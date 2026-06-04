@@ -1,14 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '../ThemeContext';
-import { Dumbbell, Globe, Moon, Sun, Menu, X, User } from 'lucide-react';
+import { Dumbbell, Globe, Moon, Sun, Menu, X, User, Shield } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AuthContext } from '../AuthContext';
 import './Navbar.css';
 
 const Navbar = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { theme, toggleTheme, lang, toggleLang } = useContext(ThemeContext);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -61,6 +61,11 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="auth-buttons-desktop">
+              {user && user.email && ['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com'].includes(user.email.toLowerCase()) && (
+                <button className="btn-icon header-action-btn" onClick={() => navigate('/admin')} title="Admin Dashboard">
+                  <Shield size={20} />
+                </button>
+              )}
               <button className="btn-icon header-action-btn" onClick={() => navigate('/profile')} title="Profile">
                 <User size={20} />
               </button>
@@ -116,9 +121,16 @@ const Navbar = () => {
                   </motion.div>
                 </>
               ) : (
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
-                  <Link to="/profile" className="menu-link" style={{ color: 'var(--accent-gold)' }}>{t('profile.dashboard')}</Link>
-                </motion.div>
+                <>
+                  {user && user.email && ['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com'].includes(user.email.toLowerCase()) && (
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
+                      <Link to="/admin" className="menu-link" style={{ color: 'var(--accent-gold)' }}>{i18n.language === 'ar' ? 'لوحة تحكم الإدارة' : 'Admin Dashboard'}</Link>
+                    </motion.div>
+                  )}
+                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
+                    <Link to="/profile" className="menu-link" style={{ color: 'var(--accent-gold)' }}>{t('profile.dashboard')}</Link>
+                  </motion.div>
+                </>
               )}
             </div>
           </motion.div>

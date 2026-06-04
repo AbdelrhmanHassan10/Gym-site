@@ -1,18 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { db } from '../firebase';
+import { collection, getDocs } from 'firebase/firestore';
 import './Champions.css';
 
 const Champions = ({ linkTo }) => {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [transformations, setTransformations] = useState([]);
 
-  const transformations = [
+  const defaultTransformations = [
     { id: 1, name: 'Mohammed Ali', weightLost: '15kg', duration: '3 Months', image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070&auto=format&fit=crop' },
     { id: 2, name: 'Omar Hassan', weightLost: '20kg', duration: '5 Months', image: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070&auto=format&fit=crop' }
   ];
+
+  useEffect(() => {
+    const fetchTransformations = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "champions"));
+        if (!querySnapshot.empty) {
+          const fetchedData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          setTransformations(fetchedData);
+        } else {
+          setTransformations(defaultTransformations);
+        }
+      } catch (error) {
+        console.error("Error fetching champions", error);
+        setTransformations(defaultTransformations);
+      }
+    };
+    fetchTransformations();
+  }, []);
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev === transformations.length - 1 ? 0 : prev + 1));
@@ -64,22 +85,26 @@ const Champions = ({ linkTo }) => {
           </button>
           
           <div className="carousel-content">
-            <AnimatePresence mode="wait">
-              <motion.img 
-                key={currentIndex}
-                src={transformations[currentIndex].image} 
-                alt="Transformation" 
-                className="transformation-img"
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.3 }}
-              />
-            </AnimatePresence>
-            <div className="transformation-info">
-              <h3>{transformations[currentIndex].name}</h3>
-              <p>{t('champions.lost')} {transformations[currentIndex].weightLost} {t('champions.in')} {transformations[currentIndex].duration}</p>
-            </div>
+            {transformations.length > 0 && (
+              <>
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={currentIndex}
+                    src={transformations[currentIndex]?.image} 
+                    alt="Transformation" 
+                    className="transformation-img"
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </AnimatePresence>
+                <div className="transformation-info">
+                  <h3>{transformations[currentIndex]?.name}</h3>
+                  <p>{t('champions.lost')} {transformations[currentIndex]?.weightLost} {t('champions.in')} {transformations[currentIndex]?.duration}</p>
+                </div>
+              </>
+            )}
           </div>
 
           <button className="carousel-btn next-btn" onClick={nextSlide}>
