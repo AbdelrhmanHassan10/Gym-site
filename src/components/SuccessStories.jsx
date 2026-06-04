@@ -6,6 +6,8 @@ import './SuccessStories.css';
 
 const SuccessStories = () => {
   const { t } = useTranslation();
+  const FastMarquee = Marquee.default || Marquee;
+
   return (
     <section className="success-section">
       <div className="success-container">
@@ -17,7 +19,7 @@ const SuccessStories = () => {
         </div>
         
         <div className="success-marquee-wrap" style={{ margin: '0 -2rem' }}>
-          <Marquee gradient={false} speed={50} pauseOnHover={true} className="success-marquee">
+          <FastMarquee gradient={false} speed={50} pauseOnHover={true} className="success-marquee">
             {/* Story 1 */}
             <div className="story-card group hover-target" style={{ margin: '0 1rem', width: '350px' }}>
               <div className="story-image-wrap">
@@ -93,7 +95,7 @@ const SuccessStories = () => {
                 <p className="story-author">{t('success.s2Author')}</p>
               </div>
             </div>
-          </Marquee>
+          </FastMarquee>
         </div>
 
         <div className="stats-container" style={{ marginTop: '3rem', display: 'flex', gap: '2rem', justifyContent: 'center' }}>

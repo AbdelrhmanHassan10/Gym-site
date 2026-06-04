@@ -10,10 +10,13 @@ import './PaymentPage.css';
 
 const PaymentPage = () => {
   const { t } = useTranslation();
+  const { user } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
   const plan = location.state?.plan;
+
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     // Check if we came back from Stripe success
@@ -44,9 +47,7 @@ const PaymentPage = () => {
     senderNumber: '',
     receiptPhoto: null
   });
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-
+  
   // Early return if not logged in or missing plan (prevents flash of content before redirect)
   if (!user || (!plan && !success)) return null;
 

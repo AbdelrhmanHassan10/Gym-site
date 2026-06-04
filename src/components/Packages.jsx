@@ -9,6 +9,7 @@ import './Packages.css';
 const Packages = ({ linkTo }) => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const FastTilt = Tilt.default || Tilt;
 
   const nutritionPlans = [
     {
@@ -86,7 +87,7 @@ const Packages = ({ linkTo }) => {
       transition={{ delay: index * 0.1 }}
       style={{ height: '100%' }}
     >
-      <Tilt
+      <FastTilt
         tiltMaxAngleX={5}
         tiltMaxAngleY={5}
         scale={1.02}
@@ -121,7 +122,7 @@ const Packages = ({ linkTo }) => {
       </ul>
       
       <button className="btn-subscribe" onClick={() => navigate('/payment', { state: { plan } })}>{t('packages.subscribe')}</button>
-      </Tilt>
+      </FastTilt>
     </motion.div>
   );
 
