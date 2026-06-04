@@ -21,8 +21,8 @@ const AboutPage = () => {
         <About />
         
         <div className="extra-info section-padding">
-          <h2>Our Philosophy</h2>
-          <p>We believe in sustainable transformations that last a lifetime. Our training methodology isn't just about lifting weights; it's about shifting mindsets, building resilience, and fostering a community of growth.</p>
+          <h2>{t('about.philosophyTitle')}</h2>
+          <p>{t('about.philosophyDesc')}</p>
           
           <div className="image-grid mt-4">
             <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop" alt="Gym setup" />
