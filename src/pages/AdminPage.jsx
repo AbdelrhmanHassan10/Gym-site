@@ -10,7 +10,7 @@ import AdminPackages from '../components/AdminPackages';
 import './AdminPage.css';
 
 const AdminPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [subscriptions, setSubscriptions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('subscriptions');
@@ -23,18 +23,6 @@ const AdminPage = () => {
 
   // Define admin emails
   const ADMIN_EMAILS = ['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com'];
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    if (!user) {
-      navigate('/login');
-    } else if (!ADMIN_EMAILS.includes(user.email.toLowerCase())) {
-      // If user is not an admin, redirect to their profile
-      navigate('/profile');
-    } else {
-      fetchSubscriptions();
-    }
-  }, [user, navigate]);
 
   const fetchSubscriptions = async () => {
     try {
@@ -54,6 +42,18 @@ const AdminPage = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (!user) {
+      navigate('/login');
+    } else if (!ADMIN_EMAILS.includes(user.email.toLowerCase())) {
+      // If user is not an admin, redirect to their profile
+      navigate('/profile');
+    } else {
+      fetchSubscriptions();
+    }
+  }, [user, navigate]);
 
   const handleStatusUpdate = async (id, newStatus) => {
     try {

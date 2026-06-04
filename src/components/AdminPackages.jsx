@@ -23,10 +23,6 @@ const AdminPackages = () => {
     features: ''
   });
 
-  useEffect(() => {
-    fetchPackages();
-  }, []);
-
   const fetchPackages = async () => {
     try {
       setLoading(true);
@@ -41,6 +37,10 @@ const AdminPackages = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchPackages();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
