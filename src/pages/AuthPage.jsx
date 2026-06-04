@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import './AuthPage.css';
 
 const AuthPage = () => {
@@ -88,6 +88,21 @@ const AuthPage = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      navigate('/');
+    } catch (err) {
+      console.error(err);
+      setError(err.message.replace('Firebase: ', ''));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="auth-page-container">
       <div className="auth-card">
@@ -139,6 +154,20 @@ const AuthPage = () => {
 
               <button type="submit" className="auth-submit-btn" disabled={loading}>
                 {loading ? 'Processing...' : (isLogin ? 'Login' : 'Create Account')}
+              </button>
+
+              <div className="auth-divider">
+                <span>OR</span>
+              </div>
+              
+              <button 
+                type="button" 
+                className="google-sign-in-btn" 
+                onClick={handleGoogleSignIn}
+                disabled={loading}
+              >
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" className="google-icon" />
+                Sign in with Google
               </button>
             </form>
           </motion.div>
