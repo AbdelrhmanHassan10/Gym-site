@@ -32,25 +32,25 @@ const Hero = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="hero-badge">
-          <span className="skew-text">Performance First</span>
+          <span className="skew-text">{t('hero.subtitle')}</span>
         </div>
         
         <h1 className="hero-title-new">
-          ELITE TRAINING.<br/>
-          <span className="text-glow">PRIVATE RESULTS.</span>
+          {t('hero.title1')}<br/>
+          <span className="text-glow">{t('hero.title2')}</span>
         </h1>
         
         <p className="hero-quote-new">
-          Experience a sanctuary of strength where precision meets high-performance. Tailored programs for those who demand excellence from their mind and body.
+          {t('hero.quote')}
         </p>
 
         <div className="hero-actions">
           <button className="btn-primary-new group" onClick={() => navigate('/packages')}>
-            Start Your Journey
+            {t('hero.startJourney')}
             <span className="material-symbols-outlined icon-arrow">arrow_forward</span>
           </button>
           <button className="btn-outline-new" onClick={() => navigate('/champions')}>
-            View Champions
+            {t('hero.viewChampions')}
           </button>
         </div>
       </motion.div>

@@ -56,8 +56,8 @@ const Navbar = () => {
         <div className="nav-right">
           {!user ? (
             <div className="auth-buttons-desktop">
-              <button className="btn-text" onClick={() => navigate('/login')}>Login</button>
-              <button className="btn-primary-small" onClick={() => navigate('/register')}>Register</button>
+              <button className="btn-text" onClick={() => navigate('/login')}>{t('auth.loginBtn')}</button>
+              <button className="btn-primary-small" onClick={() => navigate('/register')}>{t('auth.registerBtn')}</button>
             </div>
           ) : (
             <div className="auth-buttons-desktop">
@@ -109,15 +109,15 @@ const Navbar = () => {
               {!user ? (
                 <>
                   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
-                    <Link to="/login" className="menu-link" style={{ color: 'var(--accent-gold)' }}>Login</Link>
+                    <Link to="/login" className="menu-link" style={{ color: 'var(--accent-gold)' }}>{t('auth.loginBtn')}</Link>
                   </motion.div>
                   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }}>
-                    <Link to="/register" className="menu-link" style={{ color: 'var(--accent-gold)' }}>Register</Link>
+                    <Link to="/register" className="menu-link" style={{ color: 'var(--accent-gold)' }}>{t('auth.registerBtn')}</Link>
                   </motion.div>
                 </>
               ) : (
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
-                  <Link to="/profile" className="menu-link" style={{ color: 'var(--accent-gold)' }}>Profile</Link>
+                  <Link to="/profile" className="menu-link" style={{ color: 'var(--accent-gold)' }}>{t('profile.dashboard')}</Link>
                 </motion.div>
               )}
             </div>

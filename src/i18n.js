@@ -13,10 +13,12 @@ const resources = {
         "language": "عربي"
       },
       "hero": {
-        "subtitle": "[ BE YOURSELF ]",
-        "title": "COACH\nAHMED RAGAB\nTHE BEST VERSION",
-        "quote": "\"Just like I helped them change their lifestyle, live a healthy life, and become the best version of yourself.\"",
-        "subscribe": "SUBSCRIBE NOW"
+        "subtitle": "Performance First",
+        "title1": "ELITE TRAINING.",
+        "title2": "PRIVATE RESULTS.",
+        "quote": "Experience a sanctuary of strength where precision meets high-performance. Tailored programs for those who demand excellence from their mind and body.",
+        "startJourney": "Start Your Journey",
+        "viewChampions": "View Champions"
       },
       "about": {
         "title": "WHO IS",
@@ -226,10 +228,12 @@ const resources = {
         "language": "English"
       },
       "hero": {
-        "subtitle": "[ خليك نفسك ]",
-        "title": "كابتن أحمد رجب\nأحسن نسخة منك",
-        "quote": "\"زي ما ساعدتهم يغيروا حياتهم ويعيشوا صح، هساعدك تبقى أحسن نسخة من نفسك.\"",
-        "subscribe": "اشترك دلوقتي"
+        "subtitle": "الأداء رقم واحد",
+        "title1": "تدريب احترافي.",
+        "title2": "نتايج خيالية.",
+        "quote": "جرب تتمرن في مكان بيجمع بين القوة والأداء العالي. برامج مخصصة للناس اللي بتدور على التميز لجسمها وعقلها.",
+        "startJourney": "ابدأ رحلتك",
+        "viewChampions": "شوف الأبطال"
       },
       "about": {
         "title": "مين هو",
