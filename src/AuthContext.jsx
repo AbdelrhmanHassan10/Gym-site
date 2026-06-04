@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
           email: currentUser.email,
           name: currentUser.displayName || 'Current User',
           phone: currentUser.phoneNumber || '',
-          avatarUrl: currentUser.photoURL || 'https://i.pravatar.cc/150?img=11'
+          avatarUrl: currentUser.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.displayName || currentUser.email || 'User')}&background=f5a623&color=fff&bold=true`
         });
       } else {
         setUser(null);
