@@ -6,6 +6,7 @@ import { auth, db } from '../firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { Eye, EyeOff } from 'lucide-react';
+import { AuthContext } from '../AuthContext';
 import './AuthPage.css';
 
 const AuthPage = () => {

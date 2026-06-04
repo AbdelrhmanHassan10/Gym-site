@@ -145,9 +145,7 @@
   grid-column: span 12;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  justify-content: space-between;
 }
 
 @media (min-width: 768px) {
