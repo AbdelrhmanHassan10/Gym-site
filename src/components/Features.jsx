@@ -35,7 +35,7 @@ const Features = () => {
           </div>
           
           {/* Feature 3 */}
-          <div className="feature-card feature-small hover-card">
+          <div className="feature-card feature-medium hover-card">
             <Key className="feature-icon" size={48} />
             <div>
               <h3 className="feature-title">{t('features.f3Title')}</h3>
