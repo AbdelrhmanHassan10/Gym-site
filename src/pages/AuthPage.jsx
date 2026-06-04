@@ -8,6 +8,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import './AuthPage.css';
 
 const AuthPage = () => {
+  const { updateLocalUser } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -65,6 +66,14 @@ const AuthPage = () => {
           role: 'user',
           createdAt: new Date().toISOString()
         });
+        
+        // Immediately update local state so the name appears without refreshing
+        if (updateLocalUser) {
+          updateLocalUser({ 
+            name: formData.name,
+            avatarUrl: `https://ui-avatars.com/api/?name=${encodeURIComponent(formData.name)}&background=f5a623&color=fff&bold=true`
+          });
+        }
         
         navigate('/');
       }

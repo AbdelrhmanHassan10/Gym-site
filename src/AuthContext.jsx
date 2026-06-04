@@ -12,13 +12,13 @@ export const AuthProvider = ({ children }) => {
     // Listen to Firebase Auth state changes
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        // We can attach custom properties if needed
+        const name = currentUser.displayName || 'Member';
         setUser({
           uid: currentUser.uid,
           email: currentUser.email,
-          name: currentUser.displayName || 'Current User',
+          name: name,
           phone: currentUser.phoneNumber || '',
-          avatarUrl: currentUser.photoURL || 'https://i.pravatar.cc/150?img=11'
+          avatarUrl: currentUser.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f5a623&color=fff&bold=true`
         });
       } else {
         setUser(null);
@@ -37,12 +37,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateLocalUser = (updates) => {
+    setUser(prev => prev ? { ...prev, ...updates } : null);
+  };
+
   if (loading) {
     return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#0a0a0a', color: '#fff' }}>Loading...</div>;
   }
 
   return (
-    <AuthContext.Provider value={{ user, logout }}>
+    <AuthContext.Provider value={{ user, logout, updateLocalUser }}>
       {children}
     </AuthContext.Provider>
   );
