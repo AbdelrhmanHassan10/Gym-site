@@ -26,7 +26,7 @@ const Preloader = () => {
               className="logo-mark"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, yoyo: Infinity }}
+              transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
             >
               <div className="logo-ring"></div>
               <div className="logo-dot"></div>
