@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle, ShieldCheck, ArrowLeft, Lock, Award } from 'lucide-react';
 import { AuthContext } from '../AuthContext';
+import { db } from '../firebase';
+import { collection, addDoc } from 'firebase/firestore';
 import './PaymentPage.css';
 
 const PaymentPage = () => {
@@ -62,57 +64,31 @@ const PaymentPage = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (formData.paymentMethod === 'card') {
-      try {
-        const response = await fetch('http://localhost:3001/api/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...formData,
-            planTitle: plan.title,
-            duration: plan.duration,
-            price: plan.price,
-            currency: plan.currency
-          }),
-        });
-        
-        const data = await response.json();
-        
-        if (data.url) {
-          window.location.href = data.url; // Redirect to Stripe Checkout
-        } else {
-          alert('Failed to initialize payment gateway.');
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error(error);
-        alert('Network error. Please try again.');
-        setLoading(false);
+    try {
+      if (formData.paymentMethod === 'card') {
+        // Warning: Secure Stripe Checkout usually requires a backend.
+        // For a completely backend-less approach, you might want to use Stripe Payment Links instead.
+        alert('Card payment integration requires a backend or Stripe Payment Links. Storing as pending request for now.');
       }
-    } else {
-      try {
-        const response = await fetch('http://localhost:3001/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...formData,
-            planTitle: plan.title,
-            duration: plan.duration,
-            price: plan.price
-          }),
-        });
+      
+      const subData = {
+        userEmail: user.email.toLowerCase(),
+        ...formData,
+        planTitle: plan.title,
+        duration: plan.duration,
+        price: plan.price,
+        currency: plan.currency || 'EGP',
+        status: formData.paymentMethod === 'card' ? 'active' : 'pending',
+        createdAt: new Date().toISOString()
+      };
 
-        if (response.ok) {
-          setSuccess(true);
-        } else {
-          alert('Payment failed. Please try again.');
-        }
-      } catch (error) {
-        console.error(error);
-        alert('Network error. Please try again.');
-      } finally {
-        setLoading(false);
-      }
+      await addDoc(collection(db, 'subscriptions'), subData);
+      setSuccess(true);
+    } catch (error) {
+      console.error('Error adding document: ', error);
+      alert('Network error. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 

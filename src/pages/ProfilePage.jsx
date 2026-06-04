@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Activity, Clock, CreditCard, LogOut, Package, TrendingUp, Heart } from 'lucide-react';
 import { AuthContext } from '../AuthContext';
+import { db } from '../firebase';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
@@ -16,19 +18,26 @@ const ProfilePage = () => {
     if (!user) {
       navigate('/login');
     } else {
-      // Fetch dynamic profile history
-      fetch(`http://localhost:3001/api/user-profile/${user.email}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.history) {
-            setHistory(data.history);
-          }
-          setLoading(false);
-        })
-        .catch(err => {
+      const fetchHistory = async () => {
+        try {
+          const q = query(collection(db, "subscriptions"), where("userEmail", "==", user.email.toLowerCase()));
+          const querySnapshot = await getDocs(q);
+          const data = querySnapshot.docs.map(doc => ({ 
+            id: doc.id, 
+            ...doc.data(),
+            date: doc.data().createdAt || doc.data().date // fallback if needed
+          }));
+          
+          data.sort((a, b) => new Date(b.date) - new Date(a.date));
+          setHistory(data);
+        } catch (err) {
           console.error('Error fetching profile:', err);
+        } finally {
           setLoading(false);
-        });
+        }
+      };
+      
+      fetchHistory();
     }
   }, [user, navigate]);
 

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Shield, Check, X, Clock, RefreshCw } from 'lucide-react';
 import { AuthContext } from '../AuthContext';
+import { db } from '../firebase';
+import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import './AdminPage.css';
 
 const AdminPage = () => {
@@ -30,11 +32,15 @@ const AdminPage = () => {
   const fetchSubscriptions = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3001/api/subscriptions');
-      if (response.ok) {
-        const data = await response.json();
-        setSubscriptions(data);
-      }
+      const querySnapshot = await getDocs(collection(db, "subscriptions"));
+      const data = querySnapshot.docs.map(doc => ({ 
+        id: doc.id, 
+        ...doc.data(),
+        date: doc.data().createdAt || doc.data().date // fallback
+      }));
+      // Sort by date descending
+      data.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setSubscriptions(data);
     } catch (err) {
       console.error('Failed to fetch subscriptions', err);
     } finally {
@@ -45,20 +51,13 @@ const AdminPage = () => {
   const handleStatusUpdate = async (id, newStatus) => {
     try {
       setActionLoading(id);
-      const response = await fetch(`http://localhost:3001/api/subscriptions/${id}/status`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus })
-      });
+      const subRef = doc(db, 'subscriptions', id);
+      await updateDoc(subRef, { status: newStatus });
       
-      if (response.ok) {
-        // Update local state
-        setSubscriptions(prev => 
-          prev.map(sub => sub.id === id ? { ...sub, status: newStatus } : sub)
-        );
-      } else {
-        alert('Failed to update status');
-      }
+      // Update local state
+      setSubscriptions(prev => 
+        prev.map(sub => sub.id === id ? { ...sub, status: newStatus } : sub)
+      );
     } catch (err) {
       console.error('Error updating status', err);
       alert('Error updating status');
