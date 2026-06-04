@@ -28,8 +28,8 @@ const resources = {
         "f2Desc": "Biometric-driven meal plans designed for your unique metabolism and performance goals.",
         "f3Title": "24/7 Support & Tracking",
         "f3Desc": "Round-the-clock guidance and continuous follow-ups. Train anywhere, anytime, with your coach always by your side.",
-        "f4Title": "Recovery Lounge",
-        "f4Desc": "Cryotherapy, infrared saunas, and compression therapy to ensure your body recovers as hard as you train."
+        "f4Title": "Weekly Progress Reviews",
+        "f4Desc": "Detailed weekly check-ins to track your body measurements, adjust the plan, and ensure you're on the fastest path to your goal."
       },
       "success": {
         "title": "Success Stories",
@@ -266,8 +266,8 @@ const resources = {
         "f2Desc": "برامج تغذية محسوبة بالملي ومناسبة لحرق جسمك وهدفك.",
         "f3Title": "متابعة مستمرة 24/7",
         "f3Desc": "معاك خطوة بخطوة في أي وقت. تقدر تتمرن في المكان اللي يعجبك والكابتن دايماً متابع معاك عشان توصل لهدفك.",
-        "f4Title": "مكان الريكفري",
-        "f4Desc": "علاج بالتبريد، ساونا، وجلسات استشفاء عشان جسمك يرجع أحسن من الأول بعد التمرين."
+        "f4Title": "تقييم ومتابعة أسبوعية",
+        "f4Desc": "تقييم أسبوعي دقيق لوزنك ومقاساتك عشان نعدل الخطة أول بأول، ونضمن إنك بتوصل لهدفك بأسرع وأأمن طريق."
       },
       "success": {
         "title": "قصص نجاح",
