@@ -40,7 +40,7 @@ const PaymentPage = () => {
     name: '',
     email: '',
     phone: '',
-    paymentMethod: 'card',
+    paymentMethod: 'vodafone_cash',
     address: '',
     city: '',
     state: '',
@@ -119,9 +119,6 @@ const PaymentPage = () => {
 
     try {
       console.log("Starting submission...");
-      if (formData.paymentMethod === 'card') {
-        alert('Card payment integration requires a backend or Stripe Payment Links. Storing as pending request for now.');
-      }
       
       let receiptUrl = '';
       if (formData.receiptPhoto) {
@@ -139,7 +136,7 @@ const PaymentPage = () => {
         duration: plan.duration,
         price: plan.price,
         currency: plan.currency || 'EGP',
-        status: formData.paymentMethod === 'card' ? 'active' : 'pending',
+        status: 'pending',
         createdAt: new Date().toISOString()
       };
 
@@ -169,18 +166,14 @@ const PaymentPage = () => {
             <p><span>{t('auth.fullName')}:</span> <strong>{formData.name || 'AHMED RAGAB'}</strong></p>
             <p><span>{t('auth.phone')}:</span> <strong>{formData.phone || '+20 123 456 7890'}</strong></p>
             <p><span>{t('payment.package')}:</span> <strong>{plan?.title || 'Gym Plan'}</strong></p>
-            <p><span>{t('payment.methodPay')}:</span> <strong style={{ textTransform: 'capitalize' }}>{formData.paymentMethod === 'card' ? 'Credit Card' : formData.paymentMethod}</strong></p>
-            {formData.paymentMethod !== 'card' && (
-              <p><span>{t('admin.senderNo')}:</span> <strong>{formData.senderNumber || 'N/A'}</strong></p>
-            )}
+            <p><span>{t('payment.methodPay')}:</span> <strong style={{ textTransform: 'capitalize' }}>{formData.paymentMethod.replace('_', ' ')}</strong></p>
+            <p><span>{t('admin.senderNo')}:</span> <strong>{formData.senderNumber || 'N/A'}</strong></p>
             <p><span>{t('payment.amountPay')}:</span> <strong>{plan?.price || '0'} {plan?.currency || 'EGP'}</strong></p>
           </div>
 
-          {formData.paymentMethod !== 'card' && (
-            <div style={{ padding: '0.8rem', background: 'rgba(245, 166, 35, 0.1)', border: '1px solid #f5a623', borderRadius: '4px', marginBottom: '1rem', color: '#f5a623', fontSize: '0.9rem', lineHeight: '1.4' }}>
-              {t('payment.reminder')}
-            </div>
-          )}
+          <div style={{ padding: '0.8rem', background: 'rgba(245, 166, 35, 0.1)', border: '1px solid #f5a623', borderRadius: '4px', marginBottom: '1rem', color: '#f5a623', fontSize: '0.9rem', lineHeight: '1.4' }}>
+            {t('payment.reminder')}
+          </div>
 
           <button className="btn-primary" style={{ marginTop: '1rem' }} onClick={() => navigate('/')}>{t('payment.returnHome')}</button>
         </motion.div>
@@ -288,51 +281,26 @@ const PaymentPage = () => {
             <h3 className="payment-method-title">{t('payment.paymentMethod')}</h3>
             <div className="form-group">
               <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange} className="payment-select">
-                <option value="card">Credit / Debit Card</option>
+                <option value="vodafone_cash">Vodafone Cash</option>
                 <option value="fawry">Fawry</option>
                 <option value="instapay">InstaPay</option>
               </select>
             </div>
 
-            {formData.paymentMethod === 'card' && (
-              <>
-                <h3 className="payment-method-title">3. Billing Address</h3>
-                <div className="form-group">
-                  <label>Street Address</label>
-                  <input type="text" name="address" required onChange={handleChange} placeholder="123 Performance Way" />
-                </div>
-                
-                <div className="billing-grid">
-                  <div className="form-group">
-                    <label>City</label>
-                    <input type="text" name="city" required onChange={handleChange} placeholder="Cairo" />
-                  </div>
-                  <div className="form-group">
-                    <label>State</label>
-                    <input type="text" name="state" required onChange={handleChange} placeholder="Cairo Governorate" />
-                  </div>
-                </div>
-              </>
-            )}
+            <h3 className="payment-method-title">3. {t('payment.transferDetails')}</h3>
+            <div className="form-group">
+              <label>{t('payment.senderLabel')}</label>
+              <input type="tel" name="senderNumber" required onChange={handleChange} placeholder="010xxxxxxxx" />
+            </div>
 
-            {formData.paymentMethod !== 'card' && (
-              <>
-                <h3 className="payment-method-title">3. {t('payment.transferDetails')}</h3>
-                <div className="form-group">
-                  <label>{t('payment.senderLabel')}</label>
-                  <input type="tel" name="senderNumber" required onChange={handleChange} placeholder="010xxxxxxxx" />
-                </div>
-
-                <h3 className="payment-method-title">4. Payment Receipt</h3>
-                <div className="form-group">
-                  <div style={{ padding: '0.8rem', background: 'rgba(245, 166, 35, 0.1)', border: '1px solid #f5a623', borderRadius: '4px', marginBottom: '1rem', color: '#f5a623', fontSize: '0.9rem', lineHeight: '1.4' }}>
-                    {t('payment.importantNote')} {formData.paymentMethod === 'instapay' ? 'InstaPay' : 'Fawry'}{t('payment.importantNote2')}
-                  </div>
-                  <label>{t('payment.receiptLabel')}</label>
-                  <input type="file" name="receiptPhoto" required onChange={handleFileChange} accept="image/*" className="file-input" />
-                </div>
-              </>
-            )}
+            <h3 className="payment-method-title">4. Payment Receipt</h3>
+            <div className="form-group">
+              <div style={{ padding: '0.8rem', background: 'rgba(245, 166, 35, 0.1)', border: '1px solid #f5a623', borderRadius: '4px', marginBottom: '1rem', color: '#f5a623', fontSize: '0.9rem', lineHeight: '1.4' }}>
+                {t('payment.importantNote')} {formData.paymentMethod === 'instapay' ? 'InstaPay' : formData.paymentMethod === 'vodafone_cash' ? 'Vodafone Cash' : 'Fawry'}{t('payment.importantNote2')}
+              </div>
+              <label>{t('payment.receiptLabel')}</label>
+              <input type="file" name="receiptPhoto" required onChange={handleFileChange} accept="image/*" className="file-input" />
+            </div>
 
             <div className="payment-total">
               <span>{t('payment.totalPay')}</span>
@@ -340,7 +308,7 @@ const PaymentPage = () => {
             </div>
 
             <button type="submit" className="btn-primary pay-button" disabled={loading}>
-              {loading ? t('payment.processing') : formData.paymentMethod === 'card' ? `${t('payment.payWithCard')} (${plan.price} ${plan.currency || 'EGP'})` : t('payment.submitReview')}
+              {loading ? t('payment.processing') : t('payment.submitReview')}
             </button>
           </form>
         </motion.div>
