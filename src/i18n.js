@@ -64,6 +64,26 @@ const resources = {
         "subscribe": "Subscribe Now",
         "bestValue": "BEST VALUE"
       },
+      "packagesPage": {
+        "badge": "MEMBERSHIP PLANS",
+        "title1": "CHOOSE YOUR",
+        "title2": "LEVEL",
+        "subtitle": "Precision-engineered training programs for those who demand more than just a workout. Select the path to your peak performance.",
+        "comparisonTitle": "DEEP DIVE COMPARISON",
+        "features": "FEATURES",
+        "nutrition": "NUTRITION",
+        "training": "TRAINING",
+        "vip": "VIP",
+        "f1": "Custom Meal Plan",
+        "f2": "WhatsApp Follow-up",
+        "f3": "Custom Workout Program",
+        "f4": "Exercise Video Demos",
+        "f5": "Monthly Video Consultation",
+        "f6": "Private Community Access",
+        "ctaTitle": "STILL NOT SURE WHICH PATH TO TAKE?",
+        "ctaDesc": "Schedule a free consultation to find the program that aligns with your specific goals.",
+        "ctaBtn": "Book Consultation"
+      },
       "checkout": {
         "title": "Complete Your Subscription",
         "name": "Full Name",
@@ -303,6 +323,26 @@ const resources = {
         "vip": "عضوية الـ VIP",
         "subscribe": "اشترك دلوقتي",
         "bestValue": "أحسن قيمة"
+      },
+      "packagesPage": {
+        "badge": "خطط التدريب",
+        "title1": "اختار",
+        "title2": "مستواك",
+        "subtitle": "برامج تدريب متصممة بالملي للناس اللي بتدور على أكتر من مجرد تمرين. اختار طريقك للوصول لأفضل نسخة من نفسك.",
+        "comparisonTitle": "مقارنة بين الباقات",
+        "features": "المميزات",
+        "nutrition": "نظام الأكل",
+        "training": "التدريب",
+        "vip": "عضوية VIP",
+        "f1": "نظام أكل متفصل",
+        "f2": "متابعة مستمرة على الواتساب",
+        "f3": "برنامج تمرين مخصص",
+        "f4": "فيديوهات شرح للتمارين",
+        "f5": "مكالمة فيديو كل شهر",
+        "f6": "جروب برايفت للمشتركين",
+        "ctaTitle": "لسه محتار تختار أي باقة؟",
+        "ctaDesc": "احجز استشارة مجانية عشان نحدد مع بعض البرنامج اللي يناسب هدفك بالظبط.",
+        "ctaBtn": "احجز استشارتك"
       },
       "checkout": {
         "title": "كمل اشتراكك",

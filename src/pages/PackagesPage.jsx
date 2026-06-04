@@ -22,7 +22,7 @@ const PackagesPage = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          MEMBERSHIP PLANS
+          {t('packagesPage.badge')}
         </motion.div>
         <motion.h1 
           className="membership-title"
@@ -30,7 +30,7 @@ const PackagesPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          CHOOSE YOUR <span className="text-gold">LEVEL</span>
+          {t('packagesPage.title1')} <span className="text-gold">{t('packagesPage.title2')}</span>
         </motion.h1>
         <motion.p 
           className="membership-subtitle"
@@ -38,7 +38,7 @@ const PackagesPage = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          Precision-engineered training programs for those who demand more than just a workout. Select the path to your peak performance.
+          {t('packagesPage.subtitle')}
         </motion.p>
       </header>
 
@@ -48,52 +48,52 @@ const PackagesPage = () => {
       {/* Comparison Table */}
       <section className="comparison-section">
         <div className="comparison-header">
-          <h2 className="comparison-title">DEEP DIVE COMPARISON</h2>
+          <h2 className="comparison-title">{t('packagesPage.comparisonTitle')}</h2>
           <div className="comparison-underline"></div>
         </div>
         <div className="comparison-table-wrap">
           <table className="comparison-table">
             <thead>
               <tr>
-                <th className="feature-col">FEATURES</th>
-                <th className="plan-col">NUTRITION</th>
-                <th className="plan-col highlight-col">TRAINING</th>
-                <th className="plan-col">VIP</th>
+                <th className="feature-col">{t('packagesPage.features')}</th>
+                <th className="plan-col">{t('packagesPage.nutrition')}</th>
+                <th className="plan-col highlight-col">{t('packagesPage.training')}</th>
+                <th className="plan-col">{t('packagesPage.vip')}</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Custom Meal Plan</td>
+                <td>{t('packagesPage.f1')}</td>
                 <td className="center-cell"><span className="material-symbols-outlined check-icon-table">check_circle</span></td>
                 <td className="center-cell"><span className="table-dash">—</span></td>
                 <td className="center-cell"><span className="material-symbols-outlined check-icon-table">check_circle</span></td>
               </tr>
               <tr>
-                <td>WhatsApp Follow-up</td>
+                <td>{t('packagesPage.f2')}</td>
                 <td className="center-cell"><span className="material-symbols-outlined check-icon-table">check_circle</span></td>
                 <td className="center-cell"><span className="material-symbols-outlined check-icon-table">check_circle</span></td>
                 <td className="center-cell"><span className="material-symbols-outlined check-icon-table">check_circle</span></td>
               </tr>
               <tr>
-                <td>Custom Workout Program</td>
+                <td>{t('packagesPage.f3')}</td>
                 <td className="center-cell"><span className="table-dash">—</span></td>
                 <td className="center-cell"><span className="material-symbols-outlined check-icon-table">check_circle</span></td>
                 <td className="center-cell"><span className="material-symbols-outlined check-icon-table">check_circle</span></td>
               </tr>
               <tr>
-                <td>Exercise Video Demos</td>
+                <td>{t('packagesPage.f4')}</td>
                 <td className="center-cell"><span className="table-dash">—</span></td>
                 <td className="center-cell"><span className="material-symbols-outlined check-icon-table">check_circle</span></td>
                 <td className="center-cell"><span className="material-symbols-outlined check-icon-table">check_circle</span></td>
               </tr>
               <tr>
-                <td>Monthly Video Consultation</td>
+                <td>{t('packagesPage.f5')}</td>
                 <td className="center-cell"><span className="table-dash">—</span></td>
                 <td className="center-cell"><span className="table-dash">—</span></td>
                 <td className="center-cell"><span className="material-symbols-outlined check-icon-table">check_circle</span></td>
               </tr>
               <tr>
-                <td>Private Community Access</td>
+                <td>{t('packagesPage.f6')}</td>
                 <td className="center-cell"><span className="table-dash">—</span></td>
                 <td className="center-cell"><span className="table-dash">—</span></td>
                 <td className="center-cell"><span className="material-symbols-outlined check-icon-table">check_circle</span></td>
@@ -113,10 +113,10 @@ const PackagesPage = () => {
           />
           <div className="cta-overlay"></div>
           <div className="cta-content">
-            <h2 className="cta-title">STILL NOT SURE WHICH PATH TO TAKE?</h2>
-            <p className="cta-text">Schedule a free consultation to find the program that aligns with your specific goals.</p>
+            <h2 className="cta-title">{t('packagesPage.ctaTitle')}</h2>
+            <p className="cta-text">{t('packagesPage.ctaDesc')}</p>
             <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="cta-button">
-              Book Consultation
+              {t('packagesPage.ctaBtn')}
             </a>
           </div>
         </div>
