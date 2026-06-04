@@ -130,6 +130,7 @@ const PaymentPage = () => {
       }
       
       console.log("Saving to Firestore...");
+      const subData = {
         userEmail: user.email.toLowerCase(),
         ...formData,
         receiptPhoto: receiptUrl,
