@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Activity, Clock, CreditCard, LogOut, Package, TrendingUp, Heart } from 'lucide-react';
+import { Activity, Clock, CreditCard, LogOut, Package, TrendingUp, Heart, Calendar, Target } from 'lucide-react';
 import { AuthContext } from '../AuthContext';
+import { useTranslation } from 'react-i18next';
 import { db } from '../firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
+  const { t } = useTranslation();
   const { user, logout } = useContext(AuthContext);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +27,7 @@ const ProfilePage = () => {
           const data = querySnapshot.docs.map(doc => ({ 
             id: doc.id, 
             ...doc.data(),
-            date: doc.data().createdAt || doc.data().date // fallback if needed
+            date: doc.data().createdAt || doc.data().date
           }));
           
           data.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -52,42 +54,31 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-page-container">
-      {/* Welcome Header */}
-      <motion.div 
-        className="dash-welcome"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="dash-welcome-left">
-          <span className="dash-tag">DASHBOARD</span>
-          <h1 className="dash-title">WELCOME, {user.name ? user.name.toUpperCase() : 'MEMBER'}</h1>
+      <div className="profile-header">
+        <div className="profile-header-content">
+          <span className="subtitle">{t('profile.dashboard')}</span>
+          <h1>{t('profile.welcome')} {user?.name?.toUpperCase() || 'MEMBER'}</h1>
           {['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com'].includes(user.email?.toLowerCase()) && (
             <button 
               className="dash-cta-btn" 
               style={{marginTop: '1rem', background: '#333', color: 'white', padding: '0.6rem 1rem'}} 
               onClick={() => navigate('/admin')}
             >
-              Go to Admin Panel
+              {t('profile.adminPanel')}
             </button>
           )}
         </div>
-        <div className="dash-user-chip" onClick={() => handleLogout()}>
-          <div className="dash-user-avatar">
-            <img src={user.avatarUrl || "https://i.pravatar.cc/150?img=11"} alt="Profile" />
+        <div className="user-badge" onClick={() => handleLogout()}>
+          <img src={user.avatarUrl || "https://i.pravatar.cc/150?img=11"} alt="Profile" className="user-avatar" />
+          <div className="user-badge-info">
+            <span className="user-badge-name">{user.name || 'MEMBER'}</span>
+            <span className="user-badge-since">{t('profile.since')} {new Date().getFullYear()}</span>
           </div>
-          <div className="dash-user-info">
-            <p className="dash-user-status">{user.name ? user.name.toUpperCase() : 'MEMBER'}</p>
-            <p className="dash-user-since">Since {new Date().getFullYear()}</p>
-          </div>
-          <LogOut size={18} className="dash-logout-icon" />
+          <LogOut size={18} />
         </div>
-      </motion.div>
+      </div>
 
-      {/* Bento Grid */}
       <div className="dash-bento">
-
-        {/* Active Subscription (Large Card) */}
         <motion.div 
           className="dash-card dash-card-large kinetic-gradient"
           initial={{ opacity: 0, y: 20 }}
@@ -97,10 +88,10 @@ const ProfilePage = () => {
           <div className="dash-card-glow"></div>
           <div className="dash-card-inner">
             <div className="dash-card-top">
-              <span className="dash-badge">ACTIVE PLAN</span>
+              <span className="dash-badge">{t('profile.activePlan')}</span>
             </div>
             {loading ? (
-              <p className="dash-muted">Loading subscription...</p>
+              <p className="dash-muted">{t('profile.loading')}</p>
             ) : activeSubscription ? (
               <div className="dash-plan-info">
                 <h2 className="dash-plan-name">{activeSubscription.planTitle}</h2>
@@ -114,23 +105,23 @@ const ProfilePage = () => {
                       <>
                         <div className="dash-plan-stats">
                           <div className="dash-plan-stat">
-                            <p className="dash-stat-label">STATUS</p>
-                            <p className="dash-stat-value" style={{color: '#f5a623'}}>PENDING</p>
+                            <p className="dash-stat-label">{t('profile.status')}</p>
+                            <p className="dash-stat-value" style={{color: '#f5a623'}}>{t('profile.pending')}</p>
                           </div>
                           <div className="dash-plan-divider"></div>
                           <div className="dash-plan-stat">
-                            <p className="dash-stat-label">START DATE</p>
-                            <p className="dash-stat-value">Awaiting Approval</p>
+                            <p className="dash-stat-label">{t('profile.startDate')}</p>
+                            <p className="dash-stat-value">{t('profile.awaitingApproval')}</p>
                           </div>
                           <div className="dash-plan-divider"></div>
                           <div className="dash-plan-stat">
-                            <p className="dash-stat-label">END DATE</p>
-                            <p className="dash-stat-value">Awaiting Approval</p>
+                            <p className="dash-stat-label">{t('profile.endDate')}</p>
+                            <p className="dash-stat-value">{t('profile.awaitingApproval')}</p>
                           </div>
                           <div className="dash-plan-divider"></div>
                           <div className="dash-plan-stat">
-                            <p className="dash-stat-label">REMAINING</p>
-                            <p className="dash-stat-value">-- DAYS</p>
+                            <p className="dash-stat-label">{t('profile.remaining')}</p>
+                            <p className="dash-stat-value">-- {t('profile.days')}</p>
                           </div>
                         </div>
                         <div className="dash-plan-progress-wrap">
@@ -138,7 +129,7 @@ const ProfilePage = () => {
                             <div className="dash-progress-bar-fill" style={{width: '0%', background: '#555'}}></div>
                           </div>
                           <span className="dash-plan-status-text" style={{color: '#aaa'}}>
-                            ⏳ Waiting for Admin to approve your payment
+                            {t('profile.waitingAdmin')}
                           </span>
                         </div>
                       </>
@@ -150,13 +141,13 @@ const ProfilePage = () => {
                       <>
                         <div className="dash-plan-stats">
                           <div className="dash-plan-stat">
-                            <p className="dash-stat-label">STATUS</p>
-                            <p className="dash-stat-value" style={{color: '#ff4d4d'}}>REJECTED</p>
+                            <p className="dash-stat-label">{t('profile.status')}</p>
+                            <p className="dash-stat-value" style={{color: '#ff4d4d'}}>{t('profile.rejected')}</p>
                           </div>
                         </div>
                         <div className="dash-plan-progress-wrap">
                           <span className="dash-plan-status-text expired-text">
-                            ❌ Your subscription was rejected. Please contact support.
+                            {t('profile.rejectedDesc')}
                           </span>
                         </div>
                       </>
@@ -178,26 +169,26 @@ const ProfilePage = () => {
                     <>
                       <div className="dash-plan-stats">
                         <div className="dash-plan-stat">
-                          <p className="dash-stat-label">STATUS</p>
+                          <p className="dash-stat-label">{t('profile.status')}</p>
                           <p className="dash-stat-value" style={{color: isExpired ? '#ff4d4d' : 'var(--accent-gold)'}}>
-                            {isExpired ? 'EXPIRED' : 'ACTIVE'}
+                            {isExpired ? t('profile.expired') : t('profile.active')}
                           </p>
                         </div>
                         <div className="dash-plan-divider"></div>
                         <div className="dash-plan-stat">
-                          <p className="dash-stat-label">START DATE</p>
+                          <p className="dash-stat-label">{t('profile.startDate')}</p>
                           <p className="dash-stat-value">{startDate.toLocaleDateString()}</p>
                         </div>
                         <div className="dash-plan-divider"></div>
                         <div className="dash-plan-stat">
-                          <p className="dash-stat-label">END DATE</p>
+                          <p className="dash-stat-label">{t('profile.endDate')}</p>
                           <p className="dash-stat-value">{endDate.toLocaleDateString()}</p>
                         </div>
                         <div className="dash-plan-divider"></div>
                         <div className="dash-plan-stat">
-                          <p className="dash-stat-label">REMAINING</p>
+                          <p className="dash-stat-label">{t('profile.remaining')}</p>
                           <p className="dash-stat-value" style={{color: isExpiringSoon ? '#ff9800' : isExpired ? '#ff4d4d' : 'inherit'}}>
-                            {isExpired ? '0 DAYS' : `${remaining} DAYS`}
+                            {isExpired ? `0 ${t('profile.days')}` : `${remaining} ${t('profile.days')}`}
                           </p>
                         </div>
                       </div>
@@ -210,15 +201,15 @@ const ProfilePage = () => {
                         </div>
                         <span className={`dash-plan-status-text ${isExpired ? 'expired-text' : ''}`} style={{color: isExpiringSoon ? '#ff9800' : ''}}>
                           {isExpired 
-                            ? '⚠ Subscription Expired - Please renew' 
+                            ? t('profile.expiredDesc')
                             : isExpiringSoon 
-                              ? `⚠ Expiring soon! Only ${remaining} days left.` 
-                              : `✓ Active — ${Math.round(progress)}% elapsed`}
+                              ? `${t('profile.expiringSoon')} ${remaining} ${t('profile.daysLeft')}`
+                              : `${t('profile.activeDesc')} ${Math.round(progress)}% ${t('profile.elapsed')}`}
                         </span>
                         
                         {(isExpired || isExpiringSoon) && (
                           <button className="dash-cta-btn" style={{marginTop: '1rem', padding: '0.8rem 1.5rem', fontSize: '0.9rem'}} onClick={() => navigate('/packages')}>
-                            Renew Subscription
+                            {t('profile.renew')}
                           </button>
                         )}
                       </div>
@@ -228,10 +219,10 @@ const ProfilePage = () => {
               </div>
             ) : (
               <div className="dash-plan-info">
-                <h2 className="dash-plan-name" style={{opacity: 0.5}}>No Active Plan</h2>
-                <p className="dash-muted">Subscribe to a coaching package to get started.</p>
+                <h2 className="dash-plan-name" style={{opacity: 0.5}}>{t('profile.noActivePlan')}</h2>
+                <p className="dash-muted">{t('profile.subscribeToGetStarted')}</p>
                 <button className="dash-cta-btn" onClick={() => navigate('/packages')}>
-                  Browse Packages
+                  {t('profile.browsePackages')}
                 </button>
               </div>
             )}
@@ -245,23 +236,23 @@ const ProfilePage = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
         >
           <div className="dash-card-header">
-            <h4>PAYMENT HISTORY</h4>
+            <h4>{t('profile.paymentHistory')}</h4>
             <CreditCard size={24} className="dash-icon-accent" />
           </div>
           <div className="history-table-wrap">
             <table className="history-table">
               <thead>
                 <tr>
-                  <th>Date</th>
-                  <th>Package</th>
-                  <th>Amount</th>
-                  <th>Method</th>
-                  <th>Status</th>
+                  <th>{t('profile.historyDate')}</th>
+                  <th>{t('profile.historyPackage')}</th>
+                  <th>{t('profile.historyAmount')}</th>
+                  <th>{t('profile.historyMethod')}</th>
+                  <th>{t('profile.historyStatus')}</th>
                 </tr>
               </thead>
               <tbody>
                 {loading ? (
-                  <tr><td colSpan="5" style={{ textAlign: 'center' }}>Loading history...</td></tr>
+                  <tr><td colSpan="5" style={{ textAlign: 'center' }}>{t('profile.loadingHistory')}</td></tr>
                 ) : history.length > 0 ? (
                   history.map((item, idx) => (
                     <tr key={idx}>
@@ -271,13 +262,13 @@ const ProfilePage = () => {
                       <td>{item.paymentMethod}</td>
                       <td>
                         <span className={`status-badge status-${item.status || 'pending'}`}>
-                          {(item.status || 'pending').toUpperCase()}
+                          {t(`profile.${item.status || 'pending'}`)}
                         </span>
                       </td>
                     </tr>
                   ))
                 ) : (
-                  <tr><td colSpan="5" style={{ textAlign: 'center', opacity: 0.7 }}>No payment history found.</td></tr>
+                  <tr><td colSpan="5" style={{ textAlign: 'center', opacity: 0.7 }}>{t('profile.noHistory')}</td></tr>
                 )}
               </tbody>
             </table>

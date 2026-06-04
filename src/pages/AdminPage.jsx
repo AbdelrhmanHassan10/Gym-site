@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Shield, Check, X, Clock, RefreshCw } from 'lucide-react';
 import { AuthContext } from '../AuthContext';
+import { useTranslation } from 'react-i18next';
 import { db } from '../firebase';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import './AdminPage.css';
 
 const AdminPage = () => {
+  const { t } = useTranslation();
   const [subscriptions, setSubscriptions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(null);
@@ -84,14 +86,14 @@ const AdminPage = () => {
         >
           <h1 className="admin-title">
             <Shield className="admin-icon" size={40} />
-            ADMIN DASHBOARD
+            {t('admin.dashboard')}
           </h1>
-          <p className="admin-subtitle">Manage memberships and payment approvals</p>
+          <p className="admin-subtitle">{t('admin.subtitle')}</p>
         </motion.div>
         
         <button className="refresh-btn" onClick={fetchSubscriptions} disabled={loading}>
           <RefreshCw size={18} className={loading ? 'spinning' : ''} />
-          Refresh Data
+          {t('admin.refresh')}
         </button>
       </div>
 
@@ -102,31 +104,31 @@ const AdminPage = () => {
         transition={{ delay: 0.2 }}
       >
         <div className="admin-card">
-          <h2 className="admin-card-title">Recent Subscriptions</h2>
+          <h2 className="admin-card-title">{t('admin.recentSub')}</h2>
           
           <div className="admin-table-wrap">
             <table className="admin-table">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>User</th>
-                  <th>Plan & Duration</th>
-                  <th>Amount</th>
-                  <th>Method</th>
-                  <th>Sender No.</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Actions</th>
+                  <th>{t('admin.id')}</th>
+                  <th>{t('admin.user')}</th>
+                  <th>{t('admin.planDuration')}</th>
+                  <th>{t('admin.amount')}</th>
+                  <th>{t('admin.method')}</th>
+                  <th>{t('admin.senderNo')}</th>
+                  <th>{t('admin.date')}</th>
+                  <th>{t('admin.statusTitle')}</th>
+                  <th>{t('admin.actions')}</th>
                 </tr>
               </thead>
               <tbody>
                 {loading && subscriptions.length === 0 ? (
                   <tr>
-                    <td colSpan="8" className="text-center py-8 text-muted">Loading subscriptions...</td>
+                    <td colSpan="8" className="text-center py-8 text-muted">{t('admin.loading')}</td>
                   </tr>
                 ) : subscriptions.length === 0 ? (
                   <tr>
-                    <td colSpan="8" className="text-center py-8 text-muted">No subscriptions found in the database.</td>
+                    <td colSpan="8" className="text-center py-8 text-muted">{t('admin.noSubs')}</td>
                   </tr>
                 ) : (
                   subscriptions.map((sub) => (
@@ -154,7 +156,7 @@ const AdminPage = () => {
                               onClick={() => setSelectedReceipt(sub.receiptPhoto)}
                               style={{color: '#f5a623', fontSize: '0.8rem', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer', padding: 0}}
                             >
-                              View Receipt
+                              {t('admin.viewReceipt')}
                             </button>
                           </div>
                         )}
@@ -163,7 +165,7 @@ const AdminPage = () => {
                       <td className="text-muted">{new Date(sub.date).toLocaleString()}</td>
                       <td>
                         <span className={`status-badge status-${sub.status || 'pending'}`}>
-                          {(sub.status || 'pending').toUpperCase()}
+                          {t(`profile.${sub.status || 'pending'}`)}
                         </span>
                       </td>
                       <td>

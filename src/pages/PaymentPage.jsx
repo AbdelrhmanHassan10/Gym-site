@@ -165,23 +165,23 @@ const PaymentPage = () => {
           <p>We have received your request. Our team will contact you shortly to verify your payment.</p>
           
           <div className="pending-details">
-            <p><span>Name:</span> <strong>{formData.name || 'AHMED RAGAB'}</strong></p>
-            <p><span>Phone:</span> <strong>{formData.phone || '+20 123 456 7890'}</strong></p>
-            <p><span>Package:</span> <strong>{plan?.title || 'Gym Plan'}</strong></p>
-            <p><span>Method:</span> <strong style={{ textTransform: 'capitalize' }}>{formData.paymentMethod === 'card' ? 'Credit Card' : formData.paymentMethod}</strong></p>
+            <p><span>{t('auth.fullName')}:</span> <strong>{formData.name || 'AHMED RAGAB'}</strong></p>
+            <p><span>{t('auth.phone')}:</span> <strong>{formData.phone || '+20 123 456 7890'}</strong></p>
+            <p><span>{t('payment.package')}:</span> <strong>{plan?.title || 'Gym Plan'}</strong></p>
+            <p><span>{t('payment.methodPay')}:</span> <strong style={{ textTransform: 'capitalize' }}>{formData.paymentMethod === 'card' ? 'Credit Card' : formData.paymentMethod}</strong></p>
             {formData.paymentMethod !== 'card' && (
-              <p><span>Sender Number:</span> <strong>{formData.senderNumber || 'N/A'}</strong></p>
+              <p><span>{t('admin.senderNo')}:</span> <strong>{formData.senderNumber || 'N/A'}</strong></p>
             )}
-            <p><span>Amount:</span> <strong>{plan?.price || '0'} {plan?.currency || 'EGP'}</strong></p>
+            <p><span>{t('payment.amountPay')}:</span> <strong>{plan?.price || '0'} {plan?.currency || 'EGP'}</strong></p>
           </div>
 
           {formData.paymentMethod !== 'card' && (
             <div style={{ padding: '0.8rem', background: 'rgba(245, 166, 35, 0.1)', border: '1px solid #f5a623', borderRadius: '4px', marginBottom: '1rem', color: '#f5a623', fontSize: '0.9rem', lineHeight: '1.4' }}>
-              <strong>⚠️ Reminder:</strong> Please ensure you have transferred the exact amount. Our team will review your uploaded screenshot and activate your account shortly.
+              {t('payment.reminder')}
             </div>
           )}
 
-          <button className="btn-primary" style={{ marginTop: '1rem' }} onClick={() => navigate('/')}>Return Home</button>
+          <button className="btn-primary" style={{ marginTop: '1rem' }} onClick={() => navigate('/')}>{t('payment.returnHome')}</button>
         </motion.div>
       </div>
     );
@@ -191,9 +191,9 @@ const PaymentPage = () => {
     <div className="payment-page-container">
       <div className="payment-header">
         <button className="back-button" onClick={() => navigate(-1)}>
-          <ArrowLeft size={20} /> Back
+          <ArrowLeft size={20} /> {t('payment.back')}
         </button>
-        <h1>Secure Checkout</h1>
+        <h1>{t('payment.secureCheckout')}</h1>
       </div>
 
       <div className="payment-content">
@@ -203,7 +203,7 @@ const PaymentPage = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <h3>Order Summary</h3>
+          <h3>{t('payment.orderSummary')}</h3>
           <div className="summary-card">
             <div className="plan-details">
               <h4>{plan.title}</h4>
@@ -221,41 +221,41 @@ const PaymentPage = () => {
             
             <div className="price-breakdown">
               <div className="breakdown-row">
-                <span>Subtotal</span>
+                <span>{t('payment.subtotal')}</span>
                 <span>{plan.price} {plan.currency || 'EGP'}</span>
               </div>
               <div className="breakdown-row">
-                <span>Initiation Fee</span>
-                <span className="free-fee"><del>99.00 {plan.currency || 'EGP'}</del> <strong>FREE</strong></span>
+                <span>{t('payment.fee')}</span>
+                <span className="free-fee"><del>99.00 {plan.currency || 'EGP'}</del> <strong>{t('payment.free')}</strong></span>
               </div>
               <div className="breakdown-row">
-                <span>Taxes</span>
+                <span>{t('payment.taxes')}</span>
                 <span>0.00 {plan.currency || 'EGP'}</span>
               </div>
               <div className="breakdown-total">
-                <span>Total due today</span>
+                <span>{t('payment.total')}</span>
                 <span className="total-highlight">{plan.price} {plan.currency || 'EGP'}</span>
               </div>
             </div>
 
             <div className="testimonial-card">
-              <p>"The private coaching sessions here completely transformed my performance. Worth every penny."</p>
-              <span>— Marcus V., Pro Athlete</span>
+              <p>{t('payment.testimonial')}</p>
+              <span>{t('payment.testimonialAuthor')}</span>
             </div>
           </div>
           
           <div className="trust-badges">
             <div className="trust-badge">
               <ShieldCheck size={32} />
-              <span>SSL Secure</span>
+              <span>{t('payment.ssl')}</span>
             </div>
             <div className="trust-badge">
               <Lock size={32} />
-              <span>Encrypted</span>
+              <span>{t('payment.encrypted')}</span>
             </div>
             <div className="trust-badge">
               <Award size={32} />
-              <span>Premium Care</span>
+              <span>{t('payment.premium')}</span>
             </div>
           </div>
         </motion.div>
@@ -267,24 +267,24 @@ const PaymentPage = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <form onSubmit={handleSubmit} className="payment-form">
-            <h3>Billing Details</h3>
+            <h3>{t('payment.billingDetails')}</h3>
             
             <div className="form-group">
-              <label>Full Name</label>
+              <label>{t('auth.fullName')}</label>
               <input type="text" name="name" required onChange={handleChange} placeholder="AHMED RAGAB" />
             </div>
             
             <div className="form-group">
-              <label>Email Address</label>
+              <label>{t('auth.email')}</label>
               <input type="email" name="email" required onChange={handleChange} placeholder="Ahmedragab1@example.com" />
             </div>
 
             <div className="form-group">
-              <label>Phone Number</label>
+              <label>{t('auth.phone')}</label>
               <input type="tel" name="phone" required onChange={handleChange} placeholder="+20 123 456 7890" />
             </div>
 
-            <h3 className="payment-method-title">Payment Method</h3>
+            <h3 className="payment-method-title">{t('payment.paymentMethod')}</h3>
             <div className="form-group">
               <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange} className="payment-select">
                 <option value="card">Credit / Debit Card</option>
@@ -316,30 +316,30 @@ const PaymentPage = () => {
 
             {formData.paymentMethod !== 'card' && (
               <>
-                <h3 className="payment-method-title">3. Transfer Details</h3>
+                <h3 className="payment-method-title">3. {t('payment.transferDetails')}</h3>
                 <div className="form-group">
-                  <label>Sender Mobile Number (The number you transferred from)</label>
+                  <label>{t('payment.senderLabel')}</label>
                   <input type="tel" name="senderNumber" required onChange={handleChange} placeholder="010xxxxxxxx" />
                 </div>
 
                 <h3 className="payment-method-title">4. Payment Receipt</h3>
                 <div className="form-group">
                   <div style={{ padding: '0.8rem', background: 'rgba(245, 166, 35, 0.1)', border: '1px solid #f5a623', borderRadius: '4px', marginBottom: '1rem', color: '#f5a623', fontSize: '0.9rem', lineHeight: '1.4' }}>
-                    <strong>⚠️ Important Note:</strong> Please complete the transfer using {formData.paymentMethod === 'instapay' ? 'InstaPay' : 'Fawry'}, take a screenshot of the successful payment receipt, and upload it below to avoid any delays in your subscription.
+                    {t('payment.importantNote')} {formData.paymentMethod === 'instapay' ? 'InstaPay' : 'Fawry'}{t('payment.importantNote2')}
                   </div>
-                  <label>Upload screenshot/photo of the transfer receipt</label>
+                  <label>{t('payment.receiptLabel')}</label>
                   <input type="file" name="receiptPhoto" required onChange={handleFileChange} accept="image/*" className="file-input" />
                 </div>
               </>
             )}
 
             <div className="payment-total">
-              <span>Total to pay:</span>
+              <span>{t('payment.totalPay')}</span>
               <strong>{plan.price} {plan.currency || 'EGP'}</strong>
             </div>
 
             <button type="submit" className="btn-primary pay-button" disabled={loading}>
-              {loading ? 'Processing...' : formData.paymentMethod === 'card' ? `Pay with Card (${plan.price} ${plan.currency || 'EGP'})` : `Submit for Review`}
+              {loading ? t('payment.processing') : formData.paymentMethod === 'card' ? `${t('payment.payWithCard')} (${plan.price} ${plan.currency || 'EGP'})` : t('payment.submitReview')}
             </button>
           </form>
         </motion.div>
