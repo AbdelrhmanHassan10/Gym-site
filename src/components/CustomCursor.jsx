@@ -12,15 +12,22 @@ const CustomCursor = () => {
     };
 
     const handleMouseOver = (e) => {
-      if (
-        e.target.tagName.toLowerCase() === 'a' ||
-        e.target.tagName.toLowerCase() === 'button' ||
-        e.target.closest('a') ||
-        e.target.closest('button') ||
-        e.target.classList.contains('hover-card')
-      ) {
-        setIsHovering(true);
-      } else {
+      try {
+        const target = e.target;
+        if (!target || !target.tagName) return;
+
+        if (
+          target.tagName.toLowerCase() === 'a' ||
+          target.tagName.toLowerCase() === 'button' ||
+          target.closest('a') ||
+          target.closest('button') ||
+          (target.classList && target.classList.contains('hover-target'))
+        ) {
+          setIsHovering(true);
+        } else {
+          setIsHovering(false);
+        }
+      } catch (err) {
         setIsHovering(false);
       }
     };
