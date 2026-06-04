@@ -14,6 +14,9 @@ import PaymentPage from './pages/PaymentPage';
 import AuthPage from './pages/AuthPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminPage from './pages/AdminPage';
+import CustomCursor from './components/CustomCursor';
+import Preloader from './components/Preloader';
+import GlowBackground from './components/GlowBackground';
 
 import { MessageCircle } from 'lucide-react';
 
@@ -23,6 +26,9 @@ function App() {
 
   return (
     <div className={`app-container ${theme}`}>
+      <GlowBackground />
+      <Preloader />
+      <CustomCursor />
       <Navbar />
       
       <main className="main-content">

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Apple, Dumbbell, Users, Check, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import Tilt from 'react-parallax-tilt';
 import './Packages.css';
 
 const Packages = ({ linkTo }) => {
@@ -79,12 +80,24 @@ const Packages = ({ linkTo }) => {
 
   const RenderCard = ({ plan, index }) => (
     <motion.div 
-      className={`package-card ${plan.bestValue ? 'best-value-card' : ''}`}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
+      style={{ height: '100%' }}
     >
+      <Tilt
+        tiltMaxAngleX={5}
+        tiltMaxAngleY={5}
+        scale={1.02}
+        transitionSpeed={2500}
+        glareEnable={true}
+        glareMaxOpacity={0.1}
+        glareColor="#ecb613"
+        glarePosition="all"
+        className={`package-card ${plan.bestValue ? 'best-value-card' : ''}`}
+        style={{ height: '100%' }}
+      >
       {plan.bestValue && (
         <div className="best-value-badge">
           <span>&#x23F1; {t('packages.bestValue')}</span>
@@ -108,6 +121,7 @@ const Packages = ({ linkTo }) => {
       </ul>
       
       <button className="btn-subscribe" onClick={() => navigate('/payment', { state: { plan } })}>{t('packages.subscribe')}</button>
+      </Tilt>
     </motion.div>
   );
 
