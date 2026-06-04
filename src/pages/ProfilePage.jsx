@@ -62,6 +62,15 @@ const ProfilePage = () => {
         <div className="dash-welcome-left">
           <span className="dash-tag">DASHBOARD</span>
           <h1 className="dash-title">WELCOME, {user.name ? user.name.toUpperCase() : 'MEMBER'}</h1>
+          {['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com'].includes(user.email?.toLowerCase()) && (
+            <button 
+              className="dash-cta-btn" 
+              style={{marginTop: '1rem', background: '#333', color: 'white', padding: '0.6rem 1rem'}} 
+              onClick={() => navigate('/admin')}
+            >
+              Go to Admin Panel
+            </button>
+          )}
         </div>
         <div className="dash-user-chip" onClick={() => handleLogout()}>
           <div className="dash-user-avatar">
