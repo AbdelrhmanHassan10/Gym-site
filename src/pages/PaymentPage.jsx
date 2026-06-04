@@ -63,39 +63,50 @@ const PaymentPage = () => {
   // Function to compress image and convert to base64
   const compressImage = (file) => {
     return new Promise((resolve, reject) => {
+      if (!file || !file.type.startsWith('image/')) {
+        return reject(new Error('Selected file is not an image'));
+      }
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (event) => {
         const img = new Image();
-        img.src = event.target.result;
         img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const MAX_WIDTH = 800;
-          const MAX_HEIGHT = 800;
-          let width = img.width;
-          let height = img.height;
+          try {
+            const canvas = document.createElement('canvas');
+            const MAX_WIDTH = 800;
+            const MAX_HEIGHT = 800;
+            let width = img.width;
+            let height = img.height;
 
-          if (width > height) {
-            if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width;
-              width = MAX_WIDTH;
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+              }
             }
-          } else {
-            if (height > MAX_HEIGHT) {
-              width *= MAX_HEIGHT / height;
-              height = MAX_HEIGHT;
-            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            // Compress to JPEG with 0.6 quality to ensure it's small enough for Firestore
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
+            resolve(dataUrl);
+          } catch (e) {
+            reject(e);
           }
-
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-          
-          // Compress to JPEG with 0.6 quality to ensure it's small enough for Firestore
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
-          resolve(dataUrl);
         };
+        img.onerror = (error) => {
+          console.error("Image load error", error);
+          reject(new Error('Failed to load image for compression'));
+        };
+        img.src = event.target.result;
       };
       reader.onerror = (error) => reject(error);
     });
@@ -106,19 +117,19 @@ const PaymentPage = () => {
     setLoading(true);
 
     try {
+      console.log("Starting submission...");
       if (formData.paymentMethod === 'card') {
-        // Warning: Secure Stripe Checkout usually requires a backend.
-        // For a completely backend-less approach, you might want to use Stripe Payment Links instead.
         alert('Card payment integration requires a backend or Stripe Payment Links. Storing as pending request for now.');
       }
       
       let receiptUrl = '';
       if (formData.receiptPhoto) {
-        // Compress and convert to base64 instead of Firebase Storage
+        console.log("Compressing image...");
         receiptUrl = await compressImage(formData.receiptPhoto);
+        console.log("Image compressed successfully");
       }
       
-      const subData = {
+      console.log("Saving to Firestore...");
         userEmail: user.email.toLowerCase(),
         ...formData,
         receiptPhoto: receiptUrl,
