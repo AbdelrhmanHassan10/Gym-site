@@ -13,6 +13,7 @@ const ProfilePage = () => {
   const { user, logout } = useContext(AuthContext);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedSubscription, setSelectedSubscription] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const ProfilePage = () => {
     navigate('/');
   };
 
-  const activeSubscription = history.length > 0 ? history[0] : null;
+  const activeSubscription = selectedSubscription || (history.length > 0 ? history[0] : null);
 
   return (
     <div className="profile-page-container">
@@ -309,19 +310,40 @@ const ProfilePage = () => {
                 {loading ? (
                   <tr><td colSpan="5" style={{ textAlign: 'center' }}>{t('profile.loadingHistory')}</td></tr>
                 ) : history.length > 0 ? (
-                  history.map((item, idx) => (
-                    <tr key={idx}>
-                      <td>{new Date(item.date).toLocaleDateString()}</td>
-                      <td>{item.planTitle}</td>
-                      <td>{item.price} EGP</td>
-                      <td>{item.paymentMethod}</td>
-                      <td>
-                        <span className={`status-badge status-${item.status || 'pending'}`}>
-                          {t(`profile.${item.status || 'pending'}`)}
-                        </span>
-                      </td>
-                    </tr>
-                  ))
+                  history.map((item, idx) => {
+                    const isSelected = activeSubscription && activeSubscription.id === item.id;
+                    return (
+                      <tr 
+                        key={idx}
+                        onClick={() => {
+                          setSelectedSubscription(item);
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                        style={{ 
+                          cursor: 'pointer', 
+                          background: isSelected ? 'rgba(245, 166, 35, 0.1)' : 'transparent',
+                          borderLeft: isSelected ? '3px solid #f5a623' : '3px solid transparent',
+                          transition: 'all 0.2s'
+                        }}
+                        onMouseOver={(e) => {
+                          if (!isSelected) e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                        }}
+                        onMouseOut={(e) => {
+                          if (!isSelected) e.currentTarget.style.background = 'transparent';
+                        }}
+                      >
+                        <td>{new Date(item.date).toLocaleDateString()}</td>
+                        <td style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#fff' : 'inherit' }}>{item.planTitle}</td>
+                        <td>{item.price} {item.currency || 'EGP'}</td>
+                        <td style={{ textTransform: 'capitalize' }}>{item.paymentMethod?.replace('_', ' ')}</td>
+                        <td>
+                          <span className={`status-badge status-${item.status || 'pending'}`}>
+                            {t(`profile.${item.status || 'pending'}`)}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })
                 ) : (
                   <tr><td colSpan="5" style={{ textAlign: 'center', opacity: 0.7 }}>{t('profile.noHistory')}</td></tr>
                 )}
