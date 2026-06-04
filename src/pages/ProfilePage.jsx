@@ -54,10 +54,10 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-page-container">
-      <div className="profile-header">
-        <div className="profile-header-content">
-          <span className="subtitle">{t('profile.dashboard')}</span>
-          <h1>{t('profile.welcome')} {user?.name?.toUpperCase() || 'MEMBER'}</h1>
+      <div className="dash-welcome">
+        <div>
+          <span className="dash-tag">{t('profile.dashboard')}</span>
+          <h1 className="dash-title">{t('profile.welcome')} {user?.name?.toUpperCase() || 'MEMBER'}</h1>
           {['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com'].includes(user.email?.toLowerCase()) && (
             <button 
               className="dash-cta-btn" 
@@ -68,13 +68,15 @@ const ProfilePage = () => {
             </button>
           )}
         </div>
-        <div className="user-badge" onClick={() => handleLogout()}>
-          <img src={user.avatarUrl || "https://i.pravatar.cc/150?img=11"} alt="Profile" className="user-avatar" />
-          <div className="user-badge-info">
-            <span className="user-badge-name">{user.name || 'MEMBER'}</span>
-            <span className="user-badge-since">{t('profile.since')} {new Date().getFullYear()}</span>
+        <div className="dash-user-chip" onClick={() => handleLogout()}>
+          <div className="dash-user-avatar">
+            <img src={user.avatarUrl || "https://i.pravatar.cc/150?img=11"} alt="Profile" />
           </div>
-          <LogOut size={18} />
+          <div>
+            <span className="dash-user-status" style={{display: 'block'}}>{user.name || 'MEMBER'}</span>
+            <span className="dash-user-since" style={{display: 'block'}}>{t('profile.since')} {new Date().getFullYear()}</span>
+          </div>
+          <LogOut size={18} className="dash-logout-icon" />
         </div>
       </div>
 

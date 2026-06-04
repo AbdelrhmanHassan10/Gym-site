@@ -602,3 +602,30 @@
   background: #ff6b6b;
   filter: drop-shadow(0 0 8px rgba(255, 107, 107, 0.3));
 }
+
+/* ===== RTL SUPPORT ===== */
+html[dir='rtl'] .dash-user-chip,
+[dir='rtl'] .dash-user-chip {
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+}
+
+html[dir='rtl'] .dash-logout-icon,
+[dir='rtl'] .dash-logout-icon {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+html[dir='rtl'] .dash-card-glow,
+[dir='rtl'] .dash-card-glow {
+  right: auto;
+  left: 0;
+  margin-right: 0;
+  margin-left: -64px;
+}
+
+html[dir='rtl'] .history-table th, 
+html[dir='rtl'] .history-table td,
+[dir='rtl'] .history-table th, 
+[dir='rtl'] .history-table td {
+  text-align: right;
+}
