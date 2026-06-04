@@ -47,6 +47,8 @@ const resources = {
         "title": "WHO IS",
         "titleSpan": "COACH RAGAB?",
         "desc": "An internationally certified personal trainer specializing in body rebuilding and achieving real transformations through meticulously designed, scientifically based training systems.",
+        "philosophyTitle": "Our Philosophy",
+        "philosophyDesc": "We believe in sustainable transformations that last a lifetime. Our training methodology isn't just about lifting weights; it's about shifting mindsets, building resilience, and fostering a community of growth.",
         "stats": {
           "clients": "CLIENTS",
           "experience": "YEARS EXPERIENCE",
@@ -282,9 +284,9 @@ const resources = {
         "stat2Label": "نسبة الاستمرار"
       },
       "about": {
-        "title": "التميز بدون تنازلات",
-        "p1": "مبنيين على مبدأ إن التغيير الحقيقي محتاج التزام كامل، وإحنا هنا الملاذ للناس الجادة اللي بتدور على نتايج حقيقية.",
-        "p2": "إحنا بنحدد عدد المشتركين عشان نضمن إن كل واحد ياخد الاهتمام اللي محتاجه عشان يكسر أي حواجز. ده مش مجرد مكان تتمرن فيه؛ دي مساحتك الخاصة عشان توصل لأفضل نسخة من نفسك.",
+        "title": "مين هو",
+        "titleSpan": "كابتن رجب؟",
+        "desc": "مدرب شخصي معتمد دولياً متخصص في تظبيط الجسم وتحقيق نتايج حقيقية بأنظمة متفصلة ليك ومبنية على أسس علمية.",
         "philosophyTitle": "فلسفتنا",
         "philosophyDesc": "إحنا مؤمنين بالتغيير اللي بيفضل معاك طول العمر. طريقة تمريننا مش مجرد شيل حديد؛ هي تغيير في العقلية، بناء إرادة، وتأسيس بيئة بتشجع على التطور المستمر.",
         "stats": {
