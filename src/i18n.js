@@ -113,7 +113,9 @@ const resources = {
         "desc": "See the transformations of people who committed to the training plan.",
         "lost": "Lost",
         "in": "in",
-        "more": "MORE TRANSFORMATIONS"
+        "more": "MORE TRANSFORMATIONS",
+        "transformTitle": "Transform Your Life",
+        "transformDesc": "These are just a few of our success stories. Our customized plans ensure that you don't just lose weight, but you keep it off and build a healthier lifestyle forever."
       },
       "program": {
         "title": "YOUR PROGRAM INCLUDES",
@@ -373,7 +375,9 @@ const resources = {
         "desc": "شوف تحولات الناس اللي التزمت بالخطة.",
         "lost": "خس",
         "in": "في",
-        "more": "شوف تحولات تانية"
+        "more": "شوف تحولات تانية",
+        "transformTitle": "غيّر حياتك بالكامل",
+        "transformDesc": "دي مجرد أمثلة بسيطة من قصص نجاحنا. خططنا المتفصلة ليك بتضمن إنك مش بس تخس، لا كمان تحافظ على وزنك وتبني أسلوب حياة صحي مكمل معاك طول العمر."
       },
       "program": {
         "title": "برنامجك فيه إيه؟",

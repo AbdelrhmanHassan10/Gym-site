@@ -21,8 +21,8 @@ const ChampionsPage = () => {
         <Champions />
         
         <div className="extra-info section-padding">
-          <h2>Transform Your Life</h2>
-          <p>These are just a few of our success stories. Our customized plans ensure that you don't just lose weight, but you keep it off and build a healthier lifestyle forever.</p>
+          <h2>{t('champions.transformTitle')}</h2>
+          <p>{t('champions.transformDesc')}</p>
           
           <div className="image-grid mt-4">
             <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070&auto=format&fit=crop" alt="Transformation 1" />
