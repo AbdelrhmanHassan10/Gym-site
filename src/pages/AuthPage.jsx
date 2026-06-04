@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { AuthContext } from '../AuthContext';
+import { auth } from '../firebase';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import './AuthPage.css';
 
 const AuthPage = () => {
-  const { login } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', password: '', confirmPassword: '' });
   const location = useLocation();
   const navigate = useNavigate();
@@ -24,23 +26,39 @@ const AuthPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
     
-    // Use the entered email, fallback name/phone if login mode
-    const mockUser = {
-      name: formData.name || 'Current User',
-      email: formData.email,
-      phone: formData.phone || '',
-      avatarUrl: 'https://i.pravatar.cc/150?img=11'
-    };
-    
-    login(mockUser);
-    
-    // Redirect to home upon login
-    setTimeout(() => {
-      navigate('/');
-    }, 500);
+    try {
+      if (isLogin) {
+        // Login
+        await signInWithEmailAndPassword(auth, formData.email, formData.password);
+        navigate('/');
+      } else {
+        // Register
+        if (formData.password !== formData.confirmPassword) {
+          setError('Passwords do not match');
+          setLoading(false);
+          return;
+        }
+        
+        const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+        
+        // Update user profile with name
+        await updateProfile(userCredential.user, {
+          displayName: formData.name
+        });
+        
+        navigate('/');
+      }
+    } catch (err) {
+      console.error(err);
+      setError(err.message.replace('Firebase: ', ''));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -60,12 +78,12 @@ const AuthPage = () => {
             transition={{ duration: 0.3 }}
           >
             <form className="auth-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Full Name</label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Your full name" required />
-              </div>
+              {error && <div className="auth-error" style={{ color: '#ff4d4d', marginBottom: '1rem', textAlign: 'center' }}>{error}</div>}
               {!isLogin && (
-                <></>  
+                <div className="form-group">
+                  <label>Full Name</label>
+                  <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Your full name" required={!isLogin} />
+                </div>
               )}
               
               <div className="form-group">
@@ -92,8 +110,8 @@ const AuthPage = () => {
                 </div>
               )}
 
-              <button type="submit" className="auth-submit-btn">
-                {isLogin ? 'Login' : 'Create Account'}
+              <button type="submit" className="auth-submit-btn" disabled={loading}>
+                {loading ? 'Processing...' : (isLogin ? 'Login' : 'Create Account')}
               </button>
             </form>
           </motion.div>
