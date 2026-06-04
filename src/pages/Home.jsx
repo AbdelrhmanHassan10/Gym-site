@@ -11,6 +11,7 @@ import Champions from '../components/Champions';
 import Program from '../components/Program';
 import BMI from '../components/BMI';
 import FAQ from '../components/FAQ';
+import HowItWorks from '../components/HowItWorks';
 
 const Home = () => {
   const { theme, toggleTheme, lang, toggleLang } = useContext(ThemeContext);
@@ -24,6 +25,7 @@ const Home = () => {
       <SuccessStories />
       <Subscribe />
       <Packages linkTo="/packages" />
+      <HowItWorks />
       <Champions linkTo="/champions" />
       <Program />
       <FAQ linkTo="/faq" />
