@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { auth, db } from '../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { Eye, EyeOff } from 'lucide-react';
 import { AuthContext } from '../AuthContext';
@@ -29,6 +29,38 @@ const AuthPage = () => {
       setIsLogin(true);
     }
   }, [location]);
+
+  // Handle Google Redirect Result
+  useEffect(() => {
+    const checkRedirect = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result) {
+          setLoading(true);
+          const user = result.user;
+          const userDocRef = doc(db, "users", user.uid);
+          const userDoc = await getDoc(userDocRef);
+          
+          if (!userDoc.exists()) {
+            await setDoc(userDocRef, {
+              uid: user.uid,
+              name: user.displayName || 'Google User',
+              email: user.email,
+              phone: user.phoneNumber || '',
+              role: 'user',
+              createdAt: new Date().toISOString()
+            });
+          }
+          navigate('/');
+        }
+      } catch (err) {
+        console.error("Redirect Auth Error:", err);
+        setError(err.message.replace('Firebase: ', ''));
+        setLoading(false);
+      }
+    };
+    checkRedirect();
+  }, [navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -120,29 +152,12 @@ const AuthPage = () => {
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
-      const userCredential = await signInWithPopup(auth, provider);
-      const user = userCredential.user;
-
-      // Check if user exists in Firestore, if not create them
-      const userDocRef = doc(db, "users", user.uid);
-      const userDoc = await getDoc(userDocRef);
-      
-      if (!userDoc.exists()) {
-        await setDoc(userDocRef, {
-          uid: user.uid,
-          name: user.displayName || 'Google User',
-          email: user.email,
-          phone: user.phoneNumber || '',
-          role: 'user',
-          createdAt: new Date().toISOString()
-        });
-      }
-
-      navigate('/');
+      // On mobile or in-app browsers, popup is often blocked.
+      // We will try signInWithRedirect.
+      await signInWithRedirect(auth, provider);
     } catch (err) {
       console.error(err);
       setError(err.message.replace('Firebase: ', ''));
-    } finally {
       setLoading(false);
     }
   };
