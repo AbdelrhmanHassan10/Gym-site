@@ -30,38 +30,7 @@ const AuthPage = () => {
     }
   }, [location]);
 
-  // Handle Google Redirect Result
-  useEffect(() => {
-    const checkRedirect = async () => {
-      try {
-        const result = await getRedirectResult(auth);
-        if (result) {
-          setLoading(true);
-          const user = result.user;
-          const userDocRef = doc(db, "users", user.uid);
-          const userDoc = await getDoc(userDocRef);
-          
-          if (!userDoc.exists()) {
-            await setDoc(userDocRef, {
-              uid: user.uid,
-              name: user.displayName || 'Google User',
-              email: user.email,
-              phone: user.phoneNumber || '',
-              role: 'user',
-              createdAt: new Date().toISOString()
-            });
-          }
-          navigate('/');
-        }
-      } catch (err) {
-        console.error("Redirect Auth Error:", err);
-        setError(err.message.replace('Firebase: ', ''));
-        setLoading(false);
-      }
-    };
-    checkRedirect();
-  }, [navigate]);
-
+  // We removed the getRedirectResult useEffect as we will use signInWithPopup instead
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -93,24 +62,22 @@ const AuthPage = () => {
         });
 
         // Save user to Firestore Database
-        await setDoc(doc(db, "users", user.uid), {
-          uid: user.uid,
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone || '',
-          role: 'user',
-          createdAt: new Date().toISOString()
-        });
-        
-        // Immediately update local state so the name appears without refreshing
-        if (updateLocalUser) {
-          updateLocalUser({ 
+        try {
+          await setDoc(doc(db, "users", user.uid), {
+            uid: user.uid,
             name: formData.name,
-            avatarUrl: `https://ui-avatars.com/api/?name=${encodeURIComponent(formData.name)}&background=f5a623&color=fff&bold=true`
+            email: formData.email,
+            phone: formData.phone || '',
+            role: 'user',
+            createdAt: new Date().toISOString()
           });
+        } catch (dbError) {
+          console.error("Firestore error on signup:", dbError);
         }
         
-        navigate('/');
+        // Sign out and navigate to login so the user can log in with their new credentials
+        await auth.signOut();
+        navigate('/login');
       }
     } catch (err) {
       console.error(err);
@@ -152,11 +119,25 @@ const AuthPage = () => {
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
-      // On mobile or in-app browsers, popup is often blocked.
-      // We will try signInWithRedirect.
-      await signInWithRedirect(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+      
+      if (!userDoc.exists()) {
+        await setDoc(userDocRef, {
+          uid: user.uid,
+          name: user.displayName || 'Google User',
+          email: user.email,
+          phone: user.phoneNumber || '',
+          role: 'user',
+          createdAt: new Date().toISOString()
+        });
+      }
+      navigate('/');
     } catch (err) {
-      console.error(err);
+      console.error("Google Auth Error:", err);
       setError(err.message.replace('Firebase: ', ''));
       setLoading(false);
     }
