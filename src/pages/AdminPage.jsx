@@ -1,19 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Shield, Check, X, Clock, RefreshCw } from 'lucide-react';
+import { Shield, Check, X, Clock, RefreshCw, Package } from 'lucide-react';
 import { AuthContext } from '../AuthContext';
 import { useTranslation } from 'react-i18next';
 import { db } from '../firebase';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
+import AdminPackages from '../components/AdminPackages';
 import './AdminPage.css';
 
 const AdminPage = () => {
   const { t } = useTranslation();
   const [subscriptions, setSubscriptions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('subscriptions');
   const [actionLoading, setActionLoading] = useState(null);
   const [selectedReceipt, setSelectedReceipt] = useState(null);
+  const [addingPlanTo, setAddingPlanTo] = useState(null);
+  const [planForm, setPlanForm] = useState({ planLink: '', coachNotes: '' });
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -75,6 +79,27 @@ const AdminPage = () => {
     }
   };
 
+  const handleSavePlan = async (id) => {
+    try {
+      setActionLoading(id);
+      const subRef = doc(db, 'subscriptions', id);
+      await updateDoc(subRef, {
+        planLink: planForm.planLink,
+        coachNotes: planForm.coachNotes
+      });
+      setSubscriptions(prev => 
+        prev.map(sub => sub.id === id ? { ...sub, planLink: planForm.planLink, coachNotes: planForm.coachNotes } : sub)
+      );
+      setAddingPlanTo(null);
+      alert('Plan added successfully!');
+    } catch (err) {
+      console.error('Error saving plan', err);
+      alert('Error saving plan');
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
   if (!user || !ADMIN_EMAILS.includes(user.email.toLowerCase())) return null;
 
   return (
@@ -97,12 +122,22 @@ const AdminPage = () => {
         </button>
       </div>
 
+      <div className="admin-tabs">
+        <button className={`admin-tab ${activeTab === 'subscriptions' ? 'active' : ''}`} onClick={() => setActiveTab('subscriptions')}>
+          <Shield size={18} /> Subscriptions
+        </button>
+        <button className={`admin-tab ${activeTab === 'packages' ? 'active' : ''}`} onClick={() => setActiveTab('packages')}>
+          <Package size={18} /> Manage Packages
+        </button>
+      </div>
+
       <motion.div 
         className="admin-content"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
+        {activeTab === 'subscriptions' && (
         <div className="admin-card">
           <h2 className="admin-card-title">{t('admin.recentSub')}</h2>
           
@@ -191,14 +226,27 @@ const AdminPage = () => {
                             </>
                           )}
                           {sub.status === 'active' && (
-                            <button 
-                              className="btn-revoke" 
-                              onClick={() => handleStatusUpdate(sub.id, 'rejected')}
-                              disabled={actionLoading === sub.id}
-                              title="Revoke Membership"
-                            >
-                              <X size={16} /> Revoke
-                            </button>
+                            <>
+                              <button 
+                                className="btn-approve" 
+                                style={{background: '#2ecc71', marginRight: '0.5rem'}}
+                                onClick={() => {
+                                  setAddingPlanTo(sub.id);
+                                  setPlanForm({ planLink: sub.planLink || '', coachNotes: sub.coachNotes || '' });
+                                }}
+                                title="Add/Edit Plan"
+                              >
+                                <Check size={16} /> Plan
+                              </button>
+                              <button 
+                                className="btn-revoke" 
+                                onClick={() => handleStatusUpdate(sub.id, 'rejected')}
+                                disabled={actionLoading === sub.id}
+                                title="Revoke Membership"
+                              >
+                                <X size={16} /> Revoke
+                              </button>
+                            </>
                           )}
                           {sub.status === 'rejected' && (
                             <button 
@@ -219,6 +267,11 @@ const AdminPage = () => {
             </table>
           </div>
         </div>
+        )}
+
+        {activeTab === 'packages' && (
+          <AdminPackages />
+        )}
       </motion.div>
 
       {/* Receipt Modal */}
@@ -229,6 +282,51 @@ const AdminPage = () => {
               <X size={24} />
             </button>
             <img src={selectedReceipt} alt="Payment Receipt" className="receipt-image" />
+          </div>
+        </div>
+      )}
+
+      {/* Plan Modal */}
+      {addingPlanTo && (
+        <div className="receipt-modal-overlay" onClick={() => setAddingPlanTo(null)}>
+          <div className="receipt-modal-content" style={{ background: '#1a1a1a', padding: '2rem', maxWidth: '500px', borderRadius: '12px' }} onClick={(e) => e.stopPropagation()}>
+            <h3 style={{ marginBottom: '1.5rem', color: '#fff' }}>Add Plan & Notes</h3>
+            <div className="form-group" style={{ marginBottom: '1rem' }}>
+              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc' }}>Google Drive Link (PDF/Video)</label>
+              <input 
+                type="url" 
+                value={planForm.planLink} 
+                onChange={e => setPlanForm(prev => ({...prev, planLink: e.target.value}))}
+                style={{ width: '100%', padding: '0.8rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '4px' }}
+                placeholder="https://drive.google.com/..."
+              />
+            </div>
+            <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc' }}>Coach Notes / Diet Text</label>
+              <textarea 
+                value={planForm.coachNotes} 
+                onChange={e => setPlanForm(prev => ({...prev, coachNotes: e.target.value}))}
+                rows="5"
+                style={{ width: '100%', padding: '0.8rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '4px' }}
+                placeholder="Your macro targets are..."
+              ></textarea>
+            </div>
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <button 
+                className="btn-primary" 
+                onClick={() => handleSavePlan(addingPlanTo)}
+                disabled={actionLoading === addingPlanTo}
+                style={{ flex: 1 }}
+              >
+                {actionLoading === addingPlanTo ? 'Saving...' : 'Save Plan'}
+              </button>
+              <button 
+                onClick={() => setAddingPlanTo(null)}
+                style={{ flex: 1, padding: '0.8rem', background: 'transparent', color: '#fff', border: '1px solid #555', borderRadius: '4px', cursor: 'pointer' }}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -215,6 +215,38 @@ const ProfilePage = () => {
                           </button>
                         )}
                       </div>
+
+                      {/* CLIENT DELIVERY SYSTEM: Show Plan/Notes if provided */}
+                      {(activeSubscription.planLink || activeSubscription.coachNotes) && (
+                        <div style={{ marginTop: '2rem', padding: '1.5rem', background: 'rgba(245, 166, 35, 0.05)', border: '1px solid rgba(245, 166, 35, 0.2)', borderRadius: '12px' }}>
+                          <h3 style={{ color: '#f5a623', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <Target size={20} /> My Assigned Plan
+                          </h3>
+                          
+                          {activeSubscription.coachNotes && (
+                            <div style={{ marginBottom: '1.5rem' }}>
+                              <h4 style={{ color: '#fff', fontSize: '0.9rem', marginBottom: '0.5rem', opacity: 0.8 }}>Coach Notes:</h4>
+                              <div style={{ background: 'rgba(0,0,0,0.3)', padding: '1rem', borderRadius: '8px', color: '#ddd', fontSize: '0.95rem', whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>
+                                {activeSubscription.coachNotes}
+                              </div>
+                            </div>
+                          )}
+
+                          {activeSubscription.planLink && (
+                            <div>
+                              <a 
+                                href={activeSubscription.planLink} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="btn-primary" 
+                                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', padding: '0.8rem 1.5rem' }}
+                              >
+                                <Package size={18} /> Access Full Plan (PDF/Video)
+                              </a>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </>
                   );
                 })()}

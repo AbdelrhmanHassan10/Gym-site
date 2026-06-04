@@ -14,7 +14,6 @@ import PaymentPage from './pages/PaymentPage';
 import AuthPage from './pages/AuthPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminPage from './pages/AdminPage';
-import CustomCursor from './components/CustomCursor';
 import Preloader from './components/Preloader';
 import GlowBackground from './components/GlowBackground';
 
@@ -28,7 +27,6 @@ function App() {
     <div className={`app-container ${theme}`}>
       <GlowBackground />
       <Preloader />
-      <CustomCursor />
       <Navbar />
       
       <main className="main-content">

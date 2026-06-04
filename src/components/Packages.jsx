@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Apple, Dumbbell, Users, Check, ArrowRight } from 'lucide-react';
+import { Apple, Dumbbell, Users, Check } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import Tilt from 'react-parallax-tilt';
+import { db } from '../firebase';
+import { collection, getDocs } from 'firebase/firestore';
 import './Packages.css';
 
 const Packages = ({ linkTo }) => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const FastTilt = Tilt.default || Tilt;
+  const [packages, setPackages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const nutritionPlans = [
+  const defaultNutritionPlans = [
     {
       id: 1,
+      type: 'nutrition',
       title: t('packages.nutrition'),
       duration: i18n.language === 'ar' ? '٣٠ يوم' : '30 DAYS',
       oldPrice: i18n.language === 'ar' ? '٥٠٠ ج.م' : '500 EGP',
-      price: i18n.language === 'ar' ? '٢٥٠' : '250',
+      price: 250,
       currency: i18n.language === 'ar' ? 'ج.م' : 'EGP',
       save: i18n.language === 'ar' ? 'وفر ٥٠٪' : 'Save 50%',
       bestValue: false,
@@ -29,10 +34,11 @@ const Packages = ({ linkTo }) => {
     },
     {
       id: 2,
+      type: 'nutrition',
       title: t('packages.nutrition'),
       duration: i18n.language === 'ar' ? '٩٠ يوم' : '90 DAYS',
       oldPrice: i18n.language === 'ar' ? '١٥٠٠ ج.م' : '1500 EGP',
-      price: i18n.language === 'ar' ? '٦٠٠' : '600',
+      price: 600,
       currency: i18n.language === 'ar' ? 'ج.م' : 'EGP',
       save: i18n.language === 'ar' ? 'وفر ٦٠٪' : 'Save 60%',
       bestValue: true,
@@ -45,13 +51,14 @@ const Packages = ({ linkTo }) => {
     }
   ];
 
-  const trainingPlans = [
+  const defaultTrainingPlans = [
     {
-      id: 1,
+      id: 3,
+      type: 'training',
       title: t('packages.training'),
       duration: i18n.language === 'ar' ? '٣٠ يوم' : '30 DAYS',
       oldPrice: i18n.language === 'ar' ? '٨٠٠ ج.م' : '800 EGP',
-      price: i18n.language === 'ar' ? '٤٠٠' : '400',
+      price: 400,
       currency: i18n.language === 'ar' ? 'ج.م' : 'EGP',
       save: i18n.language === 'ar' ? 'وفر ٥٠٪' : 'Save 50%',
       bestValue: false,
@@ -62,11 +69,12 @@ const Packages = ({ linkTo }) => {
       ]
     },
     {
-      id: 2,
+      id: 4,
+      type: 'training',
       title: t('packages.training'),
       duration: i18n.language === 'ar' ? '٩٠ يوم' : '90 DAYS',
       oldPrice: i18n.language === 'ar' ? '٢٤٠٠ ج.م' : '2400 EGP',
-      price: i18n.language === 'ar' ? '١٠٠٠' : '1000',
+      price: 1000,
       currency: i18n.language === 'ar' ? 'ج.م' : 'EGP',
       save: i18n.language === 'ar' ? 'وفر ٥٨٪' : 'Save 58%',
       bestValue: true,
@@ -78,6 +86,48 @@ const Packages = ({ linkTo }) => {
       ]
     }
   ];
+
+  const defaultVipPlan = [
+    {
+      id: 5,
+      type: 'vip',
+      title: t('packages.vip'),
+      duration: i18n.language === 'ar' ? 'سنة واحدة VIP' : '1 YEAR VIP',
+      oldPrice: i18n.language === 'ar' ? '١٠٠٠٠ ج.م' : '10000 EGP',
+      price: 4000,
+      currency: i18n.language === 'ar' ? 'ج.م' : 'EGP',
+      save: i18n.language === 'ar' ? 'وفر ٦٠٪' : 'Save 60%',
+      bestValue: true,
+      features: [
+        i18n.language === 'ar' ? 'برنامج غذائي وتدريبي مخصص لمدة عام' : 'Full year customized nutrition & training',
+        i18n.language === 'ar' ? 'دعم WhatsApp للأولوية 24/7' : '24/7 Priority VIP WhatsApp Support',
+        i18n.language === 'ar' ? 'استشارة فيديو شهرية' : 'Monthly live video consultation',
+        i18n.language === 'ar' ? 'دخول حصري للمجتمع الخاص' : 'Exclusive access to private community'
+      ]
+    }
+  ];
+
+  const allDefaultPlans = [...defaultNutritionPlans, ...defaultTrainingPlans, ...defaultVipPlan];
+
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "packages"));
+        if (!querySnapshot.empty) {
+          const fetchedPackages = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          setPackages(fetchedPackages);
+        } else {
+          setPackages(allDefaultPlans);
+        }
+      } catch (err) {
+        console.error("Error fetching packages: ", err);
+        setPackages(allDefaultPlans);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPackages();
+  }, [i18n.language]);
 
   const RenderCard = ({ plan, index }) => (
     <motion.div 
@@ -126,6 +176,10 @@ const Packages = ({ linkTo }) => {
     </motion.div>
   );
 
+  if (loading) {
+    return <div style={{ textAlign: 'center', padding: '4rem', color: '#fff' }}>Loading Packages...</div>;
+  }
+
   return (
     <section className="packages-section">
       <div className="packages-container">
@@ -139,7 +193,6 @@ const Packages = ({ linkTo }) => {
         </motion.h2>
         <div className="title-divider"></div>
 
-        {/* NUTRITION PLAN */}
         <div className="category-section">
           <motion.div 
             className="category-header"
@@ -151,11 +204,10 @@ const Packages = ({ linkTo }) => {
             <h3 className="category-title">{t('packages.nutrition')}</h3>
           </motion.div>
           <div className="cards-grid">
-            {nutritionPlans.map((plan, idx) => <RenderCard key={plan.id} plan={plan} index={idx} />)}
+            {packages.filter(p => p.type === 'nutrition').map((plan, idx) => <RenderCard key={plan.id} plan={plan} index={idx} />)}
           </div>
         </div>
 
-        {/* TRAINING PLAN */}
         <div className="category-section">
           <motion.div 
             className="category-header"
@@ -167,7 +219,7 @@ const Packages = ({ linkTo }) => {
             <h3 className="category-title">{t('packages.training')}</h3>
           </motion.div>
           <div className="cards-grid">
-            {trainingPlans.map((plan, idx) => <RenderCard key={plan.id} plan={plan} index={idx} />)}
+            {packages.filter(p => p.type === 'training').map((plan, idx) => <RenderCard key={plan.id} plan={plan} index={idx} />)}
           </div>
         </div>
 
@@ -183,22 +235,7 @@ const Packages = ({ linkTo }) => {
             <h3 className="category-title">{t('packages.vip')}</h3>
           </motion.div>
           <div className="cards-grid single-card-centered">
-            <RenderCard index={0} plan={{
-              id: 1,
-              title: t('packages.vip'),
-              duration: i18n.language === 'ar' ? 'سنة واحدة VIP' : '1 YEAR VIP',
-              oldPrice: i18n.language === 'ar' ? '١٠٠٠٠ ج.م' : '10000 EGP',
-              price: i18n.language === 'ar' ? '٤٠٠٠' : '4000',
-              currency: i18n.language === 'ar' ? 'ج.م' : 'EGP',
-              save: i18n.language === 'ar' ? 'وفر ٦٠٪' : 'Save 60%',
-              bestValue: true,
-              features: [
-                i18n.language === 'ar' ? 'برنامج غذائي وتدريبي مخصص لمدة عام' : 'Full year customized nutrition & training',
-                i18n.language === 'ar' ? 'دعم WhatsApp للأولوية 24/7' : '24/7 Priority VIP WhatsApp Support',
-                i18n.language === 'ar' ? 'استشارة فيديو شهرية' : 'Monthly live video consultation',
-                i18n.language === 'ar' ? 'دخول حصري للمجتمع الخاص' : 'Exclusive access to private community'
-              ]
-            }} />
+            {packages.filter(p => p.type === 'vip').map((plan, idx) => <RenderCard key={plan.id} plan={plan} index={idx} />)}
           </div>
         </div>
 
