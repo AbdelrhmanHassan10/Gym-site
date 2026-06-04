@@ -4,8 +4,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle, ShieldCheck, ArrowLeft, Lock, Award } from 'lucide-react';
 import { AuthContext } from '../AuthContext';
-import { db } from '../firebase';
+import { db, storage } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import './PaymentPage.css';
 
 const PaymentPage = () => {
@@ -71,9 +72,18 @@ const PaymentPage = () => {
         alert('Card payment integration requires a backend or Stripe Payment Links. Storing as pending request for now.');
       }
       
+      let receiptUrl = '';
+      if (formData.receiptPhoto) {
+        const file = formData.receiptPhoto;
+        const storageRef = ref(storage, `receipts/${user.email}_${Date.now()}_${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        receiptUrl = await getDownloadURL(snapshot.ref);
+      }
+      
       const subData = {
         userEmail: user.email.toLowerCase(),
         ...formData,
+        receiptPhoto: receiptUrl, // store the URL instead of the File object
         planTitle: plan.title,
         duration: plan.duration,
         price: plan.price,
