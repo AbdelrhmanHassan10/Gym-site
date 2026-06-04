@@ -113,7 +113,7 @@
 .package-duration {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  color: #fff;
+  color: var(--text-color);
 }
 
 .old-price {
@@ -158,7 +158,8 @@
   align-items: flex-start;
   gap: 15px;
   font-size: 1rem;
-  color: #bbb;
+  color: var(--text-color);
+  opacity: 0.85;
 }
 
 .check-icon {

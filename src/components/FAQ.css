@@ -1,6 +1,6 @@
 .faq-section {
   padding: 6rem 2rem;
-  background: var(--bg-dark);
+  background: var(--bg-color);
   position: relative;
 }
 
@@ -29,7 +29,7 @@
 
 .faq-title {
   font-size: 2.5rem;
-  color: var(--text-light);
+  color: var(--text-color);
   font-weight: 800;
   text-transform: uppercase;
 }
@@ -41,8 +41,8 @@
 }
 
 .faq-item {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -50,13 +50,13 @@
 
 .faq-item:hover {
   border-color: rgba(245, 166, 35, 0.3);
-  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .faq-item.active {
   border-color: var(--accent-gold);
   box-shadow: 0 0 20px rgba(245, 166, 35, 0.1);
-  background: rgba(20, 20, 20, 0.8);
+  background: var(--card-bg);
 }
 
 .faq-question {
@@ -65,7 +65,7 @@
   padding: 1.5rem;
   background: transparent;
   border: none;
-  color: #fff;
+  color: var(--text-color);
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
@@ -95,7 +95,8 @@
 
 .faq-answer {
   padding: 0 1.5rem 1.5rem;
-  color: #aaa;
+  color: var(--text-color);
+  opacity: 0.85;
   font-size: 0.95rem;
   line-height: 1.6;
 }
