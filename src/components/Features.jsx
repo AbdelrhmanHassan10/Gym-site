@@ -1,14 +1,16 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Dumbbell, Utensils, Key, Activity } from 'lucide-react';
 import './Features.css';
 
 const Features = () => {
+  const { t } = useTranslation();
   return (
     <section className="features-section">
       <div className="features-container">
         <div className="features-header text-center">
-          <h2 className="section-title italic uppercase">The Standard of Excellence</h2>
+          <h2 className="section-title italic uppercase">{t('features.title')}</h2>
           <div className="title-underline"></div>
         </div>
         
@@ -17,8 +19,8 @@ const Features = () => {
           <div className="feature-card feature-large group">
             <div className="feature-content">
               <Dumbbell className="feature-icon" size={48} />
-              <h3 className="feature-title">Private Sessions</h3>
-              <p className="feature-text">1-on-1 coaching in a distraction-free environment. Every set, every rep, monitored for maximum efficiency.</p>
+              <h3 className="feature-title">{t('features.f1Title')}</h3>
+              <p className="feature-text">{t('features.f1Desc')}</p>
             </div>
             <div className="feature-bg-image overlay-gradient"></div>
           </div>
@@ -27,8 +29,8 @@ const Features = () => {
           <div className="feature-card feature-small hover-card">
             <Utensils className="feature-icon" size={48} />
             <div>
-              <h3 className="feature-title">Customized Nutrition</h3>
-              <p className="feature-text">Biometric-driven meal plans designed for your unique metabolism and performance goals.</p>
+              <h3 className="feature-title">{t('features.f2Title')}</h3>
+              <p className="feature-text">{t('features.f2Desc')}</p>
             </div>
           </div>
           
@@ -36,16 +38,16 @@ const Features = () => {
           <div className="feature-card feature-small hover-card">
             <Key className="feature-icon" size={48} />
             <div>
-              <h3 className="feature-title">24/7 Access</h3>
-              <p className="feature-text">The keys to the gym are yours. Train on your schedule, day or night, with full biosecurity access.</p>
+              <h3 className="feature-title">{t('features.f3Title')}</h3>
+              <p className="feature-text">{t('features.f3Desc')}</p>
             </div>
           </div>
           
           {/* Feature 4 */}
           <div className="feature-card feature-wide">
             <div className="feature-content-relative">
-              <h3 className="feature-title">Recovery Lounge</h3>
-              <p className="feature-text max-w-sm">Cryotherapy, infrared saunas, and compression therapy to ensure your body recovers as hard as you train.</p>
+              <h3 className="feature-title">{t('features.f4Title')}</h3>
+              <p className="feature-text max-w-sm">{t('features.f4Desc')}</p>
             </div>
             <Activity className="feature-watermark" size={180} />
           </div>

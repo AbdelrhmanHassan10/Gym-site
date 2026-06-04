@@ -20,6 +20,29 @@ const resources = {
         "startJourney": "Start Your Journey",
         "viewChampions": "View Champions"
       },
+      "features": {
+        "title": "The Standard of Excellence",
+        "f1Title": "Private Sessions",
+        "f1Desc": "1-on-1 coaching in a distraction-free environment. Every set, every rep, monitored for maximum efficiency.",
+        "f2Title": "Customized Nutrition",
+        "f2Desc": "Biometric-driven meal plans designed for your unique metabolism and performance goals.",
+        "f3Title": "24/7 Access",
+        "f3Desc": "The keys to the gym are yours. Train on your schedule, day or night, with full biosecurity access.",
+        "f4Title": "Recovery Lounge",
+        "f4Desc": "Cryotherapy, infrared saunas, and compression therapy to ensure your body recovers as hard as you train."
+      },
+      "success": {
+        "title": "Success Stories",
+        "subtitle": "Real transformations from the individuals who committed to the process. Excellence is earned, not given.",
+        "s1Badge": "12 WEEK RESULT",
+        "s1Quote": "\"The private setting allowed me to focus purely on my form. The results surpassed my expectations.\"",
+        "s1Author": "— Marcus T., Executive",
+        "s2Badge": "6 MONTH RESULT",
+        "s2Quote": "\"Nutrition was my missing link. Coach Gym Private provided the blueprint for my entire lifestyle.\"",
+        "s2Author": "— Sarah L., Athlete",
+        "stat1Label": "Success Stories",
+        "stat2Label": "Retention Rate"
+      },
       "about": {
         "title": "WHO IS",
         "titleSpan": "COACH RAGAB?",
@@ -234,6 +257,29 @@ const resources = {
         "quote": "جرب تتمرن في مكان بيجمع بين القوة والأداء العالي. برامج مخصصة للناس اللي بتدور على التميز لجسمها وعقلها.",
         "startJourney": "ابدأ رحلتك",
         "viewChampions": "شوف الأبطال"
+      },
+      "features": {
+        "title": "أعلى معايير التميز",
+        "f1Title": "تدريب برايفت",
+        "f1Desc": "تدريب 1 لـ 1 في مكان هادي مفيش فيه دوشة. كل عدة وكل مجموعة بنتابعها عشان تطلع بأحسن نتيجة.",
+        "f2Title": "نظام أكل متفصل ليك",
+        "f2Desc": "برامج تغذية محسوبة بالملي ومناسبة لحرق جسمك وهدفك.",
+        "f3Title": "الجيم بتاعك 24/7",
+        "f3Desc": "مفاتيح الجيم معاك. اتمرن في أي وقت يناسبك، صبح أو ليل، بأمان تام.",
+        "f4Title": "مكان الريكفري",
+        "f4Desc": "علاج بالتبريد، ساونا، وجلسات استشفاء عشان جسمك يرجع أحسن من الأول بعد التمرين."
+      },
+      "success": {
+        "title": "قصص نجاح",
+        "subtitle": "تغييرات حقيقية من ناس التزمت بالبرنامج. التميز بييجي بالتعب والمجهود، مش ببلاش.",
+        "s1Badge": "نتيجة 12 أسبوع",
+        "s1Quote": "\"المكان البرايفت خلاني أركز بس في تمريني وأدائي. النتايج عدت توقعاتي بكتير.\"",
+        "s1Author": "— ماركوس ت.، مدير تنفيذي",
+        "s2Badge": "نتيجة 6 شهور",
+        "s2Quote": "\"الأكل كان هو الحلقة المفقودة عندي. الجيم إداني خطة كاملة غيرت أسلوب حياتي كله.\"",
+        "s2Author": "— سارة ل.، رياضية",
+        "stat1Label": "قصص نجاح",
+        "stat2Label": "نسبة الاستمرار"
       },
       "about": {
         "title": "مين هو",
