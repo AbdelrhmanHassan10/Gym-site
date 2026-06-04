@@ -289,40 +289,70 @@ const AdminPage = () => {
       {/* Plan Modal */}
       {addingPlanTo && (
         <div className="receipt-modal-overlay" onClick={() => setAddingPlanTo(null)}>
-          <div className="receipt-modal-content" style={{ background: '#1a1a1a', padding: '2rem', maxWidth: '500px', borderRadius: '12px' }} onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ marginBottom: '1.5rem', color: '#fff' }}>{i18n.language === 'ar' ? 'إضافة الخطة والملاحظات' : 'Add Plan & Notes'}</h3>
-            <div className="form-group" style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc' }}>{i18n.language === 'ar' ? 'لينك جوجل درايف (PDF/Video)' : 'Google Drive Link (PDF/Video)'}</label>
+          <div className="plan-modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3 style={{ marginBottom: '1.5rem', color: '#fff', fontSize: '1.5rem', fontWeight: 'bold' }}>
+              {i18n.language === 'ar' ? 'إضافة الخطة والملاحظات' : 'Add Plan & Notes'}
+            </h3>
+            
+            <div className="form-group" style={{ marginBottom: '1.25rem', width: '100%' }}>
+              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc', fontSize: '0.9rem' }}>
+                {i18n.language === 'ar' ? 'لينك جوجل درايف (PDF/Video)' : 'Google Drive Link (PDF/Video)'}
+              </label>
               <input 
                 type="url" 
                 value={planForm.planLink} 
                 onChange={e => setPlanForm(prev => ({...prev, planLink: e.target.value}))}
-                style={{ width: '100%', padding: '0.8rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '4px' }}
+                style={{ width: '100%', padding: '0.8rem 1rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '6px', fontSize: '1rem', outline: 'none' }}
                 placeholder="https://drive.google.com/..."
               />
             </div>
-            <div className="form-group" style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc' }}>{i18n.language === 'ar' ? 'ملاحظات الكابتن / دايت' : 'Coach Notes / Diet Text'}</label>
+
+            <div className="form-group" style={{ marginBottom: '2rem', width: '100%' }}>
+              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc', fontSize: '0.9rem' }}>
+                {i18n.language === 'ar' ? 'ملاحظات الكابتن / دايت' : 'Coach Notes / Diet Text'}
+              </label>
               <textarea 
                 value={planForm.coachNotes} 
                 onChange={e => setPlanForm(prev => ({...prev, coachNotes: e.target.value}))}
                 rows="5"
-                style={{ width: '100%', padding: '0.8rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '4px' }}
+                style={{ width: '100%', padding: '0.8rem 1rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '6px', fontSize: '1rem', resize: 'vertical', outline: 'none' }}
                 placeholder={i18n.language === 'ar' ? 'الماكروز بتاعتك هي...' : 'Your macro targets are...'}
               ></textarea>
             </div>
-            <div style={{ display: 'flex', gap: '1rem' }}>
+
+            <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
               <button 
-                className="btn-primary" 
                 onClick={() => handleSavePlan(addingPlanTo)}
                 disabled={actionLoading === addingPlanTo}
-                style={{ flex: 1 }}
+                style={{ 
+                  flex: 2, 
+                  padding: '1rem', 
+                  background: '#f5a623', 
+                  color: '#000', 
+                  border: 'none', 
+                  borderRadius: '6px', 
+                  cursor: actionLoading === addingPlanTo ? 'not-allowed' : 'pointer',
+                  fontWeight: 'bold',
+                  fontSize: '1rem',
+                  textTransform: 'uppercase',
+                  opacity: actionLoading === addingPlanTo ? 0.7 : 1
+                }}
               >
                 {actionLoading === addingPlanTo ? (i18n.language === 'ar' ? 'جاري الحفظ...' : 'Saving...') : (i18n.language === 'ar' ? 'حفظ الخطة' : 'Save Plan')}
               </button>
+              
               <button 
                 onClick={() => setAddingPlanTo(null)}
-                style={{ flex: 1, padding: '0.8rem', background: 'transparent', color: '#fff', border: '1px solid #555', borderRadius: '4px', cursor: 'pointer' }}
+                style={{ 
+                  flex: 1, 
+                  padding: '1rem', 
+                  background: 'transparent', 
+                  color: '#fff', 
+                  border: '1px solid #555', 
+                  borderRadius: '6px', 
+                  cursor: 'pointer',
+                  fontSize: '1rem'
+                }}
               >
                 {i18n.language === 'ar' ? 'إلغاء' : 'Cancel'}
               </button>
