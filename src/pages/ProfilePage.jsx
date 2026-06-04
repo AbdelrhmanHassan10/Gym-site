@@ -99,8 +99,29 @@ const ProfilePage = () => {
                 <h2 className="dash-plan-name">{activeSubscription.planTitle}</h2>
                 {(() => {
                   const status = (activeSubscription.status || 'pending').toLowerCase();
-                  const daysMatch = activeSubscription.duration.match(/(\d+)/);
-                  const durationDays = daysMatch ? parseInt(daysMatch[1]) : 30;
+                  
+                  let durationDays = 30; // Default
+                  if (activeSubscription.duration) {
+                    const durationStr = activeSubscription.duration.toLowerCase();
+                    const numMatch = durationStr.match(/(\d+)/);
+                    let num = numMatch ? parseInt(numMatch[1]) : 1;
+
+                    if (durationStr.includes('شهرين')) {
+                      durationDays = 60;
+                    } else if (durationStr.includes('سنتين') || durationStr.includes('عامين')) {
+                      durationDays = 730;
+                    } else if (durationStr.includes('year') || durationStr.includes('سنة') || durationStr.includes('سنوات') || durationStr.includes('عام')) {
+                      durationDays = num * 365;
+                    } else if (durationStr.includes('month') || durationStr.includes('شهر') || durationStr.includes('شهور') || durationStr.includes('اشهر') || durationStr.includes('أشهر')) {
+                      durationDays = num * 30;
+                    } else if (durationStr.includes('week') || durationStr.includes('اسبوع') || durationStr.includes('أسبوع') || durationStr.includes('اسابيع') || durationStr.includes('أسابيع')) {
+                      durationDays = num * 7;
+                    } else if (durationStr.includes('day') || durationStr.includes('يوم') || durationStr.includes('أيام') || durationStr.includes('ايام')) {
+                      durationDays = num;
+                    } else if (numMatch) {
+                      durationDays = num <= 24 ? num * 30 : num;
+                    }
+                  }
 
                   if (status === 'pending') {
                     return (
