@@ -124,10 +124,10 @@ const AdminPage = () => {
 
       <div className="admin-tabs">
         <button className={`admin-tab ${activeTab === 'subscriptions' ? 'active' : ''}`} onClick={() => setActiveTab('subscriptions')}>
-          <Shield size={18} /> Subscriptions
+          <Shield size={18} /> {t('admin.dashboard')}
         </button>
         <button className={`admin-tab ${activeTab === 'packages' ? 'active' : ''}`} onClick={() => setActiveTab('packages')}>
-          <Package size={18} /> Manage Packages
+          <Package size={18} /> {i18n.language === 'ar' ? 'إدارة الباقات' : 'Manage Packages'}
         </button>
       </div>
 
@@ -234,17 +234,17 @@ const AdminPage = () => {
                                   setAddingPlanTo(sub.id);
                                   setPlanForm({ planLink: sub.planLink || '', coachNotes: sub.coachNotes || '' });
                                 }}
-                                title="Add/Edit Plan"
+                                title={i18n.language === 'ar' ? 'إضافة/تعديل خطة' : 'Add/Edit Plan'}
                               >
-                                <Check size={16} /> Plan
+                                <Check size={16} /> {i18n.language === 'ar' ? 'الخطة' : 'Plan'}
                               </button>
                               <button 
                                 className="btn-revoke" 
                                 onClick={() => handleStatusUpdate(sub.id, 'rejected')}
                                 disabled={actionLoading === sub.id}
-                                title="Revoke Membership"
+                                title={i18n.language === 'ar' ? 'إلغاء الاشتراك' : 'Revoke Membership'}
                               >
-                                <X size={16} /> Revoke
+                                <X size={16} /> {i18n.language === 'ar' ? 'إلغاء' : 'Revoke'}
                               </button>
                             </>
                           )}
@@ -290,9 +290,9 @@ const AdminPage = () => {
       {addingPlanTo && (
         <div className="receipt-modal-overlay" onClick={() => setAddingPlanTo(null)}>
           <div className="receipt-modal-content" style={{ background: '#1a1a1a', padding: '2rem', maxWidth: '500px', borderRadius: '12px' }} onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ marginBottom: '1.5rem', color: '#fff' }}>Add Plan & Notes</h3>
+            <h3 style={{ marginBottom: '1.5rem', color: '#fff' }}>{i18n.language === 'ar' ? 'إضافة الخطة والملاحظات' : 'Add Plan & Notes'}</h3>
             <div className="form-group" style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc' }}>Google Drive Link (PDF/Video)</label>
+              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc' }}>{i18n.language === 'ar' ? 'لينك جوجل درايف (PDF/Video)' : 'Google Drive Link (PDF/Video)'}</label>
               <input 
                 type="url" 
                 value={planForm.planLink} 
@@ -302,13 +302,13 @@ const AdminPage = () => {
               />
             </div>
             <div className="form-group" style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc' }}>Coach Notes / Diet Text</label>
+              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc' }}>{i18n.language === 'ar' ? 'ملاحظات الكابتن / دايت' : 'Coach Notes / Diet Text'}</label>
               <textarea 
                 value={planForm.coachNotes} 
                 onChange={e => setPlanForm(prev => ({...prev, coachNotes: e.target.value}))}
                 rows="5"
                 style={{ width: '100%', padding: '0.8rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '4px' }}
-                placeholder="Your macro targets are..."
+                placeholder={i18n.language === 'ar' ? 'الماكروز بتاعتك هي...' : 'Your macro targets are...'}
               ></textarea>
             </div>
             <div style={{ display: 'flex', gap: '1rem' }}>
@@ -318,13 +318,13 @@ const AdminPage = () => {
                 disabled={actionLoading === addingPlanTo}
                 style={{ flex: 1 }}
               >
-                {actionLoading === addingPlanTo ? 'Saving...' : 'Save Plan'}
+                {actionLoading === addingPlanTo ? (i18n.language === 'ar' ? 'جاري الحفظ...' : 'Saving...') : (i18n.language === 'ar' ? 'حفظ الخطة' : 'Save Plan')}
               </button>
               <button 
                 onClick={() => setAddingPlanTo(null)}
                 style={{ flex: 1, padding: '0.8rem', background: 'transparent', color: '#fff', border: '1px solid #555', borderRadius: '4px', cursor: 'pointer' }}
               >
-                Cancel
+                {i18n.language === 'ar' ? 'إلغاء' : 'Cancel'}
               </button>
             </div>
           </div>

@@ -3,8 +3,10 @@ import { motion } from 'framer-motion';
 import { Plus, Edit2, Trash2, Check, X } from 'lucide-react';
 import { db } from '../firebase';
 import { collection, getDocs, doc, setDoc, deleteDoc, addDoc } from 'firebase/firestore';
+import { useTranslation } from 'react-i18next';
 
 const AdminPackages = () => {
+  const { i18n } = useTranslation();
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
@@ -92,7 +94,7 @@ const AdminPackages = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this package?')) {
+    if (window.confirm(i18n.language === 'ar' ? 'متأكد إنك عايز تمسح الباقة دي؟' : 'Are you sure you want to delete this package?')) {
       try {
         setLoading(true);
         await deleteDoc(doc(db, "packages", id));
@@ -108,59 +110,59 @@ const AdminPackages = () => {
   return (
     <div className="admin-packages">
       <div className="admin-card" style={{ marginBottom: '2rem' }}>
-        <h2 className="admin-card-title">{editingId ? 'Edit Package' : 'Create New Package'}</h2>
+        <h2 className="admin-card-title">{editingId ? (i18n.language === 'ar' ? 'تعديل الباقة' : 'Edit Package') : (i18n.language === 'ar' ? 'إنشاء باقة جديدة' : 'Create New Package')}</h2>
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1rem', gridTemplateColumns: '1fr 1fr' }}>
           <div className="form-group">
-            <label>Package Type</label>
+            <label>{i18n.language === 'ar' ? 'نوع الباقة' : 'Package Type'}</label>
             <select name="type" value={formData.type} onChange={handleChange} required style={{ width: '100%', padding: '0.8rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '4px' }}>
-              <option value="nutrition">Nutrition Plan</option>
-              <option value="training">Training Plan</option>
-              <option value="vip">VIP / Full Plan</option>
+              <option value="nutrition">{i18n.language === 'ar' ? 'خطة دايت' : 'Nutrition Plan'}</option>
+              <option value="training">{i18n.language === 'ar' ? 'خطة تمرين' : 'Training Plan'}</option>
+              <option value="vip">{i18n.language === 'ar' ? 'خطة شاملة VIP' : 'VIP / Full Plan'}</option>
             </select>
           </div>
           
           <div className="form-group">
-            <label>Title (e.g. NUTRITION PLAN)</label>
+            <label>{i18n.language === 'ar' ? 'عنوان الباقة (مثلاً: دايت)' : 'Title (e.g. NUTRITION PLAN)'}</label>
             <input type="text" name="title" value={formData.title} onChange={handleChange} required style={{ width: '100%', padding: '0.8rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '4px' }} />
           </div>
 
           <div className="form-group">
-            <label>Duration (e.g. 30 DAYS)</label>
+            <label>{i18n.language === 'ar' ? 'المدة (مثلاً: ٣٠ يوم)' : 'Duration (e.g. 30 DAYS)'}</label>
             <input type="text" name="duration" value={formData.duration} onChange={handleChange} required style={{ width: '100%', padding: '0.8rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '4px' }} />
           </div>
 
           <div className="form-group">
-            <label>Price (Number only)</label>
+            <label>{i18n.language === 'ar' ? 'السعر كـ رقم (مثلاً: 500)' : 'Price (Number only)'}</label>
             <input type="number" name="price" value={formData.price} onChange={handleChange} required style={{ width: '100%', padding: '0.8rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '4px' }} />
           </div>
 
           <div className="form-group">
-            <label>Old Price Text (Optional, e.g. 500 EGP)</label>
+            <label>{i18n.language === 'ar' ? 'نص السعر القديم (اختياري، مثلاً: 1000 ج.م)' : 'Old Price Text (Optional, e.g. 500 EGP)'}</label>
             <input type="text" name="oldPrice" value={formData.oldPrice} onChange={handleChange} style={{ width: '100%', padding: '0.8rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '4px' }} />
           </div>
 
           <div className="form-group">
-            <label>Save Badge Text (Optional, e.g. Save 50%)</label>
+            <label>{i18n.language === 'ar' ? 'نص التخفيض (اختياري، مثلاً: وفر ٥٠٪)' : 'Save Badge Text (Optional, e.g. Save 50%)'}</label>
             <input type="text" name="save" value={formData.save} onChange={handleChange} style={{ width: '100%', padding: '0.8rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '4px' }} />
           </div>
 
           <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-            <label>Features (One per line)</label>
-            <textarea name="features" value={formData.features} onChange={handleChange} rows="5" required style={{ width: '100%', padding: '0.8rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '4px' }} placeholder="Customized diet plan&#10;Daily follow up&#10;Weekly adjustments"></textarea>
+            <label>{i18n.language === 'ar' ? 'المميزات (كل ميزة في سطر منفصل)' : 'Features (One per line)'}</label>
+            <textarea name="features" value={formData.features} onChange={handleChange} rows="5" required style={{ width: '100%', padding: '0.8rem', background: '#222', border: '1px solid #333', color: '#fff', borderRadius: '4px' }} placeholder={i18n.language === 'ar' ? "نظام دايت مخصص\nمتابعة يومية\nتعديل كل أسبوع" : "Customized diet plan\nDaily follow up\nWeekly adjustments"}></textarea>
           </div>
 
           <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <input type="checkbox" name="bestValue" id="bestValue" checked={formData.bestValue} onChange={handleChange} />
-            <label htmlFor="bestValue" style={{ margin: 0 }}>Mark as "Best Value"</label>
+            <label htmlFor="bestValue" style={{ margin: 0 }}>{i18n.language === 'ar' ? 'أضف علامة "أفضل قيمة"' : 'Mark as "Best Value"'}</label>
           </div>
 
           <div style={{ gridColumn: '1 / -1', display: 'flex', gap: '1rem', marginTop: '1rem' }}>
             <button type="submit" className="btn-primary" style={{ padding: '0.8rem 2rem' }} disabled={loading}>
-              {loading ? 'Saving...' : (editingId ? 'Update Package' : 'Create Package')}
+              {loading ? (i18n.language === 'ar' ? 'جاري الحفظ...' : 'Saving...') : (editingId ? (i18n.language === 'ar' ? 'تحديث الباقة' : 'Update Package') : (i18n.language === 'ar' ? 'إنشاء الباقة' : 'Create Package'))}
             </button>
             {editingId && (
               <button type="button" onClick={handleCancel} style={{ padding: '0.8rem 2rem', background: 'transparent', color: '#fff', border: '1px solid #555', borderRadius: '4px', cursor: 'pointer' }}>
-                Cancel
+                {i18n.language === 'ar' ? 'إلغاء' : 'Cancel'}
               </button>
             )}
           </div>
@@ -168,22 +170,22 @@ const AdminPackages = () => {
       </div>
 
       <div className="admin-card">
-        <h2 className="admin-card-title">Active Packages</h2>
+        <h2 className="admin-card-title">{i18n.language === 'ar' ? 'الباقات المتاحة' : 'Active Packages'}</h2>
         {loading && packages.length === 0 ? (
-          <p>Loading...</p>
+          <p>{i18n.language === 'ar' ? 'جاري التحميل...' : 'Loading...'}</p>
         ) : packages.length === 0 ? (
-          <p className="text-muted">No packages found in database. The website is using the hardcoded default packages.</p>
+          <p className="text-muted">{i18n.language === 'ar' ? 'مفيش باقات في قاعدة البيانات. الموقع حالياً بيعرض الباقات الافتراضية.' : 'No packages found in database. The website is using the hardcoded default packages.'}</p>
         ) : (
           <div className="admin-table-wrap">
             <table className="admin-table">
               <thead>
                 <tr>
-                  <th>Type</th>
-                  <th>Title</th>
-                  <th>Duration</th>
-                  <th>Price</th>
-                  <th>Features</th>
-                  <th>Actions</th>
+                  <th>{i18n.language === 'ar' ? 'النوع' : 'Type'}</th>
+                  <th>{i18n.language === 'ar' ? 'العنوان' : 'Title'}</th>
+                  <th>{i18n.language === 'ar' ? 'المدة' : 'Duration'}</th>
+                  <th>{i18n.language === 'ar' ? 'السعر' : 'Price'}</th>
+                  <th>{i18n.language === 'ar' ? 'المميزات' : 'Features'}</th>
+                  <th>{i18n.language === 'ar' ? 'إجراءات' : 'Actions'}</th>
                 </tr>
               </thead>
               <tbody>
