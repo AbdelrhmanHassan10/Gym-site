@@ -55,7 +55,34 @@ const AuthPage = () => {
       }
     } catch (err) {
       console.error(err);
-      setError(err.message.replace('Firebase: ', ''));
+      let errorMessage = 'An error occurred. Please try again.';
+      
+      switch (err.code) {
+        case 'auth/configuration-not-found':
+          errorMessage = 'Authentication is not set up on the server. Please wait or contact support.';
+          break;
+        case 'auth/email-already-in-use':
+          errorMessage = 'This email is already registered. Try logging in.';
+          break;
+        case 'auth/invalid-credential':
+        case 'auth/wrong-password':
+        case 'auth/user-not-found':
+          errorMessage = 'Invalid email or password.';
+          break;
+        case 'auth/weak-password':
+          errorMessage = 'Password should be at least 6 characters.';
+          break;
+        case 'auth/invalid-email':
+          errorMessage = 'Invalid email address format.';
+          break;
+        case 'auth/network-request-failed':
+          errorMessage = 'Network error. Please check your internet connection.';
+          break;
+        default:
+          errorMessage = err.message.replace('Firebase: ', '');
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
