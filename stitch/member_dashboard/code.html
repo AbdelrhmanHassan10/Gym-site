@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Member Dashboard | Coach Gym Private</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=Anybody:ital,wght@0,400;0,700;0,800;1,400;1,700;1,800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .kinetic-gradient {
+            background: linear-gradient(135deg, rgba(202, 243, 0, 0.15) 0%, rgba(202, 243, 0, 0) 50%);
+        }
+        .inner-glow {
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+        }
+        .glow-accent {
+            filter: drop-shadow(0 0 8px rgba(202, 243, 0, 0.3));
+        }
+        .skew-x-accent {
+            transform: skewX(-12deg);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#1f2020",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "error": "#ffb4ab",
+                        "tertiary": "#ffffff",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-primary-fixed": "#171e00",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary-fixed": "#e5e2e1",
+                        "surface-bright": "#393939",
+                        "inverse-surface": "#e4e2e1",
+                        "primary": "#ffffff",
+                        "tertiary-container": "#e2e2e2",
+                        "surface-variant": "#353535",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#2f3131",
+                        "surface-dim": "#131313",
+                        "on-background": "#e4e2e1",
+                        "on-secondary-fixed-variant": "#474646",
+                        "on-secondary-container": "#bab8b7",
+                        "on-secondary": "#313030",
+                        "inverse-primary": "#536600",
+                        "secondary": "#c8c6c5",
+                        "on-tertiary-container": "#636565",
+                        "on-surface-variant": "#c5c9ac",
+                        "primary-fixed-dim": "#b0d500",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-container-low": "#1b1c1c",
+                        "background": "#131313",
+                        "outline": "#8f9378",
+                        "on-primary": "#2a3400",
+                        "inverse-on-surface": "#303030",
+                        "outline-variant": "#444932",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "on-surface": "#e4e2e1",
+                        "primary-container": "#caf300",
+                        "primary-fixed": "#caf300",
+                        "surface-tint": "#b0d500",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-primary-fixed-variant": "#3e4c00",
+                        "on-primary-container": "#596c00",
+                        "secondary-container": "#4a4949",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "surface": "#131313",
+                        "surface-container-highest": "#353535"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "24px",
+                        "margin-mobile": "16px",
+                        "stack-lg": "48px",
+                        "gutter": "24px",
+                        "stack-sm": "12px",
+                        "base": "8px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Lexend"],
+                        "body-lg": ["Lexend"],
+                        "label-md": ["Inter"],
+                        "stats-display": ["Anybody"],
+                        "headline-md": ["Anybody"],
+                        "headline-lg-mobile": ["Anybody"],
+                        "headline-lg": ["Anybody"],
+                        "headline-xl": ["Anybody"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "stats-display": ["48px", {"lineHeight": "1.0", "fontWeight": "800"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-xl": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar Shell -->
+<header class="bg-background/95 backdrop-blur-md border-b border-surface-container-highest docked full-width top-0 sticky z-50">
+<nav class="flex justify-between items-center w-full px-margin-desktop max-w-7xl mx-auto py-4">
+<div class="text-headline-md font-headline-md font-extrabold italic text-primary dark:text-primary">
+                Coach Gym Private
+            </div>
+<div class="hidden md:flex items-center gap-gutter">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Training</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Memberships</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Trainers</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-6 py-3 rounded-full hover:scale-95 transition-transform active:scale-90 font-bold">
+                    Join Now
+                </button>
+</div>
+</nav>
+</header>
+<main class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg">
+<!-- Welcome Header -->
+<div class="mb-stack-lg flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<span class="text-primary-container font-label-md text-label-md tracking-widest uppercase mb-2 block">DASHBOARD_V2.0</span>
+<h1 class="font-headline-xl text-headline-xl italic">WELCOME, ALEX</h1>
+</div>
+<div class="flex items-center gap-base bg-surface-container p-2 rounded-lg border border-surface-container-highest">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a fit young man with a focused expression, wearing a high-performance black training shirt. The lighting is dramatic and moody, utilizing high-contrast shadows typical of a luxury performance gym environment. The background is a blurred dark interior with subtle industrial textures, maintaining the brand's aggressive yet professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiUkmydPXuU2PaW7qoJnHVuvsV-RRU-Gxu6HsZwR0XV9UQPIMPonyBxG_4YFlYsLPGrdu6RHSq77vcqTIBAfHAK7TEBbp_SfpDJIwswy3opuDWs6GT5xzMmf12Zewu-WeulAppTnnC8kixrMsA4fclCqzFrNXsEH_QSfkdY5oz7ZGe8bQarpKJc0zX9EJJeyE_sej_UNH1iRUYRIDs6vR33hcm4fxRhQRCXJGNio1wDiGRz7NR5ZwnO4tvcI3lXzIcczUSw7rv6VM"/>
+</div>
+<div class="pr-4">
+<p class="font-label-md text-label-md text-primary">ELITE STATUS</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Member since 2023</p>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Next Session Card (Large Focus) -->
+<div class="md:col-span-8 bg-surface-container border border-surface-container-highest p-stack-md rounded-xl kinetic-gradient relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/5 -mr-16 -mt-16 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-stack-md">
+<span class="bg-primary-container text-on-primary-container px-4 py-1 font-label-md text-label-md skew-x-accent inline-block italic">UPCOMING SESSION</span>
+<span class="text-on-surface-variant text-body-md">Today at 16:30</span>
+</div>
+<div class="flex flex-col md:flex-row items-center gap-stack-md">
+<div class="w-32 h-32 md:w-48 md:h-48 rounded-lg overflow-hidden border-2 border-primary-container/20 group-hover:border-primary-container transition-colors duration-500">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A muscular professional trainer with a short beard and intense gaze, standing in a high-tech gym setting. He is wearing a dark, branded athletic vest. The lighting is sharp and directional, highlighting muscle definition and creating a sense of elite expertise. The overall mood is serious, results-oriented, and high-performance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAushQe-Co3i9DtNnKR4TxnKcww_-Nsn-pfWgQLD8bz3WbhZp25bZ7sfgzl_6wlm6ef4NJcEJe6ijlZQrZVowFGvNcGDC3hVIlTVJL1dB7lF-izrESOJ2amNia_kxAV9K1hShgcS-dgJ9jesryw6RCY8R9Rtwan1lf55GxFc4le7BEcjXbwWbDN9aKThNByRRtNSNnoPUCUsp4A67NIGxjO_oyDKTlYmWFlngG-B6kb0_AO1TCt8M1JbXCo27RZVN1t-w-rzklK27o"/>
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg mb-1">MARCUS VANE</h2>
+<p class="text-primary-container font-label-md text-label-md mb-stack-sm">STRENGTH &amp; HYPERTROPHY SPECIALIST</p>
+<div class="flex items-center gap-stack-md mt-4">
+<div>
+<p class="text-on-surface-variant font-label-md text-label-md uppercase">FOCUS</p>
+<p class="font-headline-md text-headline-md italic">LEGS / CORE</p>
+</div>
+<div class="h-10 w-[1px] bg-surface-container-highest"></div>
+<div>
+<p class="text-on-surface-variant font-label-md text-label-md uppercase">DURATION</p>
+<p class="font-headline-md text-headline-md italic">75 MIN</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Facility Access QR Code -->
+<div class="md:col-span-4 bg-surface-container-high border border-surface-container-highest p-stack-md rounded-xl flex flex-col items-center justify-center text-center inner-glow">
+<p class="text-primary-container font-label-md text-label-md mb-stack-md tracking-tighter uppercase">DIGITAL PASS</p>
+<div class="bg-white p-4 rounded-xl mb-stack-md relative group">
+<!-- Fictional QR Pattern using CSS -->
+<div class="w-32 h-32 bg-black flex flex-wrap gap-1 p-1">
+<div class="w-7 h-7 bg-white"></div><div class="w-7 h-7 bg-black"></div><div class="w-7 h-7 bg-white"></div><div class="w-7 h-7 bg-white"></div>
+<div class="w-7 h-7 bg-black"></div><div class="w-7 h-7 bg-white"></div><div class="w-7 h-7 bg-black"></div><div class="w-7 h-7 bg-black"></div>
+<div class="w-7 h-7 bg-white"></div><div class="w-7 h-7 bg-black"></div><div class="w-7 h-7 bg-white"></div><div class="w-7 h-7 bg-white"></div>
+<div class="w-7 h-7 bg-white"></div><div class="w-7 h-7 bg-white"></div><div class="w-7 h-7 bg-black"></div><div class="w-7 h-7 bg-black"></div>
+</div>
+<div class="absolute inset-0 border-2 border-primary-container opacity-0 group-hover:opacity-100 transition-opacity rounded-xl"></div>
+</div>
+<h3 class="font-headline-md text-headline-md italic mb-1">SCAN TO ENTER</h3>
+<p class="text-on-surface-variant text-body-md">Main Entrance / Lockers</p>
+</div>
+<!-- Progress Overview (Bento Section) -->
+<div class="md:col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Strength Metric -->
+<div class="bg-surface-container border border-surface-container-highest p-stack-md rounded-xl inner-glow">
+<div class="flex justify-between items-center mb-stack-md">
+<h4 class="font-headline-md text-headline-md">STRENGTH PROGRESS</h4>
+<span class="material-symbols-outlined text-primary-container">trending_up</span>
+</div>
+<div class="space-y-stack-md">
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-2">
+<span>DEADLIFT</span>
+<span class="text-primary-container">185 KG (+10)</span>
+</div>
+<div class="h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary-container glow-accent" style="width: 85%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-2">
+<span>SQUAT</span>
+<span class="text-primary-container">140 KG (+5)</span>
+</div>
+<div class="h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary-container glow-accent" style="width: 70%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-2">
+<span>BENCH PRESS</span>
+<span class="text-primary-container">110 KG (+2)</span>
+</div>
+<div class="h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary-container glow-accent" style="width: 60%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Biometrics Metric -->
+<div class="bg-surface-container border border-surface-container-highest p-stack-md rounded-xl inner-glow">
+<div class="flex justify-between items-center mb-stack-md">
+<h4 class="font-headline-md text-headline-md">BIOMETRICS</h4>
+<span class="material-symbols-outlined text-primary-container">vital_signs</span>
+</div>
+<div class="flex flex-col items-center justify-center h-48 relative">
+<div class="text-center">
+<p class="font-stats-display text-stats-display text-primary-container italic">12.4%</p>
+<p class="font-label-md text-label-md uppercase text-on-surface-variant">Body Fat %</p>
+</div>
+<!-- Simple Dot Matrix style chart mock -->
+<div class="mt-6 flex gap-1 items-end h-16 w-full">
+<div class="bg-surface-variant w-full h-[60%]"></div>
+<div class="bg-surface-variant w-full h-[55%]"></div>
+<div class="bg-surface-variant w-full h-[65%]"></div>
+<div class="bg-surface-variant w-full h-[50%]"></div>
+<div class="bg-primary-container w-full h-[45%] glow-accent"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Today's Nutrition Widget -->
+<div class="md:col-span-12 lg:col-span-4 bg-surface-container-low border border-surface-container-highest p-stack-md rounded-xl relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-stack-md">TODAY'S NUTRITION</h4>
+<div class="relative w-48 h-48 mx-auto mb-stack-md flex items-center justify-center">
+<svg class="w-full h-full -rotate-90">
+<circle class="text-surface-variant" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary-container glow-accent" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-dasharray="502" stroke-dashoffset="125" stroke-width="12"></circle>
+</svg>
+<div class="absolute text-center">
+<p class="font-headline-md text-headline-md italic">2,250</p>
+<p class="font-label-md text-label-md text-on-surface-variant">/ 3,000 KCAL</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center border-b border-surface-container-highest pb-2">
+<span class="text-on-surface-variant font-label-md">PROTEIN</span>
+<span class="font-body-md text-primary">180g / 220g</span>
+</div>
+<div class="flex justify-between items-center border-b border-surface-container-highest pb-2">
+<span class="text-on-surface-variant font-label-md">CARBS</span>
+<span class="font-body-md text-primary">210g / 300g</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-label-md">FATS</span>
+<span class="font-body-md text-primary">65g / 85g</span>
+</div>
+</div>
+<button class="w-full mt-stack-md border-2 border-primary-container text-primary py-3 font-label-md hover:bg-primary-container hover:text-on-primary-container transition-all skew-x-accent">
+                    LOG MEAL
+                </button>
+</div>
+</div>
+</main>
+<!-- Footer Shell -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-surface-container-highest mt-stack-lg">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-desktop py-stack-lg max-w-7xl mx-auto gap-base">
+<div class="text-headline-sm font-headline-sm italic font-bold text-primary dark:text-primary">
+                Coach Gym Private
+            </div>
+<div class="flex flex-wrap justify-center gap-stack-md my-stack-md md:my-0">
+<a class="text-on-surface-variant text-label-md hover:text-primary transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant text-label-md hover:text-primary transition-colors duration-200" href="#">Terms of Service</a>
+<a class="text-on-surface-variant text-label-md hover:text-primary transition-colors duration-200" href="#">Contact Us</a>
+<a class="text-on-surface-variant text-label-md hover:text-primary transition-colors duration-200" href="#">Careers</a>
+</div>
+<div class="text-on-surface-variant text-body-md text-center md:text-right">
+                © 2024 Coach Gym Private. Built for Performance.
+            </div>
+</div>
+</footer>
+<script>
+        // Micro-interactions: Animate numbers on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const numbers = document.querySelectorAll('.font-stats-display');
+            numbers.forEach(num => {
+                const target = parseFloat(num.innerText);
+                let current = 0;
+                const increment = target / 30;
+                const update = () => {
+                    if (current < target) {
+                        current += increment;
+                        num.innerText = current.toFixed(1) + (num.innerText.includes('%') ? '%' : '');
+                        requestAnimationFrame(update);
+                    } else {
+                        num.innerText = target + (num.innerText.includes('%') ? '%' : '');
+                    }
+                };
+                update();
+            });
+        });
+    </script>
+</body></html>

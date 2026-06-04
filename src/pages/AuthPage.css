@@ -1,0 +1,131 @@
+.auth-page-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 2rem 4rem 2rem;
+  background: var(--bg-color);
+  position: relative;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+
+[data-theme='light'] .auth-card {
+  background: #ffffff;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-header h2 {
+  font-family: 'Anybody', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.auth-header p {
+  color: var(--text-color);
+  opacity: 0.7;
+  font-size: 0.95rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.auth-form .form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
+}
+
+[data-theme='light'] .auth-form input {
+  background: #f8f9fa;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  background: rgba(236, 182, 19, 0.05);
+}
+
+.auth-submit-btn {
+  background: var(--accent-gold);
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  padding: 1.2rem;
+  font-family: 'Anybody', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.auth-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(236, 182, 19, 0.4);
+}
+
+.auth-toggle {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--text-color);
+}
+
+.auth-toggle span {
+  color: var(--accent-gold);
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition: opacity 0.3s;
+}
+
+.auth-toggle span:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .auth-card {
+    padding: 2rem 1.5rem;
+  }
+}

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700;1,800&amp;family=Lexend:wght@300;400;500;600&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .kinetic-border {
+            position: relative;
+        }
+        .kinetic-border::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            opacity: 0.3;
+        }
+        .skew-bg {
+            transform: skewY(-2deg);
+        }
+        .skew-content {
+            transform: skewY(2deg);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#393939",
+                      "on-secondary-fixed-variant": "#474646",
+                      "inverse-surface": "#e4e2e1",
+                      "on-tertiary-container": "#636565",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "on-secondary": "#313030",
+                      "on-secondary-container": "#bab8b7",
+                      "background": "#131313",
+                      "inverse-primary": "#536600",
+                      "surface-container": "#1f2020",
+                      "secondary-fixed": "#e5e2e1",
+                      "on-error": "#690005",
+                      "error": "#ffb4ab",
+                      "inverse-on-surface": "#303030",
+                      "primary-container": "#caf300",
+                      "on-surface-variant": "#c5c9ac",
+                      "on-primary-container": "#596c00",
+                      "secondary-container": "#4a4949",
+                      "on-primary-fixed-variant": "#3e4c00",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-error-container": "#ffdad6",
+                      "primary-fixed-dim": "#b0d500",
+                      "tertiary-fixed": "#e2e2e2",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "outline-variant": "#444932",
+                      "tertiary-container": "#e2e2e2",
+                      "outline": "#8f9378",
+                      "surface-container-highest": "#353535",
+                      "on-surface": "#e4e2e1",
+                      "primary": "#ffffff",
+                      "surface": "#131313",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "on-background": "#e4e2e1",
+                      "on-tertiary": "#2f3131",
+                      "on-primary-fixed": "#171e00",
+                      "surface-tint": "#b0d500",
+                      "primary-fixed": "#caf300",
+                      "surface-variant": "#353535",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "surface-container-low": "#1b1c1c",
+                      "surface-container-high": "#2a2a2a",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "on-primary": "#2a3400",
+                      "surface-dim": "#131313",
+                      "tertiary": "#ffffff",
+                      "secondary": "#c8c6c5",
+                      "error-container": "#93000a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "gutter": "24px",
+                      "stack-md": "24px",
+                      "margin-desktop": "64px",
+                      "stack-sm": "12px",
+                      "margin-mobile": "16px",
+                      "stack-lg": "48px"
+              },
+              "fontFamily": {
+                      "headline-md": ["anybody"],
+                      "headline-lg-mobile": ["anybody"],
+                      "body-lg": ["lexend"],
+                      "stats-display": ["anybody"],
+                      "label-md": ["inter"],
+                      "headline-lg": ["anybody"],
+                      "headline-xl": ["anybody"],
+                      "body-md": ["lexend"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "stats-display": ["48px", {"lineHeight": "1.0", "fontWeight": "800"}],
+                      "label-md": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-xl": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation -->
+<nav class="w-full sticky top-0 z-50 bg-surface border-b border-surface-variant/30">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop flex justify-between items-center h-20">
+<span class="font-headline-md text-headline-md font-black italic text-primary">COACH GYM PRIVATE</span>
+<div class="hidden md:flex gap-gutter items-center">
+<a class="font-body-md text-body-md text-primary font-bold border-b-2 border-primary pb-1 transition-colors duration-200" href="#">Training</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Memberships</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Trainers</a>
+</div>
+<button class="bg-primary text-background px-6 py-2 rounded-full font-label-md text-label-md hover:scale-105 active:scale-95 transition-all duration-200 uppercase tracking-widest font-bold">
+                Join Now
+            </button>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative h-[921px] flex items-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent z-10"></div>
+<img alt="Elite Training Environment" class="w-full h-full object-cover grayscale opacity-60" data-alt="A moody, high-contrast photograph of a luxury private gym at night. Industrial steel equipment and heavy weights are illuminated by sharp, cool-toned rim lighting against deep shadows. The atmosphere is intense, professional, and exclusive, emphasizing high-performance athletic training. Professional cinematic depth of field with vibrant white accents across the dark equipment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhBxbKqfTEKM-kS-6ZD-L7Y6FHCuQoIo-v4O3GOq8K95XT2z3qymOnehvseh8GyW2h3-NQkSz8TEf9bEq6s0Z4o_820_OVVJnzukOMk_ffDRhpxECW0vWLVKXgicuZjS33CTIhQTf2TbDiipJkNgK47_pYFKfK60pUwAqggJ_O5e5bvVg4pkh0W4_1t6RM46_Ii4ng2xLRAeKog_FhE-AjimQzhB00A1f_suxdBgj8ZraB0CzZyiTRYDcNZrQV4BStHlzLhCwRzAY"/>
+</div>
+<div class="relative z-20 max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop w-full">
+<div class="max-w-3xl">
+<div class="inline-block bg-primary-container text-on-primary-container px-3 py-1 mb-6 font-label-md text-label-md rounded-sm skew-x-[-12deg]">
+<span class="block skew-x-[12deg] uppercase font-black">Performance First</span>
+</div>
+<h1 class="font-headline-xl text-[48px] md:text-headline-xl text-primary mb-stack-md leading-none tracking-tighter">
+                    ELITE TRAINING.<br/>
+<span class="text-glow italic">PRIVATE RESULTS.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg max-w-xl">
+                    Experience a sanctuary of strength where precision meets high-performance. Tailored programs for those who demand excellence from their mind and body.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="bg-primary text-background px-8 py-4 rounded-full font-headline-md text-headline-md hover:scale-105 active:scale-95 transition-all duration-300 group flex items-center justify-center gap-2">
+                        Start Your Journey
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<button class="border-2 border-primary text-primary px-8 py-4 rounded-full font-headline-md text-headline-md hover:bg-primary/10 transition-all duration-300">
+                        View Facility
+                    </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="py-stack-lg bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="mb-stack-lg text-center">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary uppercase italic mb-4">The Standard of Excellence</h2>
+<div class="h-1 w-24 bg-primary mx-auto"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Feature 1 -->
+<div class="md:col-span-8 group relative overflow-hidden bg-surface-container rounded-xl p-8 border border-surface-variant/20 hover:border-primary/50 transition-all duration-500">
+<div class="relative z-10 h-full flex flex-col justify-end min-h-[300px]">
+<span class="material-symbols-outlined text-primary text-[48px] mb-4" data-weight="fill">fitness_center</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Private Sessions</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">1-on-1 coaching in a distraction-free environment. Every set, every rep, monitored for maximum efficiency.</p>
+</div>
+<div class="absolute top-0 right-0 w-1/2 h-full opacity-20 group-hover:opacity-40 transition-opacity duration-500">
+<img alt="Training Session" class="w-full h-full object-cover grayscale" data-alt="Close up action shot of a professional personal trainer guiding a client through a heavy deadlift in a dark, high-end private gym. Dramatic side-lighting highlights the focus and physical tension. Monochromatic color palette with deep blacks and sharp highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGoFmlQFlppVDD9e7S1JpW45NPg2aj3OUfMaQVANulV8ASNzaKg0ojBc-uSRE-g25A-j_U9_I0rZI9Zob852vqeGyZHqFfIHDn8XCHsSP1iyWpHmzU-_OM42qWKFdkVcnqYg68MxENdOzJy5neIDJkLAYpYWKZOGAZolk90QIpKsdShDuATcP7hT9FQTFUIuFnTJoo7-ROaD85_Y0BiZ_KoeKB9SZH3aWdl3uIUmKzyiYnzEoI8NCAJNzgCv4ebkDf_2AC3vBviUo"/>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="md:col-span-4 bg-surface-container rounded-xl p-8 border border-surface-variant/20 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary text-[48px]" data-weight="fill">nutrition</span>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Customized Nutrition</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Biometric-driven meal plans designed for your unique metabolism and performance goals.</p>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="md:col-span-4 bg-surface-container rounded-xl p-8 border border-surface-variant/20 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary text-[48px]" data-weight="fill">key</span>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">24/7 Access</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">The keys to the gym are yours. Train on your schedule, day or night, with full biosecurity access.</p>
+</div>
+</div>
+<!-- Feature 4 -->
+<div class="md:col-span-8 bg-surface-container-high rounded-xl p-8 border-l-4 border-primary flex items-center justify-between overflow-hidden relative">
+<div class="relative z-10">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Recovery Lounge</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">Cryotherapy, infrared saunas, and compression therapy to ensure your body recovers as hard as you train.</p>
+</div>
+<span class="material-symbols-outlined text-primary/10 text-[180px] absolute -right-8 -bottom-8">spa</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Success Stories -->
+<section class="py-stack-lg bg-background">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="flex flex-col md:flex-row justify-between items-end mb-stack-lg gap-gutter">
+<div class="max-w-2xl">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary uppercase italic">Success Stories</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-4">Real transformations from the individuals who committed to the process. Excellence is earned, not given.</p>
+</div>
+<div class="flex gap-4">
+<button class="w-12 h-12 rounded-full border border-surface-variant/40 flex items-center justify-center hover:border-primary transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-12 h-12 rounded-full border border-surface-variant/40 flex items-center justify-center hover:border-primary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Transformation 1 -->
+<div class="bg-surface-container rounded-xl overflow-hidden group">
+<div class="h-80 relative">
+<img alt="Client Transformation 1" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale" data-alt="Professional fitness portrait of an athlete in mid-transformation, showcasing muscle definition and physical peak. Dramatic shadows, dark background, cinematic lighting focusing on body contours. High-end athletic aesthetic consistent with dark-mode private gym theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCUHmSu9A2mdSUu1HlKMDQWlPs1Pn3A9c18TW504JW5SAExlcwIcl-TpA9CpOB816-biI2Z4yVBG9oYg3bAjT9EomyEbcJqz33Zqeg9azjFmYgKwqEDVARw146_qcgZ2ZreGKto3CWgvSS8SQ8OVXPZ2MSaDELA1XX8HfbXVaVqR2lyYYsYfzRPi3OXOQNw8GD2uyVIIcJ1swI2ucYZD-q87HNh07ux3rgpWszmvANynNrwz32uK_5CsnPMTbRZPl5zBAAXi-96jA"/>
+<div class="absolute bottom-4 left-4 bg-primary text-background px-3 py-1 font-label-md text-label-md rounded">
+                            12 WEEK RESULT
+                        </div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-primary material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-primary material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-primary material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-primary material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-primary material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md italic text-on-surface-variant mb-4">"The private setting allowed me to focus purely on my form. The results surpassed my expectations."</p>
+<p class="font-label-md text-label-md text-primary uppercase font-bold">— Marcus T., Executive</p>
+</div>
+</div>
+<!-- Transformation 2 -->
+<div class="bg-surface-container rounded-xl overflow-hidden group">
+<div class="h-80 relative">
+<img alt="Client Transformation 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale" data-alt="Fitness photography showing a client's physical progress. Intense, sharp lighting highlights lean muscle and determination. Set in a dark, premium gym environment with industrial accents. High-contrast monochromatic style with subtle warm rim lights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaLiwHlVUwXkKr_9aSHPemG_WdADQNO6Ol2X6sYI4uCiFISJNJvitkxRv6xUJX_7MBWcSwQSqLBxPLO28f42ikjl3N8Dla13WdzwHni3SfZdOi13gGJUKKjxYq4ezuiUec6xT1Qm4qXXQ5G87fMZgFBAc1GoSRZWYfo73g3tWb1Mns1pCfANH_f-SNtUgsI92sZcuIupm9CPuxif1wU0IlsghBTtjaSapuaFi8gwmiJC3mANG_JyawMeRa17umWaqn2dEYqrXSk-o"/>
+<div class="absolute bottom-4 left-4 bg-primary text-background px-3 py-1 font-label-md text-label-md rounded">
+                            6 MONTH RESULT
+                        </div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-primary material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-primary material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-primary material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-primary material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-primary material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md italic text-on-surface-variant mb-4">"Nutrition was my missing link. Coach Gym Private provided the blueprint for my entire lifestyle."</p>
+<p class="font-label-md text-label-md text-primary uppercase font-bold">— Sarah L., Athlete</p>
+</div>
+</div>
+<!-- Stats Card -->
+<div class="bg-surface-container-high rounded-xl p-8 flex flex-col justify-center items-center text-center border-2 border-primary/20">
+<span class="font-stats-display text-stats-display text-primary mb-2">500+</span>
+<span class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant mb-stack-md">Success Stories</span>
+<div class="w-full h-px bg-surface-variant/30 my-stack-md"></div>
+<span class="font-stats-display text-stats-display text-primary mb-2">98%</span>
+<span class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">Retention Rate</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-stack-lg relative overflow-hidden bg-primary text-background">
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<div class="grid grid-cols-12 h-full gap-gutter">
+<div class="col-span-1 border-r border-background"></div>
+<div class="col-span-1 border-r border-background"></div>
+<div class="col-span-1 border-r border-background"></div>
+<div class="col-span-1 border-r border-background"></div>
+<div class="col-span-1 border-r border-background"></div>
+<div class="col-span-1 border-r border-background"></div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop text-center relative z-10">
+<h2 class="font-headline-xl text-[40px] md:text-headline-xl mb-stack-md leading-none tracking-tighter italic uppercase">
+                Ready to Join the Elite?
+            </h2>
+<p class="font-body-lg text-body-lg mb-stack-lg max-w-2xl mx-auto font-medium">
+                Our membership roster is limited to maintain the highest quality of service and availability. Secure your spot today.
+            </p>
+<button class="bg-background text-primary px-12 py-5 rounded-full font-headline-md text-headline-md hover:scale-110 active:scale-95 transition-all duration-300 shadow-xl uppercase font-black tracking-tighter">
+                Apply for Membership
+            </button>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-stack-lg bg-surface-container-lowest border-t border-surface-variant/20">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="col-span-1 md:col-span-2">
+<span class="font-headline-md text-headline-md font-black italic text-primary block mb-4">COACH GYM PRIVATE</span>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm mb-stack-md">
+                    Building the elite, one session at a time. The premier destination for private, performance-based athletic training.
+                </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-primary hover:text-background transition-all" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-primary hover:text-background transition-all" href="#">
+<span class="material-symbols-outlined">mail</span>
+</a>
+</div>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-md text-label-md text-primary uppercase mb-6 tracking-widest">Navigation</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Training</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Memberships</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Trainers</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-md text-label-md text-primary uppercase mb-6 tracking-widest">Legal</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop mt-stack-lg pt-stack-md border-t border-surface-variant/10 text-center md:text-left">
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 Coach Gym Private. Built for high performance.</p>
+</div>
+</footer>
+<!-- Micro-interactions Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hover effect for feature cards
+            const cards = document.querySelectorAll('.bg-surface-container');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+            });
+
+            // Smooth reveal on scroll
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('opacity-100', 'translate-y-0');
+                        entry.target.classList.remove('opacity-0', 'translate-y-10');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+                observer.observe(section);
+            });
+        });
+    </script>
+</body></html>

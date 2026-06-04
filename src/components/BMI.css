@@ -1,0 +1,106 @@
+.bmi-section {
+  background-color: var(--card-bg);
+  padding: 6rem 2rem;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.bmi-container {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.bmi-title {
+  font-size: 2.5rem;
+  margin-bottom: 2.5rem;
+  color: var(--text-color);
+  letter-spacing: 1px;
+}
+
+.bmi-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: var(--bg-color);
+  padding: 3rem 2.5rem;
+  border-radius: 15px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.bmi-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-group {
+  display: flex;
+  width: 100%;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 1.2rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-radius: 8px;
+  font-size: 1.1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+}
+
+.input-group input:focus {
+  border-color: var(--accent-red);
+  box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
+}
+
+.btn-calculate {
+  padding: 1.2rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background-color: var(--accent-red);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.btn-calculate:hover {
+  background-color: #ff1a1a;
+  transform: translateY(-2px);
+}
+
+.bmi-result {
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  border: 2px solid var(--accent-gold);
+}
+
+.bmi-result h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.bmi-category {
+  font-size: 1.3rem;
+  color: var(--accent-red);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .bmi-form {
+    padding: 2rem 1.5rem;
+  }
+}

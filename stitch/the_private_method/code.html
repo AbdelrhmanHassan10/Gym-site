@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Private Method | Coach Gym Private</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&amp;family=Inter:wght@400;600;700&amp;family=Anybody:ital,wght@0,400;0,600;0,700;0,800;1,800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-accent {
+            box-shadow: 0 0 20px rgba(202, 243, 0, 0.15);
+        }
+        .rim-light {
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+        }
+        .slant-bg {
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+        }
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+            color: transparent;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#1f2020",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "error": "#ffb4ab",
+                        "tertiary": "#ffffff",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-primary-fixed": "#171e00",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary-fixed": "#e5e2e1",
+                        "surface-bright": "#393939",
+                        "inverse-surface": "#e4e2e1",
+                        "primary": "#ffffff",
+                        "tertiary-container": "#e2e2e2",
+                        "surface-variant": "#353535",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#2f3131",
+                        "surface-dim": "#131313",
+                        "on-background": "#e4e2e1",
+                        "on-secondary-fixed-variant": "#474646",
+                        "on-secondary-container": "#bab8b7",
+                        "on-secondary": "#313030",
+                        "inverse-primary": "#536600",
+                        "secondary": "#c8c6c5",
+                        "on-tertiary-container": "#636565",
+                        "on-surface-variant": "#c5c9ac",
+                        "primary-fixed-dim": "#b0d500",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-container-low": "#1b1c1c",
+                        "background": "#131313",
+                        "outline": "#8f9378",
+                        "on-primary": "#2a3400",
+                        "inverse-on-surface": "#303030",
+                        "outline-variant": "#444932",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "on-surface": "#e4e2e1",
+                        "primary-container": "#caf300",
+                        "primary-fixed": "#caf300",
+                        "surface-tint": "#b0d500",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-primary-fixed-variant": "#3e4c00",
+                        "on-primary-container": "#596c00",
+                        "secondary-container": "#4a4949",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "surface": "#131313",
+                        "surface-container-highest": "#353535"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "24px",
+                        "margin-mobile": "16px",
+                        "stack-lg": "48px",
+                        "gutter": "24px",
+                        "stack-sm": "12px",
+                        "base": "8px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["lexend"],
+                        "body-lg": ["lexend"],
+                        "label-md": ["inter"],
+                        "stats-display": ["anybody"],
+                        "headline-md": ["anybody"],
+                        "headline-lg-mobile": ["anybody"],
+                        "headline-lg": ["anybody"],
+                        "headline-xl": ["anybody"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "stats-display": ["48px", {"lineHeight": "1.0", "fontWeight": "800"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-xl": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<nav class="bg-background/95 backdrop-blur-md border-b border-surface-container-highest docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-7xl mx-auto py-4">
+<div class="text-headline-md font-headline-md font-extrabold italic text-primary dark:text-primary">
+                Coach Gym Private
+            </div>
+<div class="hidden md:flex items-center gap-gutter">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Training</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Memberships</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Trainers</a>
+</div>
+<button class="bg-primary-container text-on-primary-container font-headline-md px-6 py-2 rounded-full hover:scale-95 transition-transform active:scale-90 text-label-md">
+                Join Now
+            </button>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-[819px] flex items-center overflow-hidden bg-surface-dim">
+<div class="absolute inset-0 opacity-40 mix-blend-overlay">
+<img alt="Gym Environment" class="w-full h-full object-cover" data-alt="A moody, high-contrast interior of a luxury private gym at night. Low-key lighting highlights the matte black finishes and steel textures of elite fitness equipment. Deep shadows are punctuated by subtle white rim lighting on carbon-fiber plates. The atmosphere is quiet, professional, and intensely focused, utilizing a palette of charcoal grays and sharp blacks." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ2dxgSWbfKkFpwGSmoXQA4kfe4QOMBjBoTHlwbDVsYKV92NPpq76NYFr84ofnH9GqK-lNMFV7KX7FzEM-4pfCySQcL_2IxfmRzKANZrq7abomXO6Ejq-K6lVwgbhqE_x8JHdUSyAv1WLGzMzUYiZHQiaymXf0HSgv3LxT3rXlIyvxCE2r1HZ7u9iBduEdG1z6qCiuyzr6K5uCbAC5yQHRO-MHbP7tlVvnYGWo9FdtOmulX5bsvkx08YkRi7QvHkCIqhs9DyojNi4"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent"></div>
+<div class="relative z-10 px-margin-desktop max-w-7xl mx-auto grid lg:grid-cols-2 gap-gutter items-center">
+<div>
+<span class="inline-block px-3 py-1 bg-primary-container text-on-primary-container font-label-md text-label-md rounded-sm mb-stack-sm tracking-widest">
+                        OUR PHILOSOPHY
+                    </span>
+<h1 class="font-headline-xl text-headline-xl mb-stack-md leading-none">
+                        THE <br/><span class="text-primary-container italic">PRIVATE</span> METHOD
+                    </h1>
+<p class="text-body-lg font-body-lg text-secondary-fixed max-w-lg mb-stack-lg">
+                        We don't just train bodies; we engineer performance. A data-first approach combining sports science with elite-level coaching logic.
+                    </p>
+<div class="flex gap-4">
+<button class="bg-primary-container text-on-primary-container px-8 py-4 rounded-full font-headline-md text-headline-md hover:shadow-[0_0_20px_rgba(202,243,0,0.4)] transition-all">
+                            Start Assessment
+                        </button>
+</div>
+</div>
+<div class="hidden lg:block relative">
+<div class="absolute -top-20 -right-20 text-[200px] font-headline-xl font-extrabold text-stroke opacity-10 select-none">
+                        METHOD
+                    </div>
+</div>
+</div>
+</section>
+<!-- Biometric Assessment (Initial Screening) -->
+<section class="py-stack-lg px-margin-desktop max-w-7xl mx-auto">
+<div class="grid lg:grid-cols-12 gap-gutter items-start">
+<div class="lg:col-span-4 sticky top-32">
+<div class="flex items-center gap-base mb-stack-sm">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<h2 class="font-label-md text-label-md tracking-widest text-primary-container uppercase">Phase 01</h2>
+</div>
+<h3 class="font-headline-lg text-headline-lg mb-stack-md">Biometric <br/>Assessment</h3>
+<p class="text-on-surface-variant text-body-md font-body-md">
+                        Every journey begins with a hard data baseline. We analyze body composition, mobility restrictions, and metabolic rate to build your unique physiological profile.
+                    </p>
+</div>
+<div class="lg:col-span-8 grid md:grid-cols-2 gap-gutter">
+<!-- Bento Grid of Data -->
+<div class="bg-surface-container rim-light p-stack-md rounded-xl border-l-4 border-primary-container">
+<div class="flex justify-between items-start mb-stack-md">
+<span class="material-symbols-outlined text-primary-container text-3xl">query_stats</span>
+<span class="text-label-md font-label-md text-on-surface-variant">01. SCAN</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-base">3D Body Mapping</h4>
+<p class="text-on-surface-variant text-body-md font-body-md">Sub-millimeter precision for tracking musculoskeletal changes over time.</p>
+</div>
+<div class="bg-surface-container rim-light p-stack-md rounded-xl">
+<div class="flex justify-between items-start mb-stack-md">
+<span class="material-symbols-outlined text-primary-container text-3xl">ecg_heart</span>
+<span class="text-label-md font-label-md text-on-surface-variant">02. ANALYZE</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-base">Metabolic Profiling</h4>
+<p class="text-on-surface-variant text-body-md font-body-md">Understanding your Vo2 Max and resting heart rate variability for optimal intensity.</p>
+</div>
+<div class="md:col-span-2 bg-surface-container-high relative overflow-hidden rounded-xl h-64 flex items-end p-stack-md">
+<img alt="Biometric Scan" class="absolute inset-0 w-full h-full object-cover opacity-30 grayscale" data-alt="A professional medical-grade biometric scanning environment. A person is undergoing a high-tech mobility assessment in a minimalist sports science lab. The lighting is clinical yet atmospheric, with sharp neon green accents on the digital interface screens. The style is modern, dark, and technologically advanced, emphasizing precision and data collection." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmv-1KbzPHbzRBJKtn7y7HVBFcZjin0JHDZcIkzngrqIGrix1Tp4MoM1qdJN8R35s_q6bz2DIMjV_bxxeqoG5GUcj5Gy11-Uigey1XUB3FTjzvbQbsAJLqFU2mb3D0ddb2gJLOty9oZMcedY1sk2-LPztHXTJcCxQvFF8xKafd3pdk2OEaPuLeMQSy7pQ3lpuiQiuaW9q5edQl1Q2e3zIi6ZNsfc2gl9H8TmvwNB4jiA0ZP5h1JWhQB3qd9XuHvz4fi7NQPAxPPck"/>
+<div class="relative z-10 w-full flex justify-between items-center">
+<div>
+<h4 class="font-headline-md text-headline-md">Integrated Data Ecosystem</h4>
+<p class="text-on-surface-variant text-body-md">Real-time tracking of 15+ vital markers.</p>
+</div>
+<span class="material-symbols-outlined text-primary-container text-4xl">sensors</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Integrated Nutrition (How food fuels performance) -->
+<section class="bg-surface-container-lowest py-stack-lg">
+<div class="px-margin-desktop max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row gap-gutter items-end mb-stack-lg">
+<div class="max-w-2xl">
+<h2 class="font-headline-lg text-headline-lg mb-stack-sm leading-tight">
+                            INTEGRATED <span class="text-primary-container italic">NUTRITION</span>
+</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant">
+                            Performance isn't built only in the gym. Our nutrition logic treats food as high-grade fuel, tailored to your specific metabolic demands and training schedule.
+                        </p>
+</div>
+</div>
+<div class="grid md:grid-cols-3 gap-gutter">
+<div class="flex flex-col gap-base">
+<div class="h-1 bg-surface-container-highest w-full overflow-hidden">
+<div class="h-full bg-primary-container w-2/3 glow-accent"></div>
+</div>
+<h5 class="font-headline-md text-headline-md mt-4">Fueling Window</h5>
+<p class="text-on-surface-variant text-body-md">Precise pre and post-workout macronutrient timing to maximize hypertrophy and recovery.</p>
+</div>
+<div class="flex flex-col gap-base">
+<div class="h-1 bg-surface-container-highest w-full overflow-hidden">
+<div class="h-full bg-primary-container w-1/3 glow-accent"></div>
+</div>
+<h5 class="font-headline-md text-headline-md mt-4">Micronutrient Precision</h5>
+<p class="text-on-surface-variant text-body-md">Blood-work driven supplement protocols and mineral balancing for peak hormonal health.</p>
+</div>
+<div class="flex flex-col gap-base">
+<div class="h-1 bg-surface-container-highest w-full overflow-hidden">
+<div class="h-full bg-primary-container w-5/6 glow-accent"></div>
+</div>
+<h5 class="font-headline-md text-headline-md mt-4">Adaptive Macro-Cycles</h5>
+<p class="text-on-surface-variant text-body-md">Real-time adjustments to calorie intake based on your actual training volume and sleep quality.</p>
+</div>
+</div>
+<div class="mt-stack-lg bg-surface-container p-gutter rounded-xl grid md:grid-cols-2 gap-gutter items-center border border-surface-container-highest">
+<img alt="Nutrition Prep" class="rounded-lg w-full h-64 object-cover grayscale brightness-75 hover:grayscale-0 transition-all duration-700" data-alt="High-end professional meal preparation on a dark slate surface. Fresh, vibrant ingredients like avocado, salmon, and leafy greens are arranged with surgical precision. The lighting is dramatic and focused, highlighting the textures of the food. The overall aesthetic is clean, premium, and athletic, reflecting the 'Integrated Nutrition' philosophy of the gym." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqisosj06w_lEM2Ex71IGbxfFbUO-Gukr_hxqKaQGcn1avcKsXlnA1vQUIfGnYI7lOIIAYQv5tYHAT3qxHGgE3DbA9C1xEKiBe32m2U9vn_7_BEb7wq1OJnkX-_pQpvqpfEam0l-dIoUHIAwzwTOFVM8Au4ffmaUH-lD1yT5JgiqpqYVZWj1aPT4F3MDlda3xUUnLUvT32GBHu6beAqaIBC_eU_9rE0uPFqF56Rz-gf8mRgdU3SdQplqXgGzOYgnjh7fqQoUYN2TQ"/>
+<div>
+<blockquote class="text-headline-md font-headline-md italic mb-base">
+                            "Abs are made in the kitchen, but performance is built in the cells."
+                        </blockquote>
+<cite class="text-label-md font-label-md text-primary-container block uppercase tracking-tighter">— Performance Nutrition Lead</cite>
+</div>
+</div>
+</div>
+</section>
+<!-- Elite Coaching Logic (1-on-1 structure) -->
+<section class="py-stack-lg px-margin-desktop max-w-7xl mx-auto overflow-hidden">
+<div class="text-center mb-stack-lg">
+<h2 class="font-headline-xl text-headline-xl">ELITE COACHING LOGIC</h2>
+<div class="flex justify-center gap-base mt-stack-sm">
+<div class="w-12 h-1 bg-primary-container"></div>
+<div class="w-4 h-1 bg-surface-container-highest"></div>
+<div class="w-4 h-1 bg-surface-container-highest"></div>
+</div>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Step 01 -->
+<div class="group cursor-default">
+<div class="text-stats-display font-stats-display text-stroke opacity-30 group-hover:opacity-100 group-hover:text-primary-container transition-all duration-500">01</div>
+<h4 class="font-headline-md text-headline-md mb-base">Dynamic Programming</h4>
+<p class="text-on-surface-variant text-body-md">No 'fixed' schedules. Your program evolves daily based on Bio-Feedback markers.</p>
+</div>
+<!-- Step 02 -->
+<div class="group cursor-default">
+<div class="text-stats-display font-stats-display text-stroke opacity-30 group-hover:opacity-100 group-hover:text-primary-container transition-all duration-500">02</div>
+<h4 class="font-headline-md text-headline-md mb-base">VBT Integration</h4>
+<p class="text-on-surface-variant text-body-md">Velocity-Based Training sensors ensure every rep is performed at the optimal speed.</p>
+</div>
+<!-- Step 03 -->
+<div class="group cursor-default">
+<div class="text-stats-display font-stats-display text-stroke opacity-30 group-hover:opacity-100 group-hover:text-primary-container transition-all duration-500">03</div>
+<h4 class="font-headline-md text-headline-md mb-base">Cognitive Load</h4>
+<p class="text-on-surface-variant text-body-md">Mental performance coaching to maintain high-level focus during maximal efforts.</p>
+</div>
+<!-- Step 04 -->
+<div class="group cursor-default">
+<div class="text-stats-display font-stats-display text-stroke opacity-30 group-hover:opacity-100 group-hover:text-primary-container transition-all duration-500">04</div>
+<h4 class="font-headline-md text-headline-md mb-base">Recovery Protocol</h4>
+<p class="text-on-surface-variant text-body-md">Mandatory cold plunge, sauna, and compression sessions baked into the logic.</p>
+</div>
+</div>
+<div class="mt-stack-lg bg-surface-container-high rounded-2xl p-stack-lg flex flex-col items-center text-center">
+<h3 class="font-headline-lg text-headline-lg mb-stack-md">Ready to Apply the Method?</h3>
+<button class="bg-primary-container text-on-primary-container px-12 py-4 rounded-full font-headline-md text-headline-md hover:scale-105 transition-transform flex items-center gap-2">
+                    Book Private Consultation
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-surface-container-highest full-width">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-desktop py-stack-lg max-w-7xl mx-auto gap-base">
+<div class="text-headline-sm font-headline-sm italic font-bold text-primary dark:text-primary">
+                Coach Gym Private
+            </div>
+<div class="flex flex-wrap justify-center gap-gutter my-stack-sm md:my-0">
+<a class="text-on-surface-variant text-label-md font-label-md hover:text-primary transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant text-label-md font-label-md hover:text-primary transition-colors duration-200" href="#">Terms of Service</a>
+<a class="text-on-surface-variant text-label-md font-label-md hover:text-primary transition-colors duration-200" href="#">Contact Us</a>
+<a class="text-on-surface-variant text-label-md font-label-md hover:text-primary transition-colors duration-200" href="#">Careers</a>
+</div>
+<div class="text-on-surface-variant text-body-md font-body-md">
+                © 2024 Coach Gym Private. Built for Performance.
+            </div>
+</div>
+</footer>
+<script>
+        // Simple parallax and hover interaction script
+        document.addEventListener('mousemove', (e) => {
+            const glows = document.querySelectorAll('.glow-accent');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            glows.forEach(glow => {
+                const rect = glow.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                const distanceX = (e.clientX - centerX) / 20;
+                const distanceY = (e.clientY - centerY) / 20;
+                
+                glow.style.transform = `translate(${distanceX}px, ${distanceY}px)`;
+            });
+        });
+    </script>
+</body></html>

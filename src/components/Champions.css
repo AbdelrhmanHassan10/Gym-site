@@ -1,0 +1,168 @@
+.champions-section {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+.champions-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.champions-subtitle {
+  color: var(--accent-red);
+  font-size: 1.2rem;
+  letter-spacing: 4px;
+  margin-bottom: 1rem;
+}
+
+.champions-title {
+  font-size: 4rem;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+.champions-desc {
+  font-size: 1rem;
+  color: var(--text-color);
+  letter-spacing: 1px;
+  margin-bottom: 4rem;
+  text-transform: uppercase;
+}
+
+.carousel-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.carousel-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.carousel-content {
+  width: 400px;
+  height: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.transformation-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-content {
+  position: relative;
+}
+
+.transformation-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  color: white;
+  text-align: left;
+}
+
+[dir='rtl'] .transformation-info {
+  text-align: right;
+}
+
+.transformation-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.transformation-info p {
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 3rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background-color: #333;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background-color: var(--accent-gold);
+  width: 30px;
+  border-radius: 10px;
+}
+
+.btn-more {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-more:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .champions-title {
+    font-size: 3rem;
+  }
+  .carousel-wrapper {
+    gap: 1rem;
+  }
+  .carousel-content {
+    width: 250px;
+    height: 350px;
+  }
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+[dir='rtl'] .carousel-btn svg,
+[dir='rtl'] .btn-more svg {
+  transform: scaleX(-1);
+}

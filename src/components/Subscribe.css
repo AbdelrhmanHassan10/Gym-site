@@ -1,0 +1,89 @@
+.subscribe-section {
+  background-color: var(--light-gray);
+  color: var(--text-color);
+  padding: 6rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.subscribe-container {
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+}
+
+.subscribe-title {
+  font-size: 4rem;
+  line-height: 1.1;
+  margin-bottom: 4rem;
+  letter-spacing: 1px;
+}
+
+.subscribe-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+.step-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-number {
+  position: absolute;
+  top: -40px;
+  font-size: 10rem;
+  font-weight: 800;
+  color: rgba(128, 128, 128, 0.1);
+  z-index: 0;
+  line-height: 1;
+  font-family: 'Oswald', sans-serif;
+}
+
+.step-icon {
+  width: 100px;
+  height: 100px;
+  background-color: var(--card-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  z-index: 1;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  border: 1px solid var(--border-color);
+}
+
+.step-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  z-index: 1;
+}
+
+.step-description {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.8;
+  max-width: 500px;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .subscribe-title {
+    font-size: 3rem;
+  }
+  .step-icon {
+    width: 80px;
+    height: 80px;
+  }
+  .step-title {
+    font-size: 1.5rem;
+  }
+  .step-description {
+    font-size: 1rem;
+  }
+}

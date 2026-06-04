@@ -1,0 +1,244 @@
+.membership-page {
+  min-height: 100vh;
+  background: var(--bg-color);
+  padding-top: 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hero Glow */
+.membership-hero-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 500px;
+  background: linear-gradient(to bottom, rgba(236, 182, 19, 0.04) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Header */
+.membership-header {
+  position: relative;
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.membership-badge {
+  display: inline-block;
+  background: var(--accent-gold);
+  color: #000;
+  padding: 6px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-radius: 50px;
+  margin-bottom: 1.5rem;
+  transform: skewX(-6deg);
+}
+
+.membership-title {
+  font-family: 'Anybody', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  color: var(--text-color);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  margin-bottom: 1rem;
+}
+
+.text-gold {
+  color: var(--accent-gold);
+}
+
+.membership-subtitle {
+  font-family: 'Lexend', sans-serif;
+  font-size: 1.125rem;
+  color: var(--text-color);
+  opacity: 0.7;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===== COMPARISON TABLE ===== */
+.comparison-section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.comparison-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.comparison-title {
+  font-family: 'Anybody', sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.comparison-underline {
+  width: 96px;
+  height: 4px;
+  background: var(--accent-gold);
+  margin: 0 auto;
+  transform: skewX(-6deg);
+}
+
+.comparison-table-wrap {
+  overflow-x: auto;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.comparison-table thead tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='light'] .comparison-table thead tr {
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.comparison-table th {
+  padding: 1.5rem 1rem;
+  font-family: 'Anybody', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+.comparison-table th.highlight-col {
+  color: var(--accent-gold);
+  opacity: 1;
+}
+
+.comparison-table .plan-col {
+  text-align: center;
+}
+
+.comparison-table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+[data-theme='light'] .comparison-table tbody tr {
+  border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+.comparison-table td {
+  padding: 1.5rem 1rem;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.center-cell {
+  text-align: center;
+}
+
+.check-icon-table {
+  color: var(--accent-gold);
+  font-size: 1.5rem;
+}
+
+.table-dash {
+  color: var(--text-color);
+  opacity: 0.3;
+}
+
+/* ===== CTA BANNER ===== */
+.cta-banner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
+
+.cta-banner-inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+}
+
+.cta-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.cta-banner-inner:hover .cta-bg-image {
+  transform: scale(1.05);
+}
+
+.cta-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.5) 50%, transparent 100%);
+}
+
+.cta-content {
+  position: relative;
+  z-index: 10;
+  padding: 3rem;
+  max-width: 550px;
+}
+
+.cta-title {
+  font-family: 'Anybody', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.cta-text {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.cta-button {
+  display: inline-block;
+  background: var(--accent-gold);
+  color: #000;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-family: 'Anybody', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cta-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(236, 182, 19, 0.3);
+}
+
+.cta-button:active {
+  transform: scale(0.95);
+}
