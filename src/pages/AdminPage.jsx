@@ -11,6 +11,7 @@ const AdminPage = () => {
   const [subscriptions, setSubscriptions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(null);
+  const [selectedReceipt, setSelectedReceipt] = useState(null);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -112,6 +113,7 @@ const AdminPage = () => {
                   <th>Plan & Duration</th>
                   <th>Amount</th>
                   <th>Method</th>
+                  <th>Sender No.</th>
                   <th>Date</th>
                   <th>Status</th>
                   <th>Actions</th>
@@ -148,10 +150,16 @@ const AdminPage = () => {
                         </span>
                         {sub.receiptPhoto && (
                           <div style={{marginTop: '0.5rem'}}>
-                            <a href={sub.receiptPhoto} target="_blank" rel="noreferrer" style={{color: '#f5a623', fontSize: '0.8rem', textDecoration: 'underline'}}>View Receipt</a>
+                            <button 
+                              onClick={() => setSelectedReceipt(sub.receiptPhoto)}
+                              style={{color: '#f5a623', fontSize: '0.8rem', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer', padding: 0}}
+                            >
+                              View Receipt
+                            </button>
                           </div>
                         )}
                       </td>
+                      <td className="text-muted" style={{ fontWeight: 'bold' }}>{sub.senderNumber || 'N/A'}</td>
                       <td className="text-muted">{new Date(sub.date).toLocaleString()}</td>
                       <td>
                         <span className={`status-badge status-${sub.status || 'pending'}`}>
@@ -210,6 +218,18 @@ const AdminPage = () => {
           </div>
         </div>
       </motion.div>
+
+      {/* Receipt Modal */}
+      {selectedReceipt && (
+        <div className="receipt-modal-overlay" onClick={() => setSelectedReceipt(null)}>
+          <div className="receipt-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-modal-btn" onClick={() => setSelectedReceipt(null)}>
+              <X size={24} />
+            </button>
+            <img src={selectedReceipt} alt="Payment Receipt" className="receipt-image" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
