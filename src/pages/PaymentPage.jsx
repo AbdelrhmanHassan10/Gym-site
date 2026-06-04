@@ -4,9 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle, ShieldCheck, ArrowLeft, Lock, Award } from 'lucide-react';
 import { AuthContext } from '../AuthContext';
-import { db, storage } from '../firebase';
+import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import './PaymentPage.css';
 
 const PaymentPage = () => {
@@ -61,6 +60,47 @@ const PaymentPage = () => {
     }
   };
 
+  // Function to compress image and convert to base64
+  const compressImage = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 800;
+          const MAX_HEIGHT = 800;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          // Compress to JPEG with 0.6 quality to ensure it's small enough for Firestore
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
+          resolve(dataUrl);
+        };
+      };
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -74,16 +114,14 @@ const PaymentPage = () => {
       
       let receiptUrl = '';
       if (formData.receiptPhoto) {
-        const file = formData.receiptPhoto;
-        const storageRef = ref(storage, `receipts/${user.email}_${Date.now()}_${file.name}`);
-        const snapshot = await uploadBytes(storageRef, file);
-        receiptUrl = await getDownloadURL(snapshot.ref);
+        // Compress and convert to base64 instead of Firebase Storage
+        receiptUrl = await compressImage(formData.receiptPhoto);
       }
       
       const subData = {
         userEmail: user.email.toLowerCase(),
         ...formData,
-        receiptPhoto: receiptUrl, // store the URL instead of the File object
+        receiptPhoto: receiptUrl,
         planTitle: plan.title,
         duration: plan.duration,
         price: plan.price,

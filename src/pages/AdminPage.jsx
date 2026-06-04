@@ -140,6 +140,11 @@ const AdminPage = () => {
                         <span className={`method-badge method-${sub.paymentMethod}`}>
                           {sub.paymentMethod.toUpperCase()}
                         </span>
+                        {sub.receiptPhoto && (
+                          <div style={{marginTop: '0.5rem'}}>
+                            <a href={sub.receiptPhoto} target="_blank" rel="noreferrer" style={{color: '#f5a623', fontSize: '0.8rem', textDecoration: 'underline'}}>View Receipt</a>
+                          </div>
+                        )}
                       </td>
                       <td className="text-muted">{new Date(sub.date).toLocaleString()}</td>
                       <td>
