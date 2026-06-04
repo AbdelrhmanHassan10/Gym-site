@@ -52,11 +52,17 @@ const AdminPage = () => {
     try {
       setActionLoading(id);
       const subRef = doc(db, 'subscriptions', id);
-      await updateDoc(subRef, { status: newStatus });
+      
+      const updateData = { status: newStatus };
+      if (newStatus === 'active') {
+        updateData.startDate = new Date().toISOString();
+      }
+
+      await updateDoc(subRef, updateData);
       
       // Update local state
       setSubscriptions(prev => 
-        prev.map(sub => sub.id === id ? { ...sub, status: newStatus } : sub)
+        prev.map(sub => sub.id === id ? { ...sub, ...updateData } : sub)
       );
     } catch (err) {
       console.error('Error updating status', err);

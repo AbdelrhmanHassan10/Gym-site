@@ -96,9 +96,66 @@ const ProfilePage = () => {
               <div className="dash-plan-info">
                 <h2 className="dash-plan-name">{activeSubscription.planTitle}</h2>
                 {(() => {
-                  const startDate = new Date(activeSubscription.date);
+                  const status = (activeSubscription.status || 'pending').toLowerCase();
                   const daysMatch = activeSubscription.duration.match(/(\d+)/);
                   const durationDays = daysMatch ? parseInt(daysMatch[1]) : 30;
+
+                  if (status === 'pending') {
+                    return (
+                      <>
+                        <div className="dash-plan-stats">
+                          <div className="dash-plan-stat">
+                            <p className="dash-stat-label">STATUS</p>
+                            <p className="dash-stat-value" style={{color: '#f5a623'}}>PENDING</p>
+                          </div>
+                          <div className="dash-plan-divider"></div>
+                          <div className="dash-plan-stat">
+                            <p className="dash-stat-label">START DATE</p>
+                            <p className="dash-stat-value">Awaiting Approval</p>
+                          </div>
+                          <div className="dash-plan-divider"></div>
+                          <div className="dash-plan-stat">
+                            <p className="dash-stat-label">END DATE</p>
+                            <p className="dash-stat-value">Awaiting Approval</p>
+                          </div>
+                          <div className="dash-plan-divider"></div>
+                          <div className="dash-plan-stat">
+                            <p className="dash-stat-label">REMAINING</p>
+                            <p className="dash-stat-value">-- DAYS</p>
+                          </div>
+                        </div>
+                        <div className="dash-plan-progress-wrap">
+                          <div className="dash-progress-bar-bg">
+                            <div className="dash-progress-bar-fill" style={{width: '0%', background: '#555'}}></div>
+                          </div>
+                          <span className="dash-plan-status-text" style={{color: '#aaa'}}>
+                            ⏳ Waiting for Admin to approve your payment
+                          </span>
+                        </div>
+                      </>
+                    );
+                  }
+
+                  if (status === 'rejected') {
+                    return (
+                      <>
+                        <div className="dash-plan-stats">
+                          <div className="dash-plan-stat">
+                            <p className="dash-stat-label">STATUS</p>
+                            <p className="dash-stat-value" style={{color: '#ff4d4d'}}>REJECTED</p>
+                          </div>
+                        </div>
+                        <div className="dash-plan-progress-wrap">
+                          <span className="dash-plan-status-text expired-text">
+                            ❌ Your subscription was rejected. Please contact support.
+                          </span>
+                        </div>
+                      </>
+                    );
+                  }
+
+                  // Active status
+                  const startDate = new Date(activeSubscription.startDate || activeSubscription.date);
                   const endDate = new Date(startDate.getTime() + durationDays * 24 * 60 * 60 * 1000);
                   const now = new Date();
                   const elapsed = Math.max(0, now - startDate);
@@ -106,13 +163,16 @@ const ProfilePage = () => {
                   const remaining = Math.max(0, Math.ceil((endDate - now) / (24 * 60 * 60 * 1000)));
                   const progress = Math.min(100, (elapsed / total) * 100);
                   const isExpired = now > endDate;
+                  const isExpiringSoon = !isExpired && remaining <= 5;
 
                   return (
                     <>
                       <div className="dash-plan-stats">
                         <div className="dash-plan-stat">
                           <p className="dash-stat-label">STATUS</p>
-                          <p className="dash-stat-value">{(activeSubscription.status || 'ACTIVE').toUpperCase()}</p>
+                          <p className="dash-stat-value" style={{color: isExpired ? '#ff4d4d' : 'var(--accent-gold)'}}>
+                            {isExpired ? 'EXPIRED' : 'ACTIVE'}
+                          </p>
                         </div>
                         <div className="dash-plan-divider"></div>
                         <div className="dash-plan-stat">
@@ -127,16 +187,31 @@ const ProfilePage = () => {
                         <div className="dash-plan-divider"></div>
                         <div className="dash-plan-stat">
                           <p className="dash-stat-label">REMAINING</p>
-                          <p className="dash-stat-value">{isExpired ? 'EXPIRED' : `${remaining} DAYS`}</p>
+                          <p className="dash-stat-value" style={{color: isExpiringSoon ? '#ff9800' : isExpired ? '#ff4d4d' : 'inherit'}}>
+                            {isExpired ? '0 DAYS' : `${remaining} DAYS`}
+                          </p>
                         </div>
                       </div>
                       <div className="dash-plan-progress-wrap">
                         <div className="dash-progress-bar-bg">
-                          <div className={`dash-progress-bar-fill ${isExpired ? 'expired' : ''} glow-accent`} style={{width: `${progress}%`}}></div>
+                          <div 
+                            className={`dash-progress-bar-fill ${isExpired ? 'expired' : ''} glow-accent`} 
+                            style={{width: `${progress}%`, background: isExpiringSoon ? '#ff9800' : isExpired ? '#ff4d4d' : ''}}
+                          ></div>
                         </div>
-                        <span className={`dash-plan-status-text ${isExpired ? 'expired-text' : ''}`}>
-                          {isExpired ? '⚠ Subscription Expired' : `✓ Active — ${Math.round(progress)}% elapsed`}
+                        <span className={`dash-plan-status-text ${isExpired ? 'expired-text' : ''}`} style={{color: isExpiringSoon ? '#ff9800' : ''}}>
+                          {isExpired 
+                            ? '⚠ Subscription Expired - Please renew' 
+                            : isExpiringSoon 
+                              ? `⚠ Expiring soon! Only ${remaining} days left.` 
+                              : `✓ Active — ${Math.round(progress)}% elapsed`}
                         </span>
+                        
+                        {(isExpired || isExpiringSoon) && (
+                          <button className="dash-cta-btn" style={{marginTop: '1rem', padding: '0.8rem 1.5rem', fontSize: '0.9rem'}} onClick={() => navigate('/packages')}>
+                            Renew Subscription
+                          </button>
+                        )}
                       </div>
                     </>
                   );
