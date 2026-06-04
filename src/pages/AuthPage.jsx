@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import './AuthPage.css';
 
 const AuthPage = () => {
@@ -45,10 +46,21 @@ const AuthPage = () => {
         }
         
         const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+        const user = userCredential.user;
         
         // Update user profile with name
-        await updateProfile(userCredential.user, {
+        await updateProfile(user, {
           displayName: formData.name
+        });
+
+        // Save user to Firestore Database
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || '',
+          role: 'user',
+          createdAt: new Date().toISOString()
         });
         
         navigate('/');
@@ -93,7 +105,24 @@ const AuthPage = () => {
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      const userCredential = await signInWithPopup(auth, provider);
+      const user = userCredential.user;
+
+      // Check if user exists in Firestore, if not create them
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+      
+      if (!userDoc.exists()) {
+        await setDoc(userDocRef, {
+          uid: user.uid,
+          name: user.displayName || 'Google User',
+          email: user.email,
+          phone: user.phoneNumber || '',
+          role: 'user',
+          createdAt: new Date().toISOString()
+        });
+      }
+
       navigate('/');
     } catch (err) {
       console.error(err);
