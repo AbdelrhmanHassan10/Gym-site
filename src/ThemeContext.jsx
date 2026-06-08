@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
   const [lang, setLang] = useState('en');
   const { i18n } = useTranslation();
 

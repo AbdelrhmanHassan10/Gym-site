@@ -31,7 +31,11 @@ const ProfilePage = () => {
             date: doc.data().createdAt || doc.data().date
           }));
           
-          data.sort((a, b) => new Date(b.date) - new Date(a.date));
+          data.sort((a, b) => {
+            const dateA = a.date ? new Date(a.date).getTime() : 0;
+            const dateB = b.date ? new Date(b.date).getTime() : 0;
+            return dateB - dateA;
+          });
           setHistory(data);
         } catch (err) {
           console.error('Error fetching profile:', err);
@@ -332,7 +336,7 @@ const ProfilePage = () => {
                           if (!isSelected) e.currentTarget.style.background = 'transparent';
                         }}
                       >
-                        <td>{new Date(item.date).toLocaleDateString()}</td>
+                        <td>{item.date ? new Date(item.date).toLocaleDateString() : '-'}</td>
                         <td style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#fff' : 'inherit' }}>{item.planTitle}</td>
                         <td>{item.price} {item.currency || 'EGP'}</td>
                         <td style={{ textTransform: 'capitalize' }}>{item.paymentMethod?.replace('_', ' ')}</td>

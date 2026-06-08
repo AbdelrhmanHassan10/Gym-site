@@ -287,13 +287,17 @@ const PaymentPage = () => {
               </select>
             </div>
 
-            <h3 className="payment-method-title">3. {t('payment.transferDetails')}</h3>
-            <div className="form-group">
-              <label>{t('payment.senderLabel')}</label>
-              <input type="tel" name="senderNumber" required onChange={handleChange} placeholder="010xxxxxxxx" />
-            </div>
+            {formData.paymentMethod !== 'instapay' && (
+              <>
+                <h3 className="payment-method-title">{t('payment.transferDetails')}</h3>
+                <div className="form-group">
+                  <label>{t('payment.senderLabel')}</label>
+                  <input type="tel" name="senderNumber" required onChange={handleChange} placeholder="010xxxxxxxx" />
+                </div>
+              </>
+            )}
 
-            <h3 className="payment-method-title">4. Payment Receipt</h3>
+            <h3 className="payment-method-title">Payment Receipt</h3>
             <div className="form-group">
               <div style={{ padding: '0.8rem', background: 'rgba(245, 166, 35, 0.1)', border: '1px solid #f5a623', borderRadius: '4px', marginBottom: '1rem', color: '#f5a623', fontSize: '0.9rem', lineHeight: '1.4' }}>
                 {t('payment.importantNote')} {formData.paymentMethod === 'instapay' ? 'InstaPay' : formData.paymentMethod === 'vodafone_cash' ? 'Vodafone Cash' : 'Fawry'}{t('payment.importantNote2')}
