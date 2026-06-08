@@ -114,31 +114,82 @@ const AuthPage = () => {
     }
   };
 
+  // Handle redirect result (for iOS Safari where popup is blocked)
+  useEffect(() => {
+    getRedirectResult(auth)
+      .then(async (result) => {
+        if (result && result.user) {
+          const redirectUser = result.user;
+          const userDocRef = doc(db, "users", redirectUser.uid);
+          const userDoc = await getDoc(userDocRef);
+          
+          if (!userDoc.exists()) {
+            await setDoc(userDocRef, {
+              uid: redirectUser.uid,
+              name: redirectUser.displayName || 'Google User',
+              email: redirectUser.email,
+              phone: redirectUser.phoneNumber || '',
+              role: 'user',
+              createdAt: new Date().toISOString()
+            });
+          }
+          navigate('/');
+        }
+      })
+      .catch((err) => {
+        console.error("Redirect result error:", err);
+      });
+  }, []);
+
   const handleGoogleSignIn = async () => {
     setError('');
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
       
-      const userDocRef = doc(db, "users", user.uid);
-      const userDoc = await getDoc(userDocRef);
-      
-      if (!userDoc.exists()) {
-        await setDoc(userDocRef, {
-          uid: user.uid,
-          name: user.displayName || 'Google User',
-          email: user.email,
-          phone: user.phoneNumber || '',
-          role: 'user',
-          createdAt: new Date().toISOString()
-        });
+      // Try popup first
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+        
+        if (!userDoc.exists()) {
+          await setDoc(userDocRef, {
+            uid: user.uid,
+            name: user.displayName || 'Google User',
+            email: user.email,
+            phone: user.phoneNumber || '',
+            role: 'user',
+            createdAt: new Date().toISOString()
+          });
+        }
+        navigate('/');
+      } catch (popupError) {
+        // If popup is blocked (common on iOS Safari), fall back to redirect
+        if (
+          popupError.code === 'auth/popup-blocked' || 
+          popupError.code === 'auth/popup-closed-by-user' ||
+          popupError.code === 'auth/cancelled-popup-request' ||
+          popupError.code === 'auth/internal-error'
+        ) {
+          console.log('Popup blocked, using redirect...');
+          await signInWithRedirect(auth, provider);
+          // Page will reload after redirect
+          return;
+        }
+        throw popupError;
       }
-      navigate('/');
     } catch (err) {
       console.error("Google Auth Error:", err);
-      setError(err.message.replace('Firebase: ', ''));
+      var errMsg = '';
+      if (err && err.message) {
+        errMsg = err.message.replace('Firebase: ', '');
+      } else {
+        errMsg = 'Google sign-in failed. Please try again.';
+      }
+      setError(errMsg);
       setLoading(false);
     }
   };
