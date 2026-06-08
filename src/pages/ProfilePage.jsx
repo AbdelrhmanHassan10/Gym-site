@@ -336,7 +336,7 @@ const ProfilePage = () => {
                           if (!isSelected) e.currentTarget.style.background = 'transparent';
                         }}
                       >
-                        <td>{item.date ? new Date(item.date).toLocaleDateString() : '-'}</td>
+                        <td>{item.date && !isNaN(new Date(item.date).getTime()) ? new Date(item.date).toLocaleDateString() : '-'}</td>
                         <td style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#fff' : 'inherit' }}>{item.planTitle}</td>
                         <td>{item.price} {item.currency || 'EGP'}</td>
                         <td style={{ textTransform: 'capitalize' }}>{item.paymentMethod?.replace('_', ' ')}</td>
