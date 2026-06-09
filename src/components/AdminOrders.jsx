@@ -19,11 +19,7 @@ const AdminOrders = () => {
       const querySnapshot = await getDocs(collection(db, "subscriptions"));
       const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       // Sort by date (newest first)
-      data.sort((a, b) => {
-        const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-        const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-        return dateB - dateA;
-      });
+      data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       setOrders(data);
     } catch (err) {
       console.error('Failed to fetch orders', err);
@@ -174,8 +170,8 @@ const AdminOrders = () => {
                           )}
                         </td>
                         <td style={{ textAlign: 'center', fontSize: '0.9rem' }}>
-                          <div style={{ marginBottom: '0.3rem', color: '#eee' }}>{order.createdAt && !isNaN(new Date(order.createdAt).getTime()) ? new Date(order.createdAt).toLocaleDateString() : '-'}</div>
-                          <div style={{ opacity: 0.5 }}>{order.createdAt && !isNaN(new Date(order.createdAt).getTime()) ? new Date(order.createdAt).toLocaleTimeString() : '-'}</div>
+                          <div style={{ marginBottom: '0.3rem', color: '#eee' }}>{new Date(order.createdAt).toLocaleDateString()}</div>
+                          <div style={{ opacity: 0.5 }}>{new Date(order.createdAt).toLocaleTimeString()}</div>
                         </td>
                         <td style={{ textAlign: 'center' }}>
                           <span style={{
@@ -289,7 +285,7 @@ const AdminOrders = () => {
                 <p style={{ marginBottom: '0.5rem', wordBreak: 'break-word' }}><strong>Name:</strong> <br/>{selectedOrder.name}</p>
                 <p style={{ marginBottom: '0.5rem', wordBreak: 'break-word' }}><strong>Email:</strong> <br/>{selectedOrder.userEmail}</p>
                 <p style={{ marginBottom: '0.5rem', wordBreak: 'break-word' }}><strong>Phone:</strong> <br/>{selectedOrder.phone}</p>
-                <p style={{ marginBottom: '0.5rem', wordBreak: 'break-word' }}><strong>Date:</strong> <br/>{selectedOrder.createdAt && !isNaN(new Date(selectedOrder.createdAt).getTime()) ? new Date(selectedOrder.createdAt).toLocaleString() : '-'}</p>
+                <p style={{ marginBottom: '0.5rem', wordBreak: 'break-word' }}><strong>Date:</strong> <br/>{new Date(selectedOrder.createdAt).toLocaleString()}</p>
               </div>
               <div style={{ background: 'rgba(255,255,255,0.02)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
                 <h3 style={{ fontSize: '0.85rem', color: '#888', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Payment Info</h3>
