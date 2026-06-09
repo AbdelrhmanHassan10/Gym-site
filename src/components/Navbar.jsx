@@ -61,7 +61,7 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="auth-buttons-desktop">
-              {user && user.email && ['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com'].includes(user.email.toLowerCase()) && (
+              {user && user.email && ['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com', 'abdohsn20@gmail.com', 'abdelrhmanhassan10@gmail.com'].includes(user.email.toLowerCase()) && (
                 <button className="btn-icon header-action-btn" onClick={() => navigate('/admin')} title="Admin Dashboard">
                   <Shield size={20} />
                 </button>

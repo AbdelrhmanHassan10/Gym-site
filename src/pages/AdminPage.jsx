@@ -9,6 +9,38 @@ import AdminChampions from '../components/AdminChampions';
 import AdminOrders from '../components/AdminOrders';
 import './AdminPage.css';
 
+// Error Boundary to catch rendering crashes (especially on Safari/iOS)
+class AdminErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error: error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('Admin page error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: '4rem 2rem', textAlign: 'center', minHeight: '50vh', color: 'var(--text-color)' }}>
+          <AlertTriangle size={48} color="#f5a623" style={{ marginBottom: '1rem' }} />
+          <h2 style={{ marginBottom: '1rem' }}>Something went wrong</h2>
+          <p style={{ marginBottom: '1.5rem', opacity: 0.7 }}>
+            {this.state.error ? this.state.error.message : 'An unexpected error occurred'}
+          </p>
+          <button onClick={() => window.location.reload()} style={{ padding: '0.8rem 2rem', background: '#f5a623', color: '#000', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>Reload Page</button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 const AdminPage = () => {
   const { t, i18n } = useTranslation();
   const [activeTab, setActiveTab] = useState('orders');
@@ -16,10 +48,10 @@ const AdminPage = () => {
   const navigate = useNavigate();
 
   // Define admin emails
-  const ADMIN_EMAILS = ['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com'];
+  const ADMIN_EMAILS = ['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com', 'abdohsn20@gmail.com', 'abdelrhmanhassan10@gmail.com'];
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    try { window.scrollTo(0, 0); } catch(e) {}
     if (!user) {
       navigate('/login');
     } else if (!user.email || !ADMIN_EMAILS.includes(user.email.toLowerCase())) {
@@ -31,7 +63,8 @@ const AdminPage = () => {
   if (!user || !user.email || !ADMIN_EMAILS.includes(user.email.toLowerCase())) return null;
 
   return (
-    <div className="admin-page-container">
+    <AdminErrorBoundary>
+      <div className="admin-page-container">
       <div className="admin-header">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
@@ -75,7 +108,8 @@ const AdminPage = () => {
           <AdminChampions />
         )}
       </motion.div>
-    </div>
+      </div>
+    </AdminErrorBoundary>
   );
 };
 
