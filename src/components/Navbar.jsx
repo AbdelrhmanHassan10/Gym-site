@@ -61,7 +61,7 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="auth-buttons-desktop">
-              {user && user.email && ['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com', 'abdohsn20@gmail.com', 'abdelrhmanhassan10@gmail.com'].includes(user.email.toLowerCase()) && (
+              {user && user.email && ['coachahmedragab@gmail.com', 'coach@gym.com', 'abdohsn20@gmail.com', 'abdelrhmanhassan10@gmail.com'].includes(user.email.toLowerCase()) && (
                 <button className="btn-icon header-action-btn" onClick={() => navigate('/admin')} title="Admin Dashboard">
                   <Shield size={20} />
                 </button>
@@ -122,7 +122,7 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
-                  {user && user.email && ['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com'].includes(user.email.toLowerCase()) && (
+                  {user && user.email && ['coachahmedragab@gmail.com', 'coach@gym.com'].includes(user.email.toLowerCase()) && (
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
                       <Link to="/admin" className="menu-link" style={{ color: 'var(--accent-gold)' }}>{i18n.language === 'ar' ? 'لوحة تحكم الإدارة' : 'Admin Dashboard'}</Link>
                     </motion.div>

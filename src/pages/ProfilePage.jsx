@@ -63,7 +63,7 @@ const ProfilePage = () => {
         <div>
           <span className="dash-tag">{t('profile.dashboard')}</span>
           <h1 className="dash-title">{t('profile.welcome')} {user?.name?.toUpperCase() || 'MEMBER'}</h1>
-          {['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com'].includes(user.email?.toLowerCase()) && (
+          {['coachahmedragab@gmail.com', 'coach@gym.com'].includes(user.email?.toLowerCase()) && (
             <button 
               className="dash-cta-btn" 
               style={{marginTop: '1rem', background: '#333', color: 'white', padding: '0.6rem 1rem'}} 

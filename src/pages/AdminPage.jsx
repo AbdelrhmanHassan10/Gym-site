@@ -48,7 +48,7 @@ const AdminPage = () => {
   const navigate = useNavigate();
 
   // Define admin emails
-  const ADMIN_EMAILS = ['coachahmedragab@gmail.com', 'admin@gym.com', 'coach@gym.com', 'abdohsn20@gmail.com', 'abdelrhmanhassan10@gmail.com'];
+  const ADMIN_EMAILS = ['coachahmedragab@gmail.com', 'coach@gym.com', 'abdohsn20@gmail.com', 'abdelrhmanhassan10@gmail.com'];
 
   useEffect(() => {
     try { window.scrollTo(0, 0); } catch(e) {}
