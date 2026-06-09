@@ -43,7 +43,7 @@ const AuthPage = () => {
     try {
       if (isLogin) {
         // Login
-        await signInWithEmailAndPassword(auth, formData.email, formData.password);
+        await signInWithEmailAndPassword(auth, formData.email.trim(), formData.password);
         navigate('/');
       } else {
         // Register
@@ -53,7 +53,7 @@ const AuthPage = () => {
           return;
         }
         
-        const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+        const userCredential = await createUserWithEmailAndPassword(auth, formData.email.trim(), formData.password);
         const user = userCredential.user;
         
         // Update user profile with name
