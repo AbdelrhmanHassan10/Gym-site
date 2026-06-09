@@ -52,28 +52,14 @@ const AdminPage = () => {
 
   useEffect(() => {
     try { window.scrollTo(0, 0); } catch(e) {}
-  }, []);
+    if (!user) {
+      navigate('/login');
+    } else if (!user.email || !ADMIN_EMAILS.includes(user.email.toLowerCase())) {
+      navigate('/profile');
+    }
+  }, [user, navigate]);
 
-  if (!user) {
-    return (
-      <div style={{ padding: '8rem 2rem', textAlign: 'center', color: '#fff' }}>
-        <h2>جارِ التحقق من الحساب... (User is null)</h2>
-        <p>إذا استمرت هذه الشاشة، يرجى تسجيل الدخول مرة أخرى.</p>
-        <button onClick={() => navigate('/login')} style={{ padding: '0.8rem 2rem', background: '#f5a623', color: '#000', borderRadius: '8px', marginTop: '1rem', cursor: 'pointer' }}>الذهاب لتسجيل الدخول</button>
-      </div>
-    );
-  }
-
-  if (!user.email || !ADMIN_EMAILS.includes(user.email.toLowerCase())) {
-    return (
-      <div style={{ padding: '8rem 2rem', textAlign: 'center', color: '#fff' }}>
-        <h2>صلاحيات غير كافية</h2>
-        <p>الحساب الحالي ({user.email || 'بدون إيميل'}) ليس مسجلاً كمسؤول.</p>
-        <p>UID: {user.uid}</p>
-        <button onClick={() => navigate('/profile')} style={{ padding: '0.8rem 2rem', background: '#f5a623', color: '#000', borderRadius: '8px', marginTop: '1rem', cursor: 'pointer' }}>العودة للملف الشخصي</button>
-      </div>
-    );
-  }
+  if (!user || !user.email || !ADMIN_EMAILS.includes(user.email.toLowerCase())) return null;
 
   return (
     <AdminErrorBoundary>
